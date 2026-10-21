@@ -1,0 +1,35 @@
+{
+  "ok": true,
+  "evidence_type": "Actual exported gold release; encounter-derived clinical observations are synthetic",
+  "release_sha256": "a362ba70111874d39fd58c602874c1cc446557178164df2c915a0cce02aaf825",
+  "release_bytes": 2373464,
+  "generated_at": "2026-10-21T15:40:43+00:00",
+  "as_of": "2025-12-29",
+  "districts": 64,
+  "diseases": 4,
+  "weeks": 262,
+  "rows": {
+    "observed": 67072,
+    "forecasts": 1024,
+    "signals": 256,
+    "allocations": 9216,
+    "calendar": 1696,
+    "quality": 320
+  },
+  "checks": [
+    "five_views_render_with_actual_release",
+    "choropleth_tooltip_keyboard_links_other_views",
+    "trajectory_navigator_brush_links_date_range",
+    "trajectory_mouse_wheel_zoom",
+    "seasonal_keyboard_cell_links_all_views_and_historical_label",
+    "allocation_budget_equity_resource_and_keyboard_link",
+    "warning_row_keyboard_link_and_detection_threshold",
+    "disease_tabs_coordinate",
+    "responsive_390_768_1440_no_horizontal_overflow",
+    "server_401_invalid_token_static_and_traversal_blocked",
+    "server_district_all_tables_geometry_calendar_scoped",
+    "server_query_cannot_escape_scope_security_headers",
+    "server_national_token_preserves_national_scope",
+    "district_browser_scope_and_no_browser_exceptions"
+  ]
+}

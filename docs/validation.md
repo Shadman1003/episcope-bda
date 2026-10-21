@@ -1,6 +1,6 @@
 # Validation record
 
-Updated 22 October 2026. The Ubuntu WSL1 runtime recovered after the user restarted Windows. The SF=0.01 end-to-end run, complete automated test suite and incremental acceptance checks have since completed. Two baseline scaling profiles completed before a performance revision; a fresh, uniform three-scale experiment and measured query comparisons remain pending below.
+Updated 22 October 2026. The SF=0.01 end-to-end run, complete automated test suite and incremental acceptance checks completed after the first WSL recovery. Two baseline scaling profiles completed before a performance revision. WSL1 stalled again after the latest 37-test run, and the revised benchmark did not start. Cloud validation is prepared but has not been dispatched. See [RESUME.md](RESUME.md) for the exact checkpoint and remaining work.
 
 ## Executed evidence
 

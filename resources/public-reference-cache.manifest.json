@@ -1,0 +1,574 @@
+{
+  "created_utc": "2026-10-21T21:11:31.268015+00:00",
+  "scope": "Public geography, modelled population and weather only; no synthetic facilities, encounters, stocks or secrets",
+  "attribution": "See resources/README.md, generator/README.md and reference/provenance.json inside the archive",
+  "archive_bytes": 33830870,
+  "archive_sha256": "198cf70977443d25fd6286feb21cf15e2e5a0b0f5013d245fbf801018e905ebb",
+  "files": [
+    {
+      "path": "bronze/reference/districts_original.geojson",
+      "bytes": 1686112,
+      "sha256": "7dbdb186f3b8af10417147a99859196fcd89c619fb5c6ac3804251fb6b449b6a"
+    },
+    {
+      "path": "bronze/reference/geoboundaries_metadata.json",
+      "bytes": 1850,
+      "sha256": "1f12fb2c5827799d5802b4b8672cf99953fa4ef21f6bee3ffd405a31b77f75ab"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_01_2021_2025.json",
+      "bytes": 48231,
+      "sha256": "655a778a4a5f026ec316cbb30c3f5d541d5cff31de6174d3881ef64dc9c3f57e"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_02_2021_2025.json",
+      "bytes": 48175,
+      "sha256": "e55e604897f7a53e9024737784fd1dae39094ca076ff3fe53a4b20bb86d870c1"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_03_2021_2025.json",
+      "bytes": 48171,
+      "sha256": "18d900dedd95ab92f41640e3129003e75eae6439315b114de8395a261a8c5759"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_04_2021_2025.json",
+      "bytes": 48161,
+      "sha256": "2fb9f1ab796134a32ddb62d13ae699b43a81776c6470217f035b8a5edd41cd81"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_05_2021_2025.json",
+      "bytes": 48206,
+      "sha256": "7c31bb657e2e8ae4a778e7ac643636ca46c4e79ec025028d701330e8e4b9c591"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_06_2021_2025.json",
+      "bytes": 48158,
+      "sha256": "be4d3bc5f7fd0a7568fb5efe56d96b4bea63b93b39866d00a76ef57670605dd7"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_07_2021_2025.json",
+      "bytes": 48159,
+      "sha256": "aa525bf3eb32314d4377afbf57c52b0b94a822a5719ed27b9f088a7f9f6abf4a"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_08_2021_2025.json",
+      "bytes": 48139,
+      "sha256": "77fa7bd2f069b25aafee59da5612db7cadc10f7a2426c55b5780ac02574ff8c3"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_09_2021_2025.json",
+      "bytes": 48204,
+      "sha256": "1a4493bf576f2ec450e57c664f3ea3b6b6ff8314d744471128ed2278892a6c13"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_10_2021_2025.json",
+      "bytes": 48132,
+      "sha256": "ad77d01a578e9504769591967aeb8edaa456fef2ccd21ed42301c3f2ef2e781a"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_11_2021_2025.json",
+      "bytes": 48158,
+      "sha256": "0936c405392275746d152d236dd375122b91c84d8bb6d7e6973e2d7ee222cee2"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_12_2021_2025.json",
+      "bytes": 48209,
+      "sha256": "75de8e076d9d9245fb3508fde5bcfa860719736a8cb310446092101d25cd4773"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_13_2021_2025.json",
+      "bytes": 48136,
+      "sha256": "aebaa8926cdfa46be0dcc9ec59736efaf489904fdbd8ca3bba6f98d4e1f736e3"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_14_2021_2025.json",
+      "bytes": 48198,
+      "sha256": "84e17febed21eb830867e0892df1d0957528a5786be14df445e030a512ba10c5"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_15_2021_2025.json",
+      "bytes": 48135,
+      "sha256": "aa240ffd1fd4aacbf7828bdad88e97013bf5702d23cc5d2678019ce2bce29109"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_16_2021_2025.json",
+      "bytes": 48180,
+      "sha256": "d773bc8124764cdebdca20b9f5b3eb2159364de6a2a6722f0d5435654f4cff9f"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_17_2021_2025.json",
+      "bytes": 48179,
+      "sha256": "b1870d7ca32bffe1d7b83df450f2e1cec8d759e82a7f2ed416fbd63ed230c5d2"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_18_2021_2025.json",
+      "bytes": 48167,
+      "sha256": "95594f37fc3155ee53a05280fe9198fd8b4abd830f15ba08a729ce0189f170ca"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_19_2021_2025.json",
+      "bytes": 48146,
+      "sha256": "654958a7234d0600ab27e338e86e84a6a5f28951aa46466d9c117043b87bfd70"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_20_2021_2025.json",
+      "bytes": 48151,
+      "sha256": "8020e79ce40069b6422e1d516b1514ab93aa0d2cb4b573e649f78323fb18e3de"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_21_2021_2025.json",
+      "bytes": 48196,
+      "sha256": "c1839af587ac34009fcc72b45427a3ea05b4f45234238e66517e4d0a8192dd76"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_22_2021_2025.json",
+      "bytes": 48136,
+      "sha256": "81e35ed6ff7f261427f001391c03a4fc1350a38d92817ba449e3449e5c52e579"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_23_2021_2025.json",
+      "bytes": 48169,
+      "sha256": "f00cffce1301079304799974f049dd829f5f9c5b62a0362be51ea0ef84b3642b"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_24_2021_2025.json",
+      "bytes": 48119,
+      "sha256": "5156499651b266c4d07e46c28cd848cecc1e52c62cd772ca2ae1740348c2b25e"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_25_2021_2025.json",
+      "bytes": 48144,
+      "sha256": "3caa0bf1ffb8126ac6094a904d79823ea2a7b0f5fa3a2b507ec794c013a1e0c8"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_26_2021_2025.json",
+      "bytes": 48133,
+      "sha256": "d1d3ddd37ec3657754a7ced3161ab1f4c0a16fc99b4962d44030b0f8ddabb116"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_27_2021_2025.json",
+      "bytes": 48173,
+      "sha256": "2c9f54e0945a1438207cf4def95597ad69f89c3efe42612171f9ffb925a6a055"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_28_2021_2025.json",
+      "bytes": 48224,
+      "sha256": "81be65e15216a6ab0cd78ed2b0d8a07747b433acfc9e722796a7672ee3403605"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_29_2021_2025.json",
+      "bytes": 48253,
+      "sha256": "3b8d25d05b9ac4a7f4bcfd3c70e88d6289604f64a6df4c478fcb1d467375a23f"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_30_2021_2025.json",
+      "bytes": 48132,
+      "sha256": "45564866dd30f8dc5f4e7ec97a1a9b5bf48d3432a670208ef86d92fba8d5e78e"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_31_2021_2025.json",
+      "bytes": 48162,
+      "sha256": "00ccc42567d17891bdd3b94eee357d9ef736c1645807b2a953d862717e87a613"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_32_2021_2025.json",
+      "bytes": 48248,
+      "sha256": "42ce24831e54248be22b51f569304e54014c30fa10f07991c0197554cc936221"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_33_2021_2025.json",
+      "bytes": 48129,
+      "sha256": "f4df867c79b97d7b4f4ada9575f44561d9a561c0a1ee5317c114f10594672ecd"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_34_2021_2025.json",
+      "bytes": 48146,
+      "sha256": "3c741009625b78c647050aabf0e7de00a752af2c4966b8835be1bd7de63a8d6a"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_35_2021_2025.json",
+      "bytes": 48106,
+      "sha256": "cefc4c5a7ad174439c1a0b03ba15cef57f58d2afa84dff8c82fe05a65c5249dd"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_36_2021_2025.json",
+      "bytes": 48278,
+      "sha256": "b7f27c4311c33e659c132f01a07f81cb081e060823b17f070e92f6cf85e6ddc2"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_37_2021_2025.json",
+      "bytes": 48131,
+      "sha256": "b72805aa4e00deb62e17978fdae0d66a9ce386c9a344bbd43fd42a7f3640cb35"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_38_2021_2025.json",
+      "bytes": 48147,
+      "sha256": "af243bcfede6f801e29c8a0b6fe03fa4d51f2bcb817381acb44772caed3d645a"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_39_2021_2025.json",
+      "bytes": 48280,
+      "sha256": "53460af1ecd92b0e359282796b47ea21ad52381df7fdc154af92579c123ce131"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_40_2021_2025.json",
+      "bytes": 48142,
+      "sha256": "60abdd169af7aba3131dc7f7ec24dec7c8c0b3c365a65184167a9b7ba5415102"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_41_2021_2025.json",
+      "bytes": 48124,
+      "sha256": "dcf7c0d04d6d2093ef653f499a88ed52ed49a34250e327e264a0e41e70200e23"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_42_2021_2025.json",
+      "bytes": 48138,
+      "sha256": "8ea40afe12eff732dc8124ba4af2cf784e63e1be4ead5ecebf844e9cda6bfd93"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_43_2021_2025.json",
+      "bytes": 48160,
+      "sha256": "349784335a5ffce5ac7e969dc6bc2f7ba7f9e808495b1067fd1d989ab8441621"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_44_2021_2025.json",
+      "bytes": 48133,
+      "sha256": "165a7f005c49b73428262e1757f7dc86be4e0c3dfb2e76c64da54400d455d208"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_45_2021_2025.json",
+      "bytes": 48121,
+      "sha256": "5e22080d4874a49604acdfca884782f8a08c237e345400ec913e4ab32492b338"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_46_2021_2025.json",
+      "bytes": 48293,
+      "sha256": "81f207bda8b311639ab6f8287c56a3667e332fdf0fb501de40419a49b1aa9dec"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_47_2021_2025.json",
+      "bytes": 48205,
+      "sha256": "ee2c2058e1c3553d23e16de7b08ab041ab63dd3993a7d5074b1098980bcc1f22"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_48_2021_2025.json",
+      "bytes": 48193,
+      "sha256": "731427646b27162ccedfe09e3ac596977ebb41405ecae0286b7b79887d5792cd"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_49_2021_2025.json",
+      "bytes": 48129,
+      "sha256": "41210e18140763d203c9fe7c306cb8f3a33d75981f26a9dace2e6cb1bc725e35"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_50_2021_2025.json",
+      "bytes": 48275,
+      "sha256": "70192ca8bac1b64e93536784f7495c750260b05792ed854f44c9392f53160a23"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_51_2021_2025.json",
+      "bytes": 48167,
+      "sha256": "4a8d92bf58fd360f326155b0c71e005eb9ba75134c779f15f666206c7cf97f11"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_52_2021_2025.json",
+      "bytes": 48175,
+      "sha256": "d4cf2a40df84b422a80c54eb57baa89dc790d37d285799615de220952d0a7023"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_53_2021_2025.json",
+      "bytes": 48122,
+      "sha256": "cbf2205c8917d034978ed8306842e0b9e979489c861bc2a868b04aae8e30f000"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_54_2021_2025.json",
+      "bytes": 48128,
+      "sha256": "472f943558da6ac34d543b490c4ad99e56da0ed87485c17ac6139dff44177cc1"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_55_2021_2025.json",
+      "bytes": 48108,
+      "sha256": "ca89522086187f812659f2dda19f108d91da16c52f41c57bd8a6310227e3c2e3"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_56_2021_2025.json",
+      "bytes": 48227,
+      "sha256": "33a88fb9c46ec6a85c5f86055eb714bec3d2c621acb5a4c3641e59ece71a012a"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_57_2021_2025.json",
+      "bytes": 48158,
+      "sha256": "47cd4e8eccbadeaccda90a1a981b5c9eb7696d4a8ddda39ddb5253997d9e9757"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_58_2021_2025.json",
+      "bytes": 48136,
+      "sha256": "cf20b620a609d4b5ced87d3ca6918349e2bca9030a1cdff53a3cb1f9f8448e61"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_59_2021_2025.json",
+      "bytes": 48217,
+      "sha256": "52197aa963eb06efc7af80681a9fcba1e86765ea7ee2bc49ef1ccc60f83be95e"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_60_2021_2025.json",
+      "bytes": 48149,
+      "sha256": "8580baa73fd6d4abee2e7902a9501e4660316478d8de90b3527bec64f3e1f715"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_61_2021_2025.json",
+      "bytes": 48408,
+      "sha256": "36b5a78cf2254386ed5b9856ef1cc18c9536fa72921f89d630991444a5e3c322"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_62_2021_2025.json",
+      "bytes": 48424,
+      "sha256": "9a549c4c8ee4c4a685383d9dd1bbe220dbb83ad20426f30f059056951b08f72d"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_63_2021_2025.json",
+      "bytes": 48140,
+      "sha256": "79234e74e3b48eb488750ee7a6ef9cc1ad239491bf8214530c928d691825a6d2"
+    },
+    {
+      "path": "bronze/reference/open_meteo/district_64_2021_2025.json",
+      "bytes": 48162,
+      "sha256": "f723b2d67252eb5f767b6f5e68b1dae448c3b4edc5ae8c571c9750346420bfc9"
+    },
+    {
+      "path": "bronze/reference/open_meteo_requests.json",
+      "bytes": 27177,
+      "sha256": "a03093a1433e570e7675456bb2e6838e938c31d791b93ad09d55f2b1322aef44"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_f_00_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 835843,
+      "sha256": "f69556dd0c9664051937cc59ebf62aab203e4bdf921fac6a31a5d4cc21c06c7c"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_f_01_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 836022,
+      "sha256": "599ffdc3b23e7bba02eee00c89ba9d37a09d02a2693ca3b2967d763a8b2313a7"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_f_05_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 835580,
+      "sha256": "c5ade28d77a18db247eb7610dcff89f15050e217ed92090f8d9299cc9b380aeb"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_f_10_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 835573,
+      "sha256": "929938fcb1f8037f1df3d0420c4ea87f627b2cb94f2dc17556b4f0a86d260d55"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_f_15_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 836224,
+      "sha256": "5694e0ddf52dc6061fcd84cdc1c6b2c6105f63138d673983d3ddeb90d99fbccb"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_f_20_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 836334,
+      "sha256": "11ac2c9f9d7aa2e7d6096838c12fe24faaeae4ba289fcd6f1da35b2bf9384602"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_f_25_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 835425,
+      "sha256": "91b70b83e5998f47a4ae096058cf23377affa35bee2eb9b141303095d4ccd686"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_f_30_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 835176,
+      "sha256": "194d563f640897554e00b25162372b4e26d395606dc031a9d4fac9ba9d8d3b35"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_f_35_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 834598,
+      "sha256": "64f9b5c7c08b7b742c8b399c2f95a957413bbeed07d906b6325e13bb847862ce"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_f_40_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 835055,
+      "sha256": "8969f257b532a7008ef08f5acb65e70c05e73bf25c94426dff289b267a16a2ad"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_f_45_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 834960,
+      "sha256": "8a3bbbe0fbbad862b9446d3d419554b6ee804a89e03974bdc69b67c36def4ff6"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_f_50_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 835041,
+      "sha256": "d79f6be29c0e3bf42440406bab78e521353fc6cd2d182843358182a68f1b8db9"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_f_55_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 834247,
+      "sha256": "bd246e15623423bb5f2ab1a0f49261b468c378af8734ad351d3901ab1ef8e82c"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_f_60_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 834854,
+      "sha256": "8b38c8bfb3edae3754e4bf194ecd4bf71060cbbf3aa0803694c47d0c72b389a3"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_f_65_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 833984,
+      "sha256": "b0c05231a1aed827f506ee47973c76396ea0a4006403fb05606ba83a632d875a"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_f_70_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 835065,
+      "sha256": "957d5a748f068908bbb67a271bb15b8b7831505a43fd7e39c99387c32f1d8cab"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_f_75_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 834603,
+      "sha256": "d25e6b62a40de415d2ef9f7b79ef57e164b7c107e4272e612fa7191de7bd9247"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_f_80_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 835078,
+      "sha256": "9fa4af71c7205cf248491aae6955932e46bc8d1cfe1b6c8c5b948de7a94d7f3b"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_f_85_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 836368,
+      "sha256": "98620fecd42579731c3981a0438f89c5f43cc4889cbfbfebf63b4067d55298ca"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_f_90_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 835703,
+      "sha256": "1001bb02dd0703b909022eaaad16fac6fa6bda4c2d60cf69f02aa0272efd924f"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_m_00_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 836003,
+      "sha256": "3a22763b0abcdc8beb7446c1fa0c432ff433f123ec00522080b16ef3eeaae90d"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_m_01_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 836085,
+      "sha256": "d0e57e6602e8ff873797ff668f411c5176cf9d528350ad047361d8d99cae95bd"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_m_05_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 835585,
+      "sha256": "fd846473a92f1dbae0fbee17ebc01589ada950c034496b0422140ea2b7a1c368"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_m_10_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 835176,
+      "sha256": "b0960ec67388470ae4d03a505d424d90110482d08b2705d094f09b03240833ab"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_m_15_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 835901,
+      "sha256": "2af0496f0446e7e9c874594a88c2476e6e2b8797c003bb7411fa07c9f2bf22a5"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_m_20_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 836394,
+      "sha256": "2c282f3be39cde5ab7c86f0ee17232998b0c1ca71e78ddfdc4433b8ff60cb089"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_m_25_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 835704,
+      "sha256": "2052a12bdd3c7222f84268e66c6e43db148cd9b20748b61cfde69bef8db1d682"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_m_30_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 835257,
+      "sha256": "3d121bfb0a46fddfe987698471a7dc4493a05be60d0751a3c33d372914c153ae"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_m_35_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 835146,
+      "sha256": "4e6af2a8c102e2f5cbebd0fc1d33323a1f7d4503d93c18b7ba35988f4311f141"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_m_40_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 834721,
+      "sha256": "1ce9fcd6a4223d69b2541dc69da96780827ad9235eb0556f9b731c59aa06e029"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_m_45_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 835288,
+      "sha256": "952fe262d4a345853472bc9188b51ec890cf91fb83c2774188130714aa41fc13"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_m_50_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 834963,
+      "sha256": "6055166a5a92b4545ac3ff7c54d86e03c05c97a612cd32fb4bf6ea44930ac7b9"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_m_55_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 834599,
+      "sha256": "cb3090ef36d516e798f4b041cb912bdfacf926f2c5a002344b21b4d690ed21e0"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_m_60_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 834264,
+      "sha256": "98123e68752f19a1bd70810409780bdbe7093dc3cc15e4bdb063b52516f728e5"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_m_65_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 833970,
+      "sha256": "d3d3abb1b92dbcabd08f91297d7eb765648fb56ba018aead1cf30b7971b711f8"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_m_70_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 835375,
+      "sha256": "9f7f626fa24dbe8e867b485dd9f87ce775c3ae2df7020ae909562694cb4b3d10"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_m_75_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 834319,
+      "sha256": "e30da4ccfbaa3b0bb289c5f0c47b638b478ed719f7774213ebfd27acc70119a4"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_m_80_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 835119,
+      "sha256": "dab1198995e1356a59dd5b1459c10ddce194d6f792f74863f70f4269d5e805e4"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_m_85_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 835517,
+      "sha256": "94dd044ed6e3d46deee5d2c05dacca3d93fc2ea9f7f438c256370e63ee5bbbbc"
+    },
+    {
+      "path": "bronze/reference/worldpop/bgd_m_90_2022_CN_1km_R2025A_UA_v1.tif",
+      "bytes": 834965,
+      "sha256": "9e45558a5983d61aa8ce919836092913d6051139bbba80c72d1be83ea1f98eb0"
+    },
+    {
+      "path": "bronze/reference/worldpop_dataset.html",
+      "bytes": 40546,
+      "sha256": "57c2798028a35c0d98cda2c9be29ce6c42be4e03c6f71e2459fb3f8a46734c16"
+    },
+    {
+      "path": "reference/districts.csv",
+      "bytes": 3152,
+      "sha256": "c7b513abf8a1d5b234328d58eddcdf533d207040c04d52d41309b032b5bf0974"
+    },
+    {
+      "path": "reference/districts.geojson",
+      "bytes": 1496045,
+      "sha256": "ba6fcf8df630074103126f9b654d9bee27311dcb840361c74b7be8780d4d2d92"
+    },
+    {
+      "path": "reference/population.csv",
+      "bytes": 191695,
+      "sha256": "322416cd4b83ef6edb0df5024ae2d2fa8a2aa7b8ee3d0d2549cd9dd27ea1164b"
+    },
+    {
+      "path": "reference/provenance.json",
+      "bytes": 29990,
+      "sha256": "0755b4032b58423b4314689aae7588d0081f0f290bd3021ad6f549ca8f4c6b62"
+    },
+    {
+      "path": "reference/weather.parquet",
+      "bytes": 446339,
+      "sha256": "20b8a076b462602a8c7f825ad64c3d765aea5581683df4194c06e190e2a2aa7d"
+    }
+  ]
+}

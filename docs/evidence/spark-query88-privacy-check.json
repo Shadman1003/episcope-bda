@@ -1,0 +1,6 @@
+{
+  "query88_found": true,
+  "query88_salt_literal_present": false,
+  "query88_direct_patient_id_column_present": false,
+  "source": "Actual SQL execution-start event matching the captured query; live UI had shut down before DOM recheck"
+}

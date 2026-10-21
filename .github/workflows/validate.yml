@@ -1,0 +1,117 @@
+name: Validate scaling
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  scaling:
+    name: Fresh SF=${{ matrix.scale }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        scale: ['0.25', '0.5', '1']
+    env:
+      EPISCOPE_VENV: ${{ runner.temp }}/episcope-venv
+      EPISCOPE_SPARK_MASTER: local[4]
+      EPISCOPE_DRIVER_MEMORY: 4g
+      EPISCOPE_SHUFFLE_PARTITIONS: '16'
+      SPARK_LOCAL_IP: 127.0.0.1
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - name: Check out source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python 3.12.3
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12.3'
+
+      - name: Set up Temurin Java 11
+        uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4
+        with:
+          distribution: temurin
+          java-version: '11'
+
+      - name: Record runner resources
+        shell: bash
+        run: |
+          set -euo pipefail
+          python --version
+          java -version
+          nproc
+          free -h
+          df -h . "$RUNNER_TEMP"
+
+      - name: Install pinned Python environment
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m venv "$EPISCOPE_VENV"
+          "$EPISCOPE_VENV/bin/python" -m pip install --requirement requirements.txt
+
+      - name: Create and mask this job's ephemeral patient salt
+        shell: bash
+        run: |
+          python - <<'PY'
+          import os
+          import secrets
+
+          salt = secrets.token_hex(32)
+          print(f"::add-mask::{salt}", flush=True)
+          with open(os.environ["GITHUB_ENV"], "a", encoding="utf-8") as stream:
+              stream.write(f"EPISCOPE_SALT={salt}\n")
+          PY
+
+      - name: Restore licensed public reference cache
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path, PurePosixPath
+          import stat
+          import zipfile
+
+          archive = Path("resources/public-reference-cache.zip")
+          destination = Path("data")
+          destination.mkdir(exist_ok=True)
+          with zipfile.ZipFile(archive) as bundle:
+              for member in bundle.infolist():
+                  name = PurePosixPath(member.filename)
+                  allowed = (
+                      name.parts[:1] == ("reference",)
+                      or name.parts[:2] == ("bronze", "reference")
+                      or (member.is_dir() and name.parts == ("bronze",))
+                  )
+                  if name.is_absolute() or ".." in name.parts or not allowed:
+                      raise ValueError(f"Unexpected public-cache entry: {member.filename}")
+                  if stat.S_ISLNK(member.external_attr >> 16):
+                      raise ValueError("Public cache must contain ordinary files/directories")
+              bundle.extractall(destination)
+          print("Restored public reference files; no generated encounter feed or lake reused.")
+          PY
+
+      - name: Execute fresh scale run and package safe aggregate evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          "$EPISCOPE_VENV/bin/python" scripts/ci_validate.py --scale '${{ matrix.scale }}' --output ci-public
+
+      - name: Upload aggregate evidence only
+        if: success()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: scale-${{ matrix.scale }}-aggregate-evidence
+          path: ci-public/**
+          if-no-files-found: error
+          retention-days: 1
+          compression-level: 9

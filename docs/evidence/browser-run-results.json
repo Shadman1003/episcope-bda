@@ -1,0 +1,20 @@
+[
+  {
+    "script": "tests/browser_smoke.cjs",
+    "returncode": 0,
+    "stdout": "{\n  \"ok\": true,\n  \"svg_views\": 5,\n  \"checks\": [\n    \"disease\",\n    \"district\",\n    \"threshold\",\n    \"budget\",\n    \"heatmap_time\",\n    \"choropleth_keyboard\",\n    \"responsive_390px\",\n    \"no_browser_exceptions\"\n  ]\n}\n",
+    "stderr": ""
+  },
+  {
+    "script": "tests/browser_scope.cjs",
+    "returncode": 0,
+    "stdout": "{\n  \"ok\": true,\n  \"scope\": \"district\",\n  \"districts_returned\": 1,\n  \"checks\": [\n    \"token_ui\",\n    \"server_scope\",\n    \"consistent_indices\",\n    \"district_controls\",\n    \"reset_scope\",\n    \"static_release_blocked\",\n    \"no_browser_exceptions\"\n  ]\n}\n",
+    "stderr": ""
+  },
+  {
+    "script": "work/dashboard_release_qa.cjs",
+    "returncode": 0,
+    "stdout": "{\n  \"ok\": true,\n  \"evidence_type\": \"Actual exported gold release; encounter-derived clinical observations are synthetic\",\n  \"release_sha256\": \"a362ba70111874d39fd58c602874c1cc446557178164df2c915a0cce02aaf825\",\n  \"release_bytes\": 2373464,\n  \"generated_at\": \"2026-10-21T15:40:43+00:00\",\n  \"as_of\": \"2025-12-29\",\n  \"districts\": 64,\n  \"diseases\": 4,\n  \"weeks\": 262,\n  \"rows\": {\n    \"observed\": 67072,\n    \"forecasts\": 1024,\n    \"signals\": 256,\n    \"allocations\": 9216,\n    \"calendar\": 1696,\n    \"quality\": 320\n  },\n  \"checks\": [\n    \"five_views_render_with_actual_release\",\n    \"choropleth_tooltip_keyboard_links_other_views\",\n    \"trajectory_navigator_brush_links_date_range\",\n    \"trajectory_mouse_wheel_zoom\",\n    \"seasonal_keyboard_cell_links_all_views_and_historical_label\",\n    \"allocation_budget_equity_resource_and_keyboard_link\",\n    \"warning_row_keyboard_link_and_detection_threshold\",\n    \"disease_tabs_coordinate\",\n    \"responsive_390_768_1440_no_horizontal_overflow\",\n    \"server_401_invalid_token_static_and_traversal_blocked\",\n    \"server_district_all_tables_geometry_calendar_scoped\",\n    \"server_query_cannot_escape_scope_security_headers\",\n    \"server_national_token_preserves_national_scope\",\n    \"district_browser_scope_and_no_browser_exceptions\"\n  ]\n}\n",
+    "stderr": ""
+  }
+]
