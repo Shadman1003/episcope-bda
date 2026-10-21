@@ -103,6 +103,18 @@ class ForecastTests(unittest.TestCase):
 
 
 class DetectionAndSeasonTests(unittest.TestCase):
+    def test_threshold_independent_episode_window_is_equivalent(self):
+        # Includes a missing-data score of 99, strict threshold equality and a
+        # trigger returning after exactly seven quiet days.
+        scores = np.array([0., 4., 99., 6., 0., 0., 0., 0., 0., 0., 0., 4., 5.])
+        available = np.array([True, True, False]+[True]*10)
+        for threshold in (2., 4., 5.):
+            triggers = available & (scores > threshold)
+            expanded = [bool(triggers[i] and not triggers[max(0, i-7):i].any()) for i in range(len(scores))]
+            previous_max = [max(scores[max(0, i-7):i][available[max(0, i-7):i]], default=-1e300) for i in range(len(scores))]
+            compact = triggers & (np.asarray(previous_max) <= threshold)
+            np.testing.assert_array_equal(compact, expanded)
+
     def test_cusum_accumulates_and_resets_after_unavailable_data(self):
         scores = cusum_scores([1, 4, 4, 4], [1, 1, 1, 1], [1, 1, 1, 1], [True, True, False, True])
         np.testing.assert_allclose(scores, [0., 2.5, 0., 2.5])

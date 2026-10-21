@@ -9,7 +9,7 @@ import urllib.request
 from pathlib import Path
 
 from serving.export import MAX_BYTES, _json_bytes, simplify_geojson, validate_release
-from serving.privacy import count_bin, coupled_bins
+from serving.privacy import count_bin, coupled_bins, quality_release
 from serving.server import DashboardServer, filter_payload
 
 
@@ -18,6 +18,27 @@ def release_fixture():
 
 
 class PrivacyTests(unittest.TestCase):
+    def test_quality_counts_and_pass_rates_cannot_expose_small_failures(self):
+        row={'batch_id':'a'*20,'loaded_at':'2026-01-01T00:00:00Z','rows_in':100,'rows_out':97,'quarantined':3,'duplicates':0,'rule_counts_json':'{"invalid_age":3,"invalid_sex":0}'}
+        release=quality_release(row)
+        self.assertTrue(all(release[key] is None for key in ('rows_in','rows_out','quarantined','duplicates')))
+        self.assertIsNone(release['rules'][0]['failed'])
+        self.assertTrue(all(rule['approximate_pass_rate'] is None for rule in release['rules']))
+        payload=release_fixture();payload['quality']=[release]
+        self.assertTrue(validate_release(payload))
+        payload['quality'][0]['rows_out']=95
+        with self.assertRaisesRegex(ValueError,'Quality balance'):
+            validate_release(payload)
+
+    def test_quality_public_rates_derive_from_binned_counts(self):
+        row={'batch_id':'b'*20,'rows_in':207,'rows_out':180,'quarantined':17,'duplicates':10,'rule_counts_json':'{"invalid_age":17}'}
+        release=quality_release(row)
+        self.assertEqual(release['rows_in'],205)
+        self.assertEqual(release['rules'][0]['failed'],15)
+        self.assertEqual(release['rules'][0]['approximate_pass_rate'],.95)
+        payload=release_fixture();payload['quality']=[release]
+        self.assertTrue(validate_release(payload))
+
     def test_zero_small_and_nonfinite(self):
         self.assertEqual(count_bin(0),0)
         for value in [None,1,2,3,4,4.99,-1,float("nan"),float("inf")]:

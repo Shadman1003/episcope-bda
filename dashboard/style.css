@@ -7,3 +7,4 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 
 .source-credits a{color:#496f76;text-decoration:underline;text-underline-offset:2px}svg text{fill:#637781}.card-foot,.freshness,.chart-note{color:#687c86}.kpis p{color:#697e88}
+.quality-card{padding:18px 24px;margin-bottom:20px}.quality-card>summary{cursor:pointer;font-weight:600}.quality-card>p{font-size:12px;color:#637d8b;line-height:1.6}.quality-card td details{min-width:180px}.quality-card td li{white-space:normal;font-size:11px}.quality-card .table-scroll{max-height:360px;overflow:auto}

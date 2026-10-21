@@ -216,6 +216,18 @@ function render(){
   window.epiScopeState=Object.freeze({district:state.district,disease:data.diseases[state.disease],range:state.range.map(d=>d.toISOString().slice(0,10)),threshold:state.threshold,budget:state.budget,equity:state.equity,scope:data.access.role});
 }
 
+function renderQuality(){
+  const rows=data.quality||[];$("#quality-panel").hidden=!rows.length;
+  const body=d3.select("#quality-body");body.selectAll("*").remove();
+  rows.forEach(row=>{
+    const tr=body.append("tr");tr.append("td").text((row.batch_id||"").slice(0,12));
+    tr.append("td").text((row.loaded_at||"").replace("T"," ").slice(0,19));
+    ["rows_in","rows_out","quarantined","duplicates"].forEach(key=>tr.append("td").text(row[key]===null?"Withheld":fmt.format(row[key])));
+    const detail=tr.append("td").append("details");detail.append("summary").text("View checks");
+    const list=detail.append("ul");(row.rules||[]).forEach(rule=>list.append("li").text(rule.rule.replaceAll("_"," ")+": "+(rule.approximate_pass_rate===null?"rate withheld":d3.format(".0%")(rule.approximate_pass_rate)+" pass (approx.)")));
+  });
+}
+
 function init(){
   weeks=data.weeks.map(parseDate);latestObservation=weeks[weeks.length-1];latestPlanning=parseDate(data.forecast_origin||data.as_of);
   state.range=[d3.utcWeek.offset(latestObservation,-25),d3.utcWeek.offset(latestObservation,5)];
@@ -236,7 +248,7 @@ function init(){
   $("#notice").className="notice";$("#notice").textContent=`${data.label||"SYNTHETIC HEALTH DATA"} · ${data.districts.length} districts in this access scope · weekly release · daily signals · four-week planning`;
   $("#privacy-note").textContent=data.privacy.rounding+" "+data.privacy.policy+" "+data.privacy.limitations;
   $("#evaluation-note").textContent="A lower signal multiplier increases sensitivity and alert workload. The warning footer shows the nearest actually evaluated operating point; no performance improvement is assumed.";
-  render();
+  renderQuality();render();
 }
 
 async function load(){

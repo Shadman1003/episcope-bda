@@ -13,6 +13,7 @@ it is not a differential-privacy guarantee against arbitrary external knowledge.
 from __future__ import annotations
 
 import math
+import json
 
 K = 5
 
@@ -48,3 +49,18 @@ def safe_ratio(value, precision=3):
 def displayed_alert(score, threshold_multiplier, complete=True):
     """Signals may be recomputed only for complete, non-suppressed releases."""
     return bool(complete and score is not None and score >= threshold_multiplier)
+
+
+def quality_release(row):
+    """Per-load quality counts and approximate pass rates from protected bins."""
+    counts = coupled_bins([row.get(key) for key in ('rows_in','rows_out','quarantined','duplicates')])
+    failures = json.loads(row.get('rule_counts_json') or '{}')
+    total = counts[0]
+    rules = []
+    for rule, value in sorted(failures.items()):
+        failed = count_bin(value)
+        approximate = (round(max(0.,min(1.,1-failed/total))/.05)*.05
+                       if total and failed is not None else None)
+        rules.append({'rule':rule,'failed':failed,'approximate_pass_rate':safe_ratio(approximate,2)})
+    return dict(batch_id=row.get('batch_id'),loaded_at=row.get('loaded_at'),
+                **dict(zip(('rows_in','rows_out','quarantined','duplicates'),counts)),rules=rules)

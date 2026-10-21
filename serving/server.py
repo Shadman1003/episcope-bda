@@ -41,6 +41,7 @@ def filter_payload(payload, principal):
     # National evaluation summaries are not needed by district officers.
     result["tradeoff"] = []
     result["scenarios"] = []
+    result['quality'] = []  # Source-load metadata is scoped nationally.
     result["access"] = {"role": "district", "district_id": identifier, "label": district["district_name"] + " district"}
     return result
 

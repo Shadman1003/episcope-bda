@@ -28,11 +28,18 @@ def evaluate_detection(spark, alerts, root: Path, daily=None):
     threshold_rows = [("EARS_C2", float(t)) for t in (.5, 1, 1.5, 2, 2.5, 3, 4, 5)]
     threshold_rows += [("CUSUM", float(t)) for t in (2, 3, 4, 5, 7, 10)]
     thresholds = spark.createDataFrame(threshold_rows, "method string, threshold_multiplier double")
-    scored = (alerts.join(F.broadcast(thresholds), "method")
-              .withColumn("trigger", F.col("data_complete") & (F.col("score") > F.col("threshold_multiplier"))))
-    keys = ["district_id", "disease", "method", "threshold_multiplier"]
-    history = Window.partitionBy(*keys).orderBy("date").rowsBetween(-7, -1)
-    scored = scored.withColumn("episode", F.col("trigger") & (F.coalesce(F.max(F.col("trigger").cast("int")).over(history), F.lit(0)) == 0)).persist(StorageLevel.DISK_ONLY)
+    # For any threshold h, "no eligible score exceeded h in the last seven
+    # days" is exactly "the maximum eligible score was <= h". Compute that
+    # threshold-independent window BEFORE expanding the grid. Then retain only
+    # actual triggers. This avoids sorting/caching millions of non-alert rows.
+    history = Window.partitionBy("district_id", "disease", "method").orderBy("date").rowsBetween(-7, -1)
+    scored = (alerts.withColumn("previous_max", F.max(F.when(F.col("data_complete"), F.col("score"))).over(history))
+              .where(F.col("data_complete") & (F.col("score") > F.when(F.col("method") == "EARS_C2", F.lit(.5)).otherwise(F.lit(2.))))
+              .join(F.broadcast(thresholds), "method")
+              .where(F.col("score") > F.col("threshold_multiplier"))
+              .withColumn("trigger", F.lit(True))
+              .withColumn("episode", F.coalesce(F.col("previous_max"), F.lit(-1e300)) <= F.col("threshold_multiplier"))
+              .persist(StorageLevel.DISK_ONLY))
     max_date = alerts.agg(F.max("as_of_date")).first()[0]
     min_date = alerts.agg(F.min("as_of_date")).first()[0]
     split = max_date.replace(year=max_date.year, month=1, day=1)
@@ -43,7 +50,8 @@ def evaluate_detection(spark, alerts, root: Path, daily=None):
         events = events.where((F.col("start_date") >= F.lit(min_date)) & (F.col("end_date") <= F.lit(max_date)))
         event_count = events.select("event_id").distinct().count()
         district_event_count = events.select("event_id", "district_id").distinct().count()
-        bounds = signal.agg(F.min("as_of_date"), F.max("as_of_date"), F.countDistinct("district_id")).first()
+        exposure_rows = alerts if period == "all" else alerts.where(F.col("as_of_date") < F.lit(split) if period == "calibration" else F.col("as_of_date") >= F.lit(split))
+        bounds = exposure_rows.agg(F.min("as_of_date"), F.max("as_of_date"), F.countDistinct("district_id")).first()
         years = max(1/365.2425, (bounds[1]-bounds[0]).days/365.2425) if bounds[0] else 1.
         exposure = max(1., bounds[2]*years)
         # False alerts are checked against every true outbreak, including one

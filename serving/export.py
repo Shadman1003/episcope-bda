@@ -13,7 +13,7 @@ import json
 import math
 from pathlib import Path
 
-from serving.privacy import count_bin, coupled_bins, safe_ratio
+from serving.privacy import count_bin, coupled_bins, safe_ratio, quality_release
 
 MAX_BYTES = 10_000_000
 DISEASES = ["dengue", "diarrhoea", "influenza", "malaria"]
@@ -122,6 +122,13 @@ def validate_release(payload):
         raise ValueError("Daily numerator, expected counts and thresholds must not be released")
     if any(forbidden in payload for forbidden in ("totals", "daily", "patients", "encounters", "admissions", "deaths")):
         raise ValueError("Overlapping totals or patient-level tables are forbidden")
+    for row in payload.get('quality', []):
+        values=[row.get(key) for key in ('rows_in','rows_out','quarantined','duplicates')]
+        if any(value is None for value in values) and not all(value is None for value in values):
+            raise ValueError('Quality balance tuple has partial suppression')
+        for value in values + [rule.get('failed') for rule in row.get('rules',[])]:
+            if value is not None and (value < 0 or 0 < value < 5 or value % 5 != 0):
+                raise ValueError('Unsafe quality count')
     return True
 
 
@@ -161,7 +168,7 @@ def export_dashboard(spark, root: Path) -> dict:
             "calendar": ["division", "disease", "epi_week", "seasonal_index", "action", "year"],
         },
         "observed": [], "forecasts": [], "signals": [], "allocations": [], "calendar": [],
-        "tradeoff": [], "scenarios": [], "resources": [],
+        "tradeoff": [], "scenarios": [], "resources": [], "quality": [],
     }
     observed_rows = weekly.select("district_id", "disease", "week_start", "cases", "completeness").orderBy("district_id", "disease", "week_start").collect()
     for row in observed_rows:
@@ -216,6 +223,9 @@ def export_dashboard(spark, root: Path) -> dict:
         # district. Publish only scenario controls and dimensionless comparisons.
         payload["scenarios"] = [{"budget": round(float(row.budget), 2), "equity_floor": float(row.equity_floor), "benefit_vs_baseline_pct": safe_ratio(row.benefit_vs_baseline_pct), "min_population_ratio": safe_ratio(row.min_population_ratio), "transport_utilisation": safe_ratio(row.transport_utilisation)} for row in scenarios.collect()]
     geography_path = root / "reference" / "districts.geojson"
+    quality = read('quality')
+    if quality is not None:
+        payload['quality'] = [quality_release(row.asDict()) for row in quality.orderBy(F.desc('loaded_at')).collect()]
     payload["geography"] = simplify_geojson(json.loads(geography_path.read_text(encoding="utf-8")), districts) if geography_path.exists() else {"type": "FeatureCollection", "features": []}
     validate_release(payload)
     raw = _json_bytes(payload)

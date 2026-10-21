@@ -24,7 +24,7 @@ const fs = require('fs');
   await page.locator('#heatmap rect.cell').nth(80).click();
   const afterWeek=await page.evaluate(()=>window.epiScopeState);if(JSON.stringify(afterWeek.range)===JSON.stringify(district.range))throw new Error('Heatmap did not coordinate time range');
   await page.locator('#reset').click();
-  const geometry=page.locator('#map .district-shape');await geometry.first().click();
+  const geometry=page.locator('#map .district-shape');await geometry.first().focus();await geometry.first().press('Enter');
   if((await page.evaluate(()=>window.epiScopeState)).district==='all')throw new Error('Choropleth click did not coordinate');
   await page.locator('#reset').click();
   if(process.env.EPISCOPE_SCREENSHOT_DIR){fs.mkdirSync(process.env.EPISCOPE_SCREENSHOT_DIR,{recursive:true});await page.screenshot({path:path.join(process.env.EPISCOPE_SCREENSHOT_DIR,'dashboard-desktop.png'),fullPage:true});}
@@ -34,6 +34,6 @@ const fs = require('fs');
   if(overflow)throw new Error('Mobile page overflows horizontally');
   if(process.env.EPISCOPE_SCREENSHOT_DIR)await page.screenshot({path:path.join(process.env.EPISCOPE_SCREENSHOT_DIR,'dashboard-mobile.png'),fullPage:true});
   if(errors.length)throw new Error(errors.join('\n'));
-  console.log(JSON.stringify({ok:true,svg_views:counts,checks:['disease','district','threshold','budget','heatmap_time','choropleth','responsive_390px','no_browser_exceptions']},null,2));
+  console.log(JSON.stringify({ok:true,svg_views:counts,checks:['disease','district','threshold','budget','heatmap_time','choropleth_keyboard','responsive_390px','no_browser_exceptions']},null,2));
   await browser.close();
 })().catch(error=>{console.error(error);process.exit(1);});

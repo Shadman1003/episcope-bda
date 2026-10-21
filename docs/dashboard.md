@@ -62,3 +62,7 @@ A generic static HTTP server must not be used for role demonstrations, because i
 Automation and visual inspection assess functional correctness and layout. **Two non-CS human usability sessions have not been conducted.** Their names, observations, completion times and findings are not invented. A human study remains necessary before claiming the brief’s usability recommendation has been satisfied. Suitable tasks are selecting a district, explaining a forecast interval, identifying a withheld cell, adjusting the equity policy and deciding which signal requires source verification.
 
 Technical reproduction notes and the retained D3 licence are in `serving/README.md`. Final report, policy brief and presentation production are deferred as requested.
+
+## Per-load quality evidence (DQ-2)
+
+The national view includes an expandable per-load quality table with protected input, accepted, quarantined and duplicate/replaced counts. Each load exposes its rule checks and approximate pass rates derived from released five-count bins. Exact private ratios are not exported. A small component suppresses the entire count balance family; district tokens receive no national load metadata. Relative reporting activity is explicitly labelled as a proxy rather than verified submission completeness.

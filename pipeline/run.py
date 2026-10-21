@@ -200,7 +200,9 @@ def run_pipeline(spark, root, drop=None):
                         'rows_in': row['rows_in'], 'rows_out': out_counts.get(batch, 0),
                         'quarantined': row['quarantined'],
                         'duplicates': row['rows_in'] - row['quarantined'] - out_counts.get(batch, 0),
-                        'rule_counts_json': json.dumps({rule: row[rule] for rule in rules}), 'checksum': meta[batch]['checksum']})
+                        'rule_counts_json': json.dumps({rule: row[rule] for rule in rules}),
+                        'rule_pass_rates_json': json.dumps({rule: 1-row[rule]/max(1,row['rows_in']) for rule in rules}),
+                        'checksum': meta[batch]['checksum']})
     cleaned.unpersist()
     stocks = read_raw(spark, root, manifest, 'stocks')
     if stocks is not None:
