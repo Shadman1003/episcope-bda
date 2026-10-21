@@ -67,7 +67,8 @@ def run(args):
             stage('spark_optimisations', lambda: benchmark_optimisations(spark, root), log)
         generation = json.loads((root/'generation_manifest.json').read_text()) if (root/'generation_manifest.json').exists() else {}
         result = {'status': 'ok', 'started_at': run_started, 'completed_at':datetime.now(timezone.utc).isoformat(), 'total_seconds': time.monotonic()-start,
-                  'hardware': hardware(), 'scale': generation.get('scale'), 'seed': generation.get('seed'), 'root': str(root), 'stages': log,
+                  'hardware': hardware(), 'source_revision': source_revision(),
+                  'scale': generation.get('scale'), 'seed': generation.get('seed'), 'root': str(root), 'stages': log,
                   'generated_encounter_rows':generation.get('encounter_rows'), 'generated_unique_encounters':generation.get('unique_encounters'),
                   'facilities':generation.get('facilities'), 'stock_rows':sum(row['rows'] for row in generation.get('stock_files',[])),
                   'output_bytes': tree_size(root / 'lake'), 'application_id': spark.sparkContext.applicationId}
@@ -83,9 +84,23 @@ def run(args):
 
 def hardware():
     import psutil
+    model = platform.processor() or None
+    cpuinfo = Path('/proc/cpuinfo')
+    if cpuinfo.exists():
+        model = next((line.split(':', 1)[1].strip() for line in cpuinfo.read_text().splitlines()
+                      if line.startswith('model name') and ':' in line), model)
     return {'platform': platform.platform(), 'python':platform.python_version(), 'logical_cpus':os.cpu_count(),
+            'cpu_model':model, 'physical_cores':psutil.cpu_count(logical=False),
             'memory_bytes':psutil.virtual_memory().total, 'available_memory_bytes':psutil.virtual_memory().available,
             'spark_master': os.getenv('EPISCOPE_SPARK_MASTER','local[2]'), 'driver_memory':os.getenv('EPISCOPE_DRIVER_MEMORY','1g')}
+
+
+def source_revision():
+    try:
+        return subprocess.run(['git','rev-parse','HEAD'],cwd=REPOSITORY,check=True,
+                              capture_output=True,text=True,timeout=5).stdout.strip()
+    except (OSError, subprocess.SubprocessError):
+        return None
 
 
 def tree_size(path):

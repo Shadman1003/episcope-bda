@@ -1,0 +1,125 @@
+{
+  "experiment_id": "20261021T200536722646Z",
+  "runs": [
+    {
+      "status": "ok",
+      "started_at": "2026-10-21T20:05:37.551371+00:00",
+      "completed_at": "2026-10-21T20:24:41.215225+00:00",
+      "total_seconds": 1143.6638930000001,
+      "hardware": {
+        "platform": "Linux-4.4.0-19041-Microsoft-x86_64-with-glibc2.39",
+        "python": "3.12.3",
+        "logical_cpus": 4,
+        "memory_bytes": 8464728064,
+        "available_memory_bytes": 729726976,
+        "spark_master": "local[2]",
+        "driver_memory": "1g"
+      },
+      "scale": 0.25,
+      "seed": 4345,
+      "generated_encounter_rows": 6412101,
+      "generated_unique_encounters": 6286618,
+      "facilities": 640,
+      "stock_rows": 1168640,
+      "output_bytes": 958029666,
+      "input_bytes": 713880263,
+      "under_45_minutes": true,
+      "experiment_id": "20261021T200536722646Z",
+      "measurement": "fresh generated feed and lake; cached public references",
+      "profile": "runs/20261021T200536722646Z/sf0_25",
+      "stages": [
+        {
+          "stage": "public_references",
+          "seconds": 6.1799496000000005,
+          "attempt": 1,
+          "status": "ok"
+        },
+        {
+          "stage": "synthetic_generator",
+          "seconds": 93.4577098,
+          "attempt": 1,
+          "status": "ok"
+        },
+        {
+          "stage": "bronze_silver_gold",
+          "seconds": 664.7428828,
+          "attempt": 1,
+          "status": "ok"
+        },
+        {
+          "stage": "analytics",
+          "seconds": 345.5772895000001,
+          "attempt": 1,
+          "status": "ok"
+        },
+        {
+          "stage": "dashboard_export",
+          "seconds": 14.697423599999865,
+          "attempt": 1,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "started_at": "2026-10-21T20:24:44.086458+00:00",
+      "completed_at": "2026-10-21T20:56:02.489504+00:00",
+      "total_seconds": 1878.4030916000002,
+      "hardware": {
+        "platform": "Linux-4.4.0-19041-Microsoft-x86_64-with-glibc2.39",
+        "python": "3.12.3",
+        "logical_cpus": 4,
+        "memory_bytes": 8464728064,
+        "available_memory_bytes": 870068224,
+        "spark_master": "local[2]",
+        "driver_memory": "1g"
+      },
+      "scale": 0.5,
+      "seed": 4345,
+      "generated_encounter_rows": 12858721,
+      "generated_unique_encounters": 12606672,
+      "facilities": 640,
+      "stock_rows": 1168640,
+      "output_bytes": 1881259162,
+      "input_bytes": 1281660282,
+      "under_45_minutes": true,
+      "experiment_id": "20261021T200536722646Z",
+      "measurement": "fresh generated feed and lake; cached public references",
+      "profile": "runs/20261021T200536722646Z/sf0_5",
+      "stages": [
+        {
+          "stage": "public_references",
+          "seconds": 10.397122399999944,
+          "attempt": 1,
+          "status": "ok"
+        },
+        {
+          "stage": "synthetic_generator",
+          "seconds": 234.32239210000012,
+          "attempt": 1,
+          "status": "ok"
+        },
+        {
+          "stage": "bronze_silver_gold",
+          "seconds": 1290.0841685999999,
+          "attempt": 1,
+          "status": "ok"
+        },
+        {
+          "stage": "analytics",
+          "seconds": 318.4019863999997,
+          "attempt": 1,
+          "status": "ok"
+        },
+        {
+          "stage": "dashboard_export",
+          "seconds": 23.000642599999992,
+          "attempt": 1,
+          "status": "ok"
+        }
+      ]
+    }
+  ],
+  "experiment_status": "baseline stopped after two completed profiles before full-scale generation",
+  "reason": "Measured pace motivated a fresh, uniformly optimized three-scale experiment."
+}

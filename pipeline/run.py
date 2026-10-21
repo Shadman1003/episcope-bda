@@ -192,7 +192,8 @@ def build_gold(spark, root):
         stocks = stocks.join(F.broadcast(facilities.select('facility_id', 'district_id', 'beds', 'icu_beds')), 'facility_id')
         stock = stocks.groupBy('district_id').agg(*[F.sum(c).alias(c) for c in ('iv_saline', 'ns1_kits', 'ors', 'antimalarials', 'occupied_beds', 'beds', 'icu_beds')], F.max('date').alias('as_of'))
         publish(stock.coalesce(1), root, 'gold', 'stock')
-    return {'start_date': str(bounds[0]), 'end_date': str(bounds[1]), 'latest_report': str(bounds[2]), 'weekly_rows': weekly.count()}
+    return {'start_date': str(bounds[0]), 'end_date': str(bounds[1]), 'latest_report': str(bounds[2]),
+            'weekly_rows': spark.read.parquet(str(root / 'lake/gold/weekly')).count()}
 
 
 def run_pipeline(spark, root, drop=None):
@@ -216,19 +217,30 @@ def run_pipeline(spark, root, drop=None):
         raise ValueError('No encounter sources found; run generator or supply --drop')
     cleaned, rules = clean_encounters(raw, facilities, get_salt(root))
     cleaned = cleaned.persist(StorageLevel.DISK_ONLY)
-    stats = cleaned.groupBy('_batch_id').agg(F.count('*').alias('rows_in'),
-             F.sum((F.size('reason_codes') > 0).cast('long')).alias('quarantined'),
-             *[F.sum(F.array_contains('reason_codes', rule).cast('long')).alias(rule) for rule in rules]).collect()
-    valid = cleaned.filter(F.size('reason_codes') == 0).drop('reason_codes')
-    latest = Window.partitionBy('encounter_id').orderBy(F.desc('_loaded_at'), F.desc('revision'), F.desc('_payload_hash'), F.desc('_batch_id'))
-    ranked = valid.withColumn('_rn', F.row_number().over(latest))
-    removed = ranked.filter('_rn > 1').drop('_rn').withColumn('reason_codes', F.array(F.lit('duplicate_or_superseded_encounter_id')))
-    quarantine = cleaned.filter(F.size('reason_codes') > 0).unionByName(removed)
-    publish(quarantine.repartition(2), root, 'silver', 'quarantine')
-    valid = ranked.filter('_rn=1').drop('_rn')
-    valid = valid.join(F.broadcast(facilities.select('facility_id', 'district_id').dropDuplicates()), ['facility_id', 'district_id'])
-    valid = valid.withColumn('epi_year', F.year(F.date_add(F.to_date(F.date_trunc('week', 'onset_date')), 3)))
-    publish(valid.repartition(8, 'epi_year'), root, 'silver', 'encounters', ['epi_year'])
+    ranked = None
+    try:
+        stats = cleaned.groupBy('_batch_id').agg(F.count('*').alias('rows_in'),
+                 F.sum((F.size('reason_codes') > 0).cast('long')).alias('quarantined'),
+                 *[F.sum(F.array_contains('reason_codes', rule).cast('long')).alias(rule) for rule in rules]).collect()
+        valid = cleaned.filter(F.size('reason_codes') == 0).drop('reason_codes')
+        latest = Window.partitionBy('encounter_id').orderBy(F.desc('_loaded_at'), F.desc('revision'), F.desc('_payload_hash'), F.desc('_batch_id'))
+        ranked = valid.withColumn('_rn', F.row_number().over(latest)).persist(StorageLevel.DISK_ONLY)
+        removed = ranked.filter('_rn > 1').drop('_rn').withColumn('reason_codes', F.array(F.lit('duplicate_or_superseded_encounter_id')))
+        quarantine = cleaned.filter(F.size('reason_codes') > 0).unionByName(removed)
+        # This complete write materialises ranked for both duplicate and retained
+        # rows, so the retained publication can reuse the same shuffle/window.
+        publish(quarantine.repartition(2), root, 'silver', 'quarantine')
+        cleaned.unpersist(blocking=True)
+        valid = ranked.filter('_rn=1').drop('_rn')
+        valid = valid.join(F.broadcast(facilities.select('facility_id', 'district_id').dropDuplicates()), ['facility_id', 'district_id'])
+        valid = valid.withColumn('epi_year', F.year(F.date_add(F.to_date(F.date_trunc('week', 'onset_date')), 3)))
+        publish(valid.repartition(8, 'epi_year'), root, 'silver', 'encounters', ['epi_year'])
+    finally:
+        try:
+            if ranked is not None:
+                ranked.unpersist(blocking=True)
+        finally:
+            cleaned.unpersist(blocking=True)
     valid_out = spark.read.parquet(str(root / 'lake/silver/encounters')).groupBy('_batch_id').count().collect()
     out_counts = {r['_batch_id']: r['count'] for r in valid_out}
     quality = []
@@ -246,7 +258,6 @@ def run_pipeline(spark, root, drop=None):
                         'rule_counts_json': json.dumps(rule_values),
                         'rule_pass_rates_json': json.dumps({rule: 1-value/max(1,row['rows_in']) for rule,value in rule_values.items()}),
                         'checksum': meta[batch]['checksum']})
-    cleaned.unpersist()
     stocks = read_raw(spark, root, manifest, 'stocks')
     if stocks is not None:
         fields = ('iv_saline', 'ns1_kits', 'ors', 'antimalarials', 'occupied_beds')

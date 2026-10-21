@@ -1,13 +1,13 @@
 # Validation record
 
-Updated 22 October 2026. The Ubuntu WSL1 runtime recovered after the user restarted Windows. The SF=0.01 end-to-end run, complete automated test suite and incremental acceptance checks have since completed. Fresh SF 0.25, 0.5 and 1 experiments are in progress; their results and measured Spark optimisation comparisons remain pending below.
+Updated 22 October 2026. The Ubuntu WSL1 runtime recovered after the user restarted Windows. The SF=0.01 end-to-end run, complete automated test suite and incremental acceptance checks have since completed. Two baseline scaling profiles completed before a performance revision; a fresh, uniform three-scale experiment and measured query comparisons remain pending below.
 
 ## Executed evidence
 
 | Check | Recorded result | Evidence |
 |---|---|---|
 | SF=0.01 `all` run | Passed in **495.682 s**; reference acquisition, generation entry point, Spark pipeline, analytics and export completed | [`results/run_all.json`](../results/run_all.json) |
-| Complete Python suite | **37 passed** in **97.23 s**, one NumPy warning | [`docs/evidence/python-tests.txt`](evidence/python-tests.txt) |
+| Complete Python suite after performance revision | **37 passed** in **127.06 s**, one NumPy warning | [`docs/evidence/python-tests.txt`](evidence/python-tests.txt) |
 | Fourteen-day incremental CLI run | Pipeline, analytics and export passed in **348.137 s** | [`results/run_incremental.json`](../results/run_incremental.json) |
 | Adversarial incremental acceptance | Passed: valid records, late-week recomputation, quarantine, manifest lineage, restored SQL views and exact-repeat no-op | [`results/incremental_acceptance.json`](../results/incremental_acceptance.json) |
 | Actual-release browser/API checks | Passed on the initial exported gold release; linked views, controls, responsive layouts and access scope | [`docs/evidence/dashboard-browser-qa.json`](evidence/dashboard-browser-qa.json), [`browser-run-results.json`](evidence/browser-run-results.json) |
@@ -42,6 +42,12 @@ Automated checks used the actual baseline release with SHA256 `a362ba70111874d39
 Desktop, mobile and district-scope screenshots and initial Spark UI captures are retained in [`docs/evidence/`](evidence/). Initial application captures establish that the application ran; they do not replace pending before/after optimisation measurements. **Two independent non-CS usability sessions have not been conducted.** Automated interaction checks do not establish user comprehension or field usability.
 
 ## Scaling and optimisation evidence pending
+
+The first timing iteration completed SF 0.25 in **1,143.664 s** and SF 0.5 in **1,878.403 s**, with 6,412,101 and 12,858,721 submitted encounters respectively. These measured results are preserved in [`scalability_baseline.json`](../results/scalability_baseline.json). The baseline experiment was intentionally stopped after those two completed profiles, before SF=1 generation, to revise the expensive processing path. It does not establish a full-scale baseline runtime.
+
+The revision replaces a higher-order quality-reason filter with native conditional-array concatenation, caches the encounter ranking shared by quarantine and retained outputs, and counts the published weekly table instead of recomputing it. Rule order, null-as-failure, overlapping violations, payload hashing and revision ordering remain unchanged. All 37 tests passed after the change. The earlier 97.23-second suite output is retained in [`python-tests-baseline.txt`](evidence/python-tests-baseline.txt).
+
+Each revised profile runs in its own Python/JVM process, avoiding a resident gateway heap during subsequent generation. The new primary total includes process startup and shutdown; `orchestrator_seconds` retains the narrower timer used by the baseline. Compare matching timer scopes when computing speedups. Source revision and CPU model are recorded with the revised runs.
 
 The scaling runner creates a fresh timestamped directory for each experiment and separate SF 0.25, 0.5 and 1 profiles. It reuses public downloads, generates a fresh synthetic feed and lake, and rejects an idempotent no-op as a substitute for measured transformations. Runs execute serially on this host.
 

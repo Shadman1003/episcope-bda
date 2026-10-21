@@ -1,8 +1,10 @@
 """Measured scaling and controlled Spark query comparisons (ENG-2/ENG-3)."""
-from copy import copy
 from pathlib import Path
+import json
 import shutil
 import statistics
+import subprocess
+import sys
 import time
 from datetime import datetime, timezone
 from pyspark.sql import functions as F
@@ -18,10 +20,12 @@ def benchmark_optimisations(spark, root):
     results = []
 
     def measure(label, query):
+        spark.sparkContext.setJobGroup(label, label)
         query.explain(mode='formatted')
         (out / f'{label}_plan.txt').write_text(query._jdf.queryExecution().executedPlan().toString(), encoding='utf-8')
         times = []
-        for _ in range(3):
+        for sample in range(3):
+            spark.sparkContext.setJobDescription(f'{label}: sample {sample+1}/3')
             start = time.monotonic()
             value = [r.asDict() for r in query.collect()]
             times.append(time.monotonic()-start)
@@ -44,6 +48,8 @@ def benchmark_optimisations(spark, root):
         results.append(measure('pruning_before_opaque_predicate', encounters.filter(opaque_year('epi_year')).agg(F.count('*').alias('encounters'))))
         results.append(measure('pruning_after_native_predicate', encounters.filter(F.col('epi_year') == year).agg(F.count('*').alias('encounters'))))
     finally:
+        spark.sparkContext.setLocalProperty('spark.jobGroup.id', None)
+        spark.sparkContext.setLocalProperty('spark.job.description', None)
         spark.conf.set('spark.sql.adaptive.enabled', old_aqe)
         spark.conf.set('spark.sql.autoBroadcastJoinThreshold', old_broadcast)
     comparisons = []
@@ -58,7 +64,7 @@ def benchmark_optimisations(spark, root):
 
 
 def run_scaling(args):
-    from orchestration.cli import REPOSITORY, run
+    from orchestration.cli import REPOSITORY
     base = Path(args.root).resolve()
     results = []
     experiment_id = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
@@ -72,18 +78,30 @@ def run_scaling(args):
         cache = base / 'bronze/reference'
         if cache.exists() and not (target / 'bronze/reference').exists():
             shutil.copytree(cache, target / 'bronze/reference')
-        scenario = copy(args)
-        scenario.root, scenario.scale, scenario.action = str(target), scale, 'all'
-        result = run(scenario)
+        # Each profile gets its own Python/JVM lifetime. A stopped SparkContext
+        # otherwise leaves the gateway heap resident during the next generator.
+        started_at = datetime.now(timezone.utc).isoformat()
+        started = time.monotonic()
+        subprocess.run([sys.executable, '-m', 'orchestration.cli', 'all',
+                        '--root', str(target), '--scale', str(scale),
+                        '--seed', str(args.seed)], check=True, cwd=REPOSITORY)
+        process_seconds = time.monotonic() - started
+        completed_at = datetime.now(timezone.utc).isoformat()
+        result = json.loads((profile/'results/run_all.json').read_text(encoding='utf-8'))
         if any(stage.get('result',{}).get('idempotent_noop') for stage in result['stages']):
             raise AssertionError('A scaling run cannot substitute an idempotent no-op for full transformations')
         result['experiment_id'] = experiment_id
         result['measurement'] = 'fresh generated feed and lake; cached public references'
-        result['under_45_minutes'] = result['total_seconds'] <= 2700
+        result['orchestrator_seconds'] = result['total_seconds']
+        result['total_seconds'] = process_seconds
+        result['started_at'], result['completed_at'] = started_at, completed_at
+        result['timer_scope'] = 'child process start through exit, including Python/JVM startup and shutdown; reference cache copy excluded'
+        result['under_45_minutes'] = process_seconds <= 2700
         result['input_bytes'] = sum(p.stat().st_size for p in (target/'incoming').rglob('*') if p.is_file())
         public_keys=('status','started_at','completed_at','total_seconds','hardware','scale','seed',
                      'generated_encounter_rows','generated_unique_encounters','facilities','stock_rows',
-                     'output_bytes','input_bytes','under_45_minutes','experiment_id','measurement')
+                     'output_bytes','input_bytes','under_45_minutes','experiment_id','measurement',
+                     'orchestrator_seconds','timer_scope','source_revision')
         public={key:result.get(key) for key in public_keys}
         public['profile']=str(profile.relative_to(REPOSITORY))
         public['stages']=[{key:stage[key] for key in ('stage','seconds','attempt','status')} for stage in result['stages']]

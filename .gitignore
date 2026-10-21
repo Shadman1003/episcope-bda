@@ -21,6 +21,7 @@ brief-extracted.txt
 results/*
 !results/README.md
 !results/scalability.json
+!results/scalability_baseline.json
 !results/evaluation_summary.json
 !results/forecast_summary.csv
 !results/detection_tradeoff.csv
@@ -29,4 +30,5 @@ results/*
 !results/performance/
 results/performance/*
 !results/performance/optimisations.json
+!results/performance/pipeline_comparison.json
 !results/performance/*_plan.txt

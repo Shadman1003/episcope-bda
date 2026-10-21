@@ -24,6 +24,8 @@ async function verifyNationalPolicyPlots(page,{screenshotDir}={}){
   await page.locator('#district').selectOption('0');
   const diseaseCount=await page.locator('.disease-tab').count();
   await page.locator('.disease-tab').nth((controls.disease+1)%diseaseCount).click();
+  const resourceCount=await page.locator('#resource option').count();
+  if(resourceCount>1)await page.locator('#resource').selectOption(String((Number(controls.resource)+1)%resourceCount));
   assert.deepEqual(await snapshot(),allCoordinates,'National policy coordinates followed district/disease/resource filters');
   await page.locator('#heatmap rect.cell').nth(80).focus();await page.keyboard.press('Enter');
   assert.deepEqual(await snapshot(),allCoordinates,'National policy coordinates followed historical date selection');

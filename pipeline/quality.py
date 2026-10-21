@@ -39,8 +39,12 @@ def clean_encounters(raw, facilities, salt):
         'invalid_admission_flag': ~F.lower('admitted').isin('true', 'false', '1', '0'),
         'invalid_outcome': ~F.lower('outcome').isin('recovered', 'died', 'death', 'ongoing', 'referred', 'unknown'),
     }
-    errors = [F.when(F.coalesce(condition, F.lit(True)), F.lit(name)) for name, condition in rules.items()]
-    x = x.withColumn('reason_codes', F.filter(F.array(*errors), lambda item: item.isNotNull()))
+    # Native conditional arrays preserve rule order and null-as-failure without
+    # the higher-order ArrayFilter code-generation fallback in Spark 3.5.
+    empty_codes = F.array().cast('array<string>')
+    errors = [F.when(F.coalesce(condition, F.lit(True)), F.array(F.lit(name)))
+              .otherwise(empty_codes) for name, condition in rules.items()]
+    x = x.withColumn('reason_codes', F.concat(*errors) if errors else empty_codes)
     x = (x.withColumn('patient_hash', F.sha2(F.concat(F.lit(salt), F.lit(':'), F.col('patient_id')), 256))
          .drop('patient_id', 'age_years')
          .withColumn('age_band', F.when(F.col('_age') < 5, '00-04')
