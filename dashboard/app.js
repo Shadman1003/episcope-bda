@@ -41,6 +41,12 @@ function districtMatches(index){return state.district==="all"||index===Number(st
 function selectedObserved(){return data.observed.filter(r=>r[1]===state.disease&&districtMatches(r[0])&&inRange(weeks[r[2]]));}
 function selectedForecasts(){return data.forecasts.filter(r=>r[1]===state.disease&&districtMatches(r[0]));}
 function currentSignals(){return data.signals.filter(r=>r[1]===state.disease&&districtMatches(r[0])&&inRange(parseDate(r[2])));}
+function signalReviewFlag(signal){
+  if(!signal||!Number.isFinite(signal[6])||!signal[8]||signal[9])return false;
+  // The official 3σ decision precedes publication rounding of its score.
+  if(state.threshold===3&&typeof signal[7]==="boolean")return signal[7];
+  return signal[6]>state.threshold;
+}
 function districtName(){return state.district==="all"?"All districts":data.districts[Number(state.district)].district_name;}
 function selectedPopulation(){return d3.sum(data.districts.filter((_,i)=>districtMatches(i)),r=>r.population);}
 function sumKnown(rows,position){const known=rows.filter(r=>r[position]!==null);return known.length?d3.sum(known,r=>r[position]):null;}
@@ -53,7 +59,7 @@ function scaleLegend(selector, scale, max, title){
   root.append("span").text(title);
   const svg=root.append("svg").attr("width",150).attr("height",23).attr("viewBox","0 0 150 23");
   d3.range(60).forEach(i=>svg.append("rect").attr("x",i*2).attr("y",1).attr("width",2).attr("height",6).attr("fill",scale(max*i/59)));
-  svg.append("text").attr("x",0).attr("y",20).text("0");svg.append("text").attr("x",120).attr("y",20).attr("text-anchor","end").text(d3.format(".2~s")(max));
+  svg.append("text").attr("x",0).attr("y",20).text("0");svg.append("text").attr("x",120).attr("y",20).attr("text-anchor","end").text(d3.format(max<1000?".3~g":".2~s")(max));
   root.append("span").text("▧ Withheld / no release");
 }
 
@@ -62,8 +68,8 @@ function renderKPIs(){
   const known=observed.filter(r=>r[3]!==null), missing=observed.length-known.length;
   $("#kpi-cases").textContent=known.length?fmt.format(d3.sum(known,r=>r[3])):"—";
   $("#kpi-period").textContent=`${shortDate(state.range[0])} – ${dateFormat(state.range[1])} · ${missing?missing+" cells withheld":"five-count bins"}`;
-  $("#kpi-alerts").textContent=fmt.format(new Set(currentSignals().filter(r=>r[6]!==null&&r[6]>=state.threshold&&r[8]).map(r=>r[0])).size);
-  $("#kpi-threshold").textContent=currentSignals().length?`EARS-C2 ≥ ${state.threshold.toFixed(1)}σ · ${data.signal_as_of||data.as_of}`:"Latest signals lie outside selected dates";
+  $("#kpi-alerts").textContent=fmt.format(new Set(currentSignals().filter(signalReviewFlag).map(r=>r[0])).size);
+  $("#kpi-threshold").textContent=currentSignals().length?`${state.threshold===3?"Official EARS-C2":"Approx. what-if"} > ${state.threshold.toFixed(1)}σ · ${data.signal_as_of||data.as_of}`:"Latest signals lie outside selected dates";
   const quality=d3.mean(observed,r=>r[4]);$("#kpi-quality").textContent=quality===undefined?"—":d3.format(".0%")(quality);
   const predicted=sumKnown(forecasts,4);$("#kpi-forecast").textContent=predicted===null?"—":fmt.format(predicted);
   const lower=sumKnown(forecasts,5),upper=sumKnown(forecasts,6);
@@ -91,11 +97,11 @@ function renderMap(){
   if(!data.geography.features.length){svg.append("text").attr("x",width/2).attr("y",height/2).attr("text-anchor","middle").text("District geography is not available in this release.");return;}
   const projection=d3.geoMercator().fitExtent([[25,10],[width-25,height-12]],data.geography),path=d3.geoPath(projection);
   svg.selectAll("path.district-shape").data(data.geography.features).join("path").attr("class",f=>"district-shape"+(String(byId.get(f.properties.district_id)?.index)===state.district?" selected":"")).attr("d",path).attr("fill",f=>{const r=byId.get(f.properties.district_id);return r?.incidence===null?"url(#suppressed-map)":color(r?.incidence||0);}).attr("opacity",f=>state.district==="all"||String(byId.get(f.properties.district_id)?.index)===state.district?1:.4).attr("tabindex",0).attr("role","button").attr("aria-label",f=>`Select ${byId.get(f.properties.district_id)?.district.district_name||"district"}`).on("click",(_,f)=>changeDistrict(byId.get(f.properties.district_id).index)).on("keydown",(event,f)=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();changeDistrict(byId.get(f.properties.district_id).index);}}).on("pointermove",(event,f)=>{
-    const r=byId.get(f.properties.district_id);tooltip(event,r.district.district_name,[r.incidence===null?"Case cells withheld":`${d3.format(".1f")(r.incidence)} released cases / 100,000`,`${fmt.format(r.cases)} visible cases · ${r.withheld} withheld weeks`,`${d3.format(".0%")(r.quality||0)} mean reporting completeness`,"Select to coordinate all views"]);
+    const r=byId.get(f.properties.district_id);tooltip(event,r.district.district_name,[r.incidence===null?"Case cells withheld":`${d3.format(".1f")(r.incidence)} released cases / 100,000`,`${fmt.format(r.cases)} visible cases · ${r.withheld} withheld weeks`,`${d3.format(".0%")(r.quality||0)} relative reporting activity`,"Select to coordinate all views"]);
   }).on("pointerleave",hideTip);
-  const alerted=new Set(currentSignals().filter(r=>r[6]!==null&&r[6]>=state.threshold&&r[8]).map(r=>r[0]));
+  const alerted=new Set(currentSignals().filter(signalReviewFlag).map(r=>r[0]));
   svg.selectAll("circle.alert-marker").data(data.geography.features.filter(f=>alerted.has(byId.get(f.properties.district_id)?.index))).join("circle").attr("class","alert-marker").attr("cx",f=>path.centroid(f)[0]).attr("cy",f=>path.centroid(f)[1]).attr("r",4.5);
-  scaleLegend("#map-legend",color,max,"Incidence");d3.select("#map-legend").append("span").text("● Daily review signal");
+  scaleLegend("#map-legend",color,max,"Incidence");d3.select("#map-legend").append("span").text(state.threshold===3?"● Daily review signal":"● Approx. what-if signal");
   $("#map-caption").textContent=`${shortDate(state.range[0])}–${dateFormat(state.range[1])} · visible cells only`;
 }
 
@@ -188,29 +194,104 @@ function renderAllocation(){
   $("#allocation-caption").textContent=`${label(data.resources[state.resource]||"Resource")} · ${data.forecast_origin||data.as_of} planning origin · ${rows.length<known.length?"top seven by net need":"selected scope"}`;
 }
 
+function nearestC2Metric(){
+  return (data.tradeoff||[]).filter(r=>r.method==="EARS_C2"&&Number.isFinite(r.threshold_multiplier)&&(r.evaluation_period||"all")==="all").sort((a,b)=>Math.abs(a.threshold_multiplier-state.threshold)-Math.abs(b.threshold_multiplier-state.threshold)||a.threshold_multiplier-b.threshold_multiplier)[0];
+}
+
 function renderWarnings(){
   const periods=d3.group(selectedObserved(),r=>r[0]),signals=new Map(currentSignals().map(r=>[r[0],r]));
   const rows=data.districts.map((district,index)=>({district,index,signal:signals.get(index),period:periods.get(index)||[]})).filter(r=>districtMatches(r.index)).sort((a,b)=>(b.signal?.[6]??-Infinity)-(a.signal?.[6]??-Infinity));
   const body=d3.select("#warning-body");body.selectAll("*").remove();
   rows.forEach(row=>{
-    const signal=row.signal,valid=signal&&signal[6]!==null,complete=signal?.[8],alert=valid&&complete&&signal[6]>=state.threshold,missing=row.period.some(r=>r[3]===null),quality=d3.mean(row.period,r=>r[4]);
+    const signal=row.signal,valid=signal&&signal[6]!==null,complete=signal?.[8],alert=signalReviewFlag(signal),missing=row.period.some(r=>r[3]===null),quality=d3.mean(row.period,r=>r[4]);
     const tr=body.append("tr").attr("data-district",row.index).attr("tabindex",0).attr("aria-label",`Select ${row.district.district_name}`).on("click",()=>changeDistrict(row.index)).on("keydown",event=>{if(event.key==="Enter")changeDistrict(row.index);});
     tr.append("td").text(row.district.district_name);
     tr.append("td").append("span").attr("class","badge "+(alert?"alert":!valid||!complete?"missing":"quiet")).text(alert?"Review signal":!signal?"Outside dates":signal[9]?"Backfill pause":!valid?"Withheld":!complete?"Incomplete":"Monitor");
     const score=tr.append("td");score.append("span").text(valid?d3.format(".2f")(signal[6]):"—");if(valid)score.append("span").attr("class","score-bar").append("i").style("width",Math.min(100,Math.max(0,signal[6])*10)+"%");
     const known=sumKnown(row.period,3);tr.append("td").text(known===null?"Withheld":fmt.format(known)+(missing?" + withheld":""));
     tr.append("td").text(quality===undefined?"—":d3.format(".0%")(quality));
-    tr.append("td").text(signal?.[9]?"Suspected reporting backfill: alert temporarily withheld":!complete&&signal?"Verify reporting completeness":alert?"Verify reports; review local readiness":!valid?"Use released weekly pattern; verify source":"Continue routine surveillance");
+    tr.append("td").text(signal?.[9]?"Suspected reporting backfill: alert temporarily withheld":!complete&&signal?"Verify reporting activity":alert?"Verify reports; review local readiness":!valid?"Use released weekly pattern; verify source":"Continue routine surveillance");
   });
-  const metric=data.tradeoff.filter(r=>r.method==="EARS_C2").sort((a,b)=>Math.abs(a.threshold_multiplier-state.threshold)-Math.abs(b.threshold_multiplier-state.threshold))[0];
-  $("#warning-caption").textContent=metric?`Nearest evaluated multiplier ${metric.threshold_multiplier}: sensitivity ${metric.sensitivity===null?"unavailable":d3.format(".0%")(metric.sensitivity)}, false alerts ${metric.false_alerts_per_district_year===null?"unavailable":d3.format(".2f")(metric.false_alerts_per_district_year)} / district-year. Signals require verification.`:"Signals support review; they are not outbreak diagnoses. Small daily numerators or baselines suppress the score.";
+  const metric=nearestC2Metric();
+  const decisionNote=state.threshold===3?"3σ flags use the released detector decision before score rounding.":"What-if flags are approximate comparisons of rounded published scores.";
+  $("#warning-caption").textContent=(metric?`Nearest evaluated multiplier ${metric.threshold_multiplier}: sensitivity ${metric.sensitivity===null?"unavailable":d3.format(".0%")(metric.sensitivity)}, false alerts ${metric.false_alerts_per_district_year===null?"unavailable":d3.format(".2f")(metric.false_alerts_per_district_year)} / district-year. Signals require verification.`:"Signals support review; they are not outbreak diagnoses. Small daily numerators or baselines suppress the score.")+" "+decisionNote;
+}
+
+function evaluationFrame(selector,title,xDomain,yDomain,xLabel,yLabel,xFormat,yFormat){
+  const height=260,{svg,width}=svgFor(selector,height),margin={top:17,right:20,bottom:48,left:53};
+  svg.attr("role","group").attr("aria-label",title);
+  svg.append("title").text(title);
+  const x=d3.scaleLinear().domain(xDomain).nice().range([margin.left,width-margin.right]);
+  const y=d3.scaleLinear().domain(yDomain).nice().range([height-margin.bottom,margin.top]);
+  svg.append("g").attr("class","grid").attr("transform",`translate(${margin.left},0)`).call(d3.axisLeft(y).ticks(4).tickSize(-(width-margin.left-margin.right)).tickFormat(""));
+  svg.append("g").attr("class","axis").attr("transform",`translate(0,${height-margin.bottom})`).call(d3.axisBottom(x).ticks(width<380?3:5).tickFormat(xFormat).tickSizeOuter(0));
+  svg.append("g").attr("class","axis").attr("transform",`translate(${margin.left},0)`).call(d3.axisLeft(y).ticks(4).tickFormat(yFormat).tickSizeOuter(0));
+  svg.append("text").attr("class","evaluation-axis-label").attr("x",(margin.left+width-margin.right)/2).attr("y",height-9).attr("text-anchor","middle").text(xLabel);
+  svg.append("text").attr("class","evaluation-axis-label").attr("transform","rotate(-90)").attr("x",-(margin.top+height-margin.bottom)/2).attr("y",13).attr("text-anchor","middle").text(yLabel);
+  return {svg,x,y};
+}
+
+function evaluationPointEvents(points,describe){
+  points.attr("tabindex",0).attr("role","img").attr("aria-label",r=>{const text=describe(r);return text.title+". "+text.lines.join(". ");})
+    .on("pointermove",(event,r)=>{const text=describe(r);tooltip(event,text.title,text.lines);})
+    .on("pointerleave",hideTip).on("blur",hideTip)
+    .on("focus",function(event,r){const bounds=this.getBoundingClientRect(),text=describe(r);tooltip({clientX:bounds.left+bounds.width/2,clientY:bounds.top+bounds.height/2},text.title,text.lines);})
+    .on("keydown",event=>{if(event.key==="Escape")hideTip();});
+}
+
+function renderDetectionPolicy(){
+  const rows=(data.tradeoff||[]).filter(r=>(r.evaluation_period||"all")==="all"&&["EARS_C2","CUSUM"].includes(r.method)&&Number.isFinite(r.sensitivity)&&Number.isFinite(r.false_alerts_per_district_year)&&Number.isFinite(r.threshold_multiplier)&&r.sensitivity>=0&&r.sensitivity<=1&&r.false_alerts_per_district_year>=0);
+  if(!rows.length){d3.select("#detection-policy").selectAll("*").remove();d3.select("#detection-policy").append("p").attr("class","empty").text("No released national detection evaluation is available.");$("#detection-policy-note").textContent="Unavailable metrics are not plotted.";return;}
+  const nearest=nearestC2Metric(),isSelected=r=>r===nearest;
+  const {svg,x,y}=evaluationFrame("#detection-policy","National teaching backtest: event sensitivity versus false alerts per district-year for EARS-C2 and CUSUM. Points report median actual issue delay among detected events.",[0,Math.max(1,d3.max(rows,r=>r.false_alerts_per_district_year))*1.06],[0,1],"False alerts / district-year","Event sensitivity",d3.format(".3~g"),d3.format(".0%"));
+  const color=method=>method==="EARS_C2"?palette.teal:palette.purple;
+  for(const [method,group] of d3.group(rows,r=>r.method)){
+    svg.append("path").datum(group.slice().sort((a,b)=>a.false_alerts_per_district_year-b.false_alerts_per_district_year)).attr("class","evaluation-curve").attr("fill","none").attr("stroke",color(method)).attr("stroke-width",1.7).attr("stroke-dasharray",method==="CUSUM"?"5 3":null).attr("d",d3.line().x(r=>x(r.false_alerts_per_district_year)).y(r=>y(r.sensitivity)));
+  }
+  const points=svg.selectAll("g.detection-point").data(rows.slice().sort((a,b)=>a.method.localeCompare(b.method)||a.threshold_multiplier-b.threshold_multiplier)).join("g").attr("class",r=>"evaluation-point detection-point"+(isSelected(r)?" selected":"")).attr("data-method",r=>r.method).attr("data-threshold",r=>r.threshold_multiplier).attr("aria-current",r=>isSelected(r)?"true":null).attr("transform",r=>`translate(${x(r.false_alerts_per_district_year)},${y(r.sensitivity)})`);
+  points.append("circle").attr("r",9).attr("fill","transparent");
+  points.filter(isSelected).append("circle").attr("class","evaluation-selection-ring").attr("r",7.5).attr("fill","none").attr("stroke",palette.orange).attr("stroke-width",2);
+  points.append("path").attr("d",r=>d3.symbol().type(r.method==="CUSUM"?d3.symbolDiamond:d3.symbolCircle).size(32)()).attr("fill",r=>color(r.method)).attr("stroke","white").attr("stroke-width",1);
+  evaluationPointEvents(points,r=>({title:(r.method==="EARS_C2"?"EARS-C2":"CUSUM")+" · multiplier "+d3.format(".1f")(r.threshold_multiplier),lines:["Sensitivity: "+d3.format(".1%")((r.sensitivity)),"False alerts: "+d3.format(".2f")(r.false_alerts_per_district_year)+" / district-year","Median issue delay (detected events): "+(Number.isFinite(r.median_days_to_detection)?d3.format(".1f")(r.median_days_to_detection)+" days":"unavailable"),"Pooled national teaching backtest · all diseases and periods"]}));
+  points.filter(isSelected).raise();
+  $("#detection-policy-note").textContent=nearest&&rows.includes(nearest)?`Ring: nearest evaluated EARS-C2 multiplier ${d3.format(".1f")(nearest.threshold_multiplier)} to the ${state.threshold.toFixed(1)}σ control · sensitivity ${d3.format(".1%")(nearest.sensitivity)} · false alerts ${d3.format(".2f")(nearest.false_alerts_per_district_year)} / district-year.`:"The nearest EARS-C2 setting has no released coordinates. CUSUM settings use their own evaluated multipliers.";
+}
+
+function renderAllocationPolicy(){
+  const rows=(data.scenarios||[]).filter(r=>Number.isFinite(r.budget)&&Number.isFinite(r.equity_floor)&&Number.isFinite(r.min_population_ratio)&&Number.isFinite(r.benefit_vs_baseline_pct)&&r.min_population_ratio>=0);
+  const legend=d3.select("#allocation-policy-legend");legend.selectAll("*").remove();
+  if(!rows.length){d3.select("#allocation-policy").selectAll("*").remove();d3.select("#allocation-policy").append("p").attr("class","empty").text("No released national allocation evaluation is available.");$("#allocation-policy-note").textContent="Unavailable metrics are not plotted.";return;}
+  const budgetValues=Array.from(new Set(rows.map(r=>r.budget))).sort(d3.ascending),colors=["#4277a5","#b37735","#55976f","#9a70a6","#3e9296","#ba615b"],dashes=[null,"6 3","2 3","8 3 2 3","1 3","10 3"];
+  const color=d3.scaleOrdinal(budgetValues,colors),dash=budget=>dashes[budgetValues.indexOf(budget)%dashes.length];
+  const low=Math.min(0,d3.min(rows,r=>r.benefit_vs_baseline_pct)),high=Math.max(0,d3.max(rows,r=>r.benefit_vs_baseline_pct));
+  const {svg,x,y}=evaluationFrame("#allocation-policy","National resource planning scenarios: reduction in weighted unmet need versus population allocation at the same budget, against minimum district-resource allocation share divided by population share. Each budget line connects increasing equity floors.",[0,Math.max(1,d3.max(rows,r=>r.min_population_ratio))*1.03],[low<0?low*1.1:0,high>0?high*1.08:low<0?0:1],"Minimum allocation share / population share","Weighted unmet need reduction (%)",d3.format(".2~f"),value=>d3.format(".0f")(value));
+  for(const [budget,group] of Array.from(d3.group(rows,r=>r.budget)).sort((a,b)=>a[0]-b[0])){
+    svg.append("path").datum(group.slice().sort((a,b)=>a.equity_floor-b.equity_floor)).attr("class","evaluation-curve allocation-policy-curve").attr("data-budget",budget).attr("fill","none").attr("stroke",color(budget)).attr("stroke-width",Math.abs(budget-state.budget)<.005?2.4:1.4).attr("stroke-dasharray",dash(budget)).attr("opacity",Math.abs(budget-state.budget)<.005?1:.6).attr("d",d3.line().x(r=>x(r.min_population_ratio)).y(r=>y(r.benefit_vs_baseline_pct)));
+    const item=legend.append("span"),swatch=item.append("svg").attr("width",19).attr("height",10).attr("aria-hidden","true");swatch.append("line").attr("x1",0).attr("x2",18).attr("y1",5).attr("y2",5).attr("stroke",color(budget)).attr("stroke-width",2).attr("stroke-dasharray",dash(budget));item.append("span").text(compact.format(budget)+" units");
+  }
+  const isSelected=r=>Math.abs(r.budget-state.budget)<.005&&Math.abs(r.equity_floor-state.equity)<.0001;
+  const points=svg.selectAll("g.allocation-policy-point").data(rows.slice().sort((a,b)=>a.budget-b.budget||a.equity_floor-b.equity_floor)).join("g").attr("class",r=>"evaluation-point allocation-policy-point"+(isSelected(r)?" selected":"")).attr("data-budget",r=>r.budget).attr("data-equity",r=>r.equity_floor).attr("aria-current",r=>isSelected(r)?"true":null).attr("transform",r=>`translate(${x(r.min_population_ratio)},${y(r.benefit_vs_baseline_pct)})`);
+  points.append("circle").attr("r",9).attr("fill","transparent");
+  points.filter(isSelected).append("circle").attr("class","evaluation-selection-ring").attr("r",7.5).attr("fill","none").attr("stroke",palette.orange).attr("stroke-width",2);
+  points.append("circle").attr("r",3).attr("fill",r=>color(r.budget)).attr("stroke","white").attr("stroke-width",1);
+  const benefit=value=>d3.format(".1f")(Math.abs(value)<.00001?0:value)+"%";
+  evaluationPointEvents(points,r=>({title:"Budget "+d3.format(",.2f")(r.budget)+" units · equity floor α "+d3.format(".0%")(r.equity_floor),lines:["Weighted unmet need reduction: "+benefit(r.benefit_vs_baseline_pct),"Minimum allocation / population share: "+d3.format(".3f")(r.min_population_ratio)+"×","Latest national plan · all resources","Same-budget population baseline; overlapping points retain their actual values"]}));
+  points.filter(isSelected).raise();
+  const selected=rows.find(isSelected);$("#allocation-policy-note").textContent=selected?`Ring: budget ${d3.format(",.2f")(selected.budget)} units · equity floor ${d3.format(".0%")(selected.equity_floor)} · minimum share ratio ${d3.format(".3f")(selected.min_population_ratio)}× · weighted unmet need reduction ${benefit(selected.benefit_vs_baseline_pct)}.`:"The current budget and equity setting has no released evaluation coordinates.";
+}
+
+function renderPolicyChecks(){
+  const panel=$("#policy-checks");panel.hidden=data.access.role!=="national"||!((data.tradeoff||[]).length||(data.scenarios||[]).length);
+  if(panel.hidden){d3.selectAll("#detection-policy > *, #allocation-policy > *, #allocation-policy-legend > *").remove();$("#detection-policy-note").textContent="";$("#allocation-policy-note").textContent="";return;}
+  if(!panel.open)return;
+  renderDetectionPolicy();renderAllocationPolicy();
 }
 
 function render(){
   if(!data)return;hideTip();
   d3.selectAll(".disease-tab").classed("active",(_,i)=>i===state.disease).attr("aria-pressed",(_,i)=>String(i===state.disease));
   $("#budget-value").textContent=compact.format(state.budget)+" units";$("#equity-value").textContent=d3.format(".0%")(state.equity);$("#threshold-value").textContent=state.threshold.toFixed(1)+"σ";
-  renderKPIs();renderMap();renderSeries();renderHeatmap();renderAllocation();renderWarnings();
+  renderKPIs();renderMap();renderSeries();renderHeatmap();renderAllocation();renderWarnings();renderPolicyChecks();
   // A read-only diagnostic hook helps automated integration checks inspect the
   // actual linked UI state without exposing any additional source data.
   window.epiScopeState=Object.freeze({district:state.district,disease:data.diseases[state.disease],range:state.range.map(d=>d.toISOString().slice(0,10)),threshold:state.threshold,budget:state.budget,equity:state.equity,scope:data.access.role});
@@ -259,6 +340,7 @@ async function load(){
 }
 $("#access-button").onclick=()=>$("#token-dialog").showModal();
 $("#token-submit").onclick=()=>{const token=$("#token-input").value.trim();if(token)sessionStorage.setItem("episcope-token",token);else sessionStorage.removeItem("episcope-token");$("#token-input").value="";load();};
+$("#policy-checks").addEventListener("toggle",()=>{if(data)renderPolicyChecks();});
 window.addEventListener("resize",()=>{clearTimeout(renderTimer);renderTimer=setTimeout(render,150);});
 document.addEventListener("scroll",hideTip,{passive:true});
 load();

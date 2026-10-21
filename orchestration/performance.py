@@ -4,6 +4,7 @@ from pathlib import Path
 import shutil
 import statistics
 import time
+from datetime import datetime, timezone
 from pyspark.sql import functions as F
 from pipeline.common import json_write
 
@@ -60,8 +61,9 @@ def run_scaling(args):
     from orchestration.cli import REPOSITORY, run
     base = Path(args.root).resolve()
     results = []
+    experiment_id = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
     for scale in (.25, .5, 1.):
-        profile = REPOSITORY / 'runs' / ('sf' + str(scale).replace('.', '_'))
+        profile = REPOSITORY / 'runs' / experiment_id / ('sf' + str(scale).replace('.', '_'))
         target = profile / 'data'
         target.mkdir(parents=True, exist_ok=True)
         if not (target / 'reference').exists():
@@ -73,8 +75,18 @@ def run_scaling(args):
         scenario = copy(args)
         scenario.root, scenario.scale, scenario.action = str(target), scale, 'all'
         result = run(scenario)
+        if any(stage.get('result',{}).get('idempotent_noop') for stage in result['stages']):
+            raise AssertionError('A scaling run cannot substitute an idempotent no-op for full transformations')
+        result['experiment_id'] = experiment_id
+        result['measurement'] = 'fresh generated feed and lake; cached public references'
         result['under_45_minutes'] = result['total_seconds'] <= 2700
         result['input_bytes'] = sum(p.stat().st_size for p in (target/'incoming').rglob('*') if p.is_file())
-        results.append(result)
-        json_write(REPOSITORY / 'results/scalability.json', {'runs':results})
+        public_keys=('status','started_at','completed_at','total_seconds','hardware','scale','seed',
+                     'generated_encounter_rows','generated_unique_encounters','facilities','stock_rows',
+                     'output_bytes','input_bytes','under_45_minutes','experiment_id','measurement')
+        public={key:result.get(key) for key in public_keys}
+        public['profile']=str(profile.relative_to(REPOSITORY))
+        public['stages']=[{key:stage[key] for key in ('stage','seconds','attempt','status')} for stage in result['stages']]
+        results.append(public)
+        json_write(REPOSITORY / 'results/scalability.json', {'experiment_id':experiment_id,'runs':results})
     return results

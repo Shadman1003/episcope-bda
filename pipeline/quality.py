@@ -10,7 +10,11 @@ def clean_encounters(raw, facilities, salt):
     for column in ENCOUNTER_COLUMNS:
         if column not in raw.columns:
             raw = raw.withColumn(column, F.lit(None).cast('string'))
-    raw = raw.select(*ENCOUNTER_COLUMNS, '_batch_id', '_loaded_at', '_source_file')
+    if 'revision' not in raw.columns:
+        raw = raw.withColumn('revision', F.lit('0'))
+    raw = raw.select(*ENCOUNTER_COLUMNS, 'revision', '_batch_id', '_loaded_at', '_source_file')
+    raw = raw.withColumn('_payload_hash', F.sha2(F.to_json(F.struct(*ENCOUNTER_COLUMNS, 'revision')), 256))
+    raw = raw.withColumn('revision', F.coalesce(F.col('revision').cast('long'), F.lit(0)))
     for c in ENCOUNTER_COLUMNS:
         raw = raw.withColumn(c, F.trim(F.col(c).cast('string')))
     refs = facilities.select('facility_id', 'district_id').dropDuplicates(['facility_id'])

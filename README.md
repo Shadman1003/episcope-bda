@@ -83,7 +83,7 @@ See `generator/README.md` for data provenance, `docs/architecture.md` for design
 
 ```bash
 bash run_wsl.sh benchmark
-bash run_wsl.sh optimisations --root runs/sf1_0/data
+bash run_wsl.sh optimisations --root runs/EXPERIMENT_ID/sf1_0/data
 ```
 
 The scaling runner executes SF in `{0.25,0.5,1}`, records actual stage runtime, output bytes and hardware, and records whether each run took at most 45 minutes. It does not replace execution with an extrapolated number. Generated profiles are kept separately in `runs/`. The controlled optimisation study compares a merge join with a broadcast join, and an opaque date predicate with native partition pruning; plans, three-query timings and matching results are retained. Query speedup is not a claim of equal whole-pipeline speedup.

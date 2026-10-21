@@ -77,3 +77,39 @@ def test_reordered_drop_columns(spark,tmp_path):
     manifest,_=ingest(tmp_path)
     rows={r.encounter_id:r.age_years for r in read_raw(spark,tmp_path,manifest,'encounters').collect()}
     assert rows=={'E1':'30','E2':'40'}
+
+
+def test_registry_rejects_null_capacity_and_ambiguous_keys(spark):
+    from pipeline.run import validate_facilities
+    columns='facility_id string, district_id string, beds int, icu_beds int'
+    valid=spark.createDataFrame([('F1','01',20,2)],columns)
+    validate_facilities(valid)
+    for rows in ([('F1','01',None,2)],[('F1',None,20,2)],[('F1','01',20,21)],[('F1','01',20,2),('F1','02',20,2)]):
+        with pytest.raises(ValueError):
+            validate_facilities(spark.createDataFrame(rows,columns))
+
+
+def test_drop_contracts_allow_pretty_json_arrays_and_sidecar_metadata(tmp_path):
+    from pipeline.run import ingest
+    incoming=tmp_path/'incoming'
+    incoming.mkdir();(tmp_path/'reference').mkdir()
+    (incoming/'arbitrary-one.json').write_text(json.dumps([fixture_row()],indent=2))
+    (incoming/'arbitrary-two.json').write_text(json.dumps({'facility_id':'F1','date':'2026-01-14','occupied_beds':5,'iv_saline':100},indent=2))
+    (incoming/'inline-first-field.json').write_text('{ "encounter_id":"E2",\n "patient_id":"SYNTH2"\n}')
+    (incoming/'sidecar.json').write_text(json.dumps({'synthetic':True,'files':{'arbitrary-one.json':'abc'}}))
+    manifest,new=ingest(tmp_path)
+    assert len(new)==3
+    assert {row['source'] for row in manifest}=={'encounters','stocks'}
+    assert all(row['json_multiline'] for row in manifest)
+
+
+def test_gold_records_link_to_immutable_bronze_manifest(spark,tmp_path):
+    from pipeline.common import publish
+    (tmp_path/'bronze').mkdir()
+    batches=[{'batch_id':'a'*20,'source':'encounters','checksum':'a'*64,'path':'bronze/encounters/file.csv'}]
+    (tmp_path/'bronze/manifest.json').write_text(json.dumps(batches))
+    path=publish(spark.createDataFrame([('01',15)],['district_id','cases']),tmp_path,'gold','lineage_test')
+    row=spark.read.parquet(str(path)).first()
+    lineage=json.loads((tmp_path/'lake/lineage'/(row.lineage_id+'.json')).read_text())
+    assert lineage['bronze_batches']==batches
+    assert lineage['granularity']=='conservative run-level dependencies'

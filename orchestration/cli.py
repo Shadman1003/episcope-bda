@@ -40,6 +40,7 @@ def run(args):
     output = root.parent / 'results'
     log = []
     start = time.monotonic()
+    run_started = datetime.now(timezone.utc).isoformat()
     spark = None
     try:
         if args.action == 'all':
@@ -64,8 +65,11 @@ def run(args):
         if args.action == 'optimisations':
             from orchestration.performance import benchmark_optimisations
             stage('spark_optimisations', lambda: benchmark_optimisations(spark, root), log)
-        result = {'status': 'ok', 'started_at': datetime.now(timezone.utc).isoformat(), 'total_seconds': time.monotonic()-start,
-                  'hardware': hardware(), 'scale': args.scale, 'seed': args.seed, 'root': str(root), 'stages': log,
+        generation = json.loads((root/'generation_manifest.json').read_text()) if (root/'generation_manifest.json').exists() else {}
+        result = {'status': 'ok', 'started_at': run_started, 'completed_at':datetime.now(timezone.utc).isoformat(), 'total_seconds': time.monotonic()-start,
+                  'hardware': hardware(), 'scale': generation.get('scale'), 'seed': generation.get('seed'), 'root': str(root), 'stages': log,
+                  'generated_encounter_rows':generation.get('encounter_rows'), 'generated_unique_encounters':generation.get('unique_encounters'),
+                  'facilities':generation.get('facilities'), 'stock_rows':sum(row['rows'] for row in generation.get('stock_files',[])),
                   'output_bytes': tree_size(root / 'lake'), 'application_id': spark.sparkContext.applicationId}
         json_write(output / f'run_{args.action}.json', result)
         return result

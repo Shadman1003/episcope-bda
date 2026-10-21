@@ -48,7 +48,7 @@ def safe_ratio(value, precision=3):
 
 def displayed_alert(score, threshold_multiplier, complete=True):
     """Signals may be recomputed only for complete, non-suppressed releases."""
-    return bool(complete and score is not None and score >= threshold_multiplier)
+    return bool(complete and score is not None and score > threshold_multiplier)
 
 
 def quality_release(row):

@@ -40,7 +40,7 @@ def make_spark(root, app='EpiScope', cores=None):
     scratch.mkdir(exist_ok=True)
     os.environ.setdefault('SPARK_LOCAL_IP', '127.0.0.1')
     os.environ.setdefault('PYSPARK_PYTHON', os.sys.executable)
-    return (SparkSession.builder.appName(app)
+    session = (SparkSession.builder.appName(app)
             .master(os.getenv('EPISCOPE_SPARK_MASTER', f'local[{cores or 2}]'))
             .config('spark.driver.memory', os.getenv('EPISCOPE_DRIVER_MEMORY', '1g'))
             .config('spark.sql.shuffle.partitions', os.getenv('EPISCOPE_SHUFFLE_PARTITIONS', '8'))
@@ -59,10 +59,34 @@ def make_spark(root, app='EpiScope', cores=None):
             .config('spark.ui.retainedStages', '50')
             .config('spark.driver.bindAddress', '127.0.0.1')
             .getOrCreate())
+    # Recreate the SQL catalog from persisted external Parquet tables.
+    database = 'episcope_' + hashlib.sha256(str(root).encode()).hexdigest()[:10]
+    session.sql(f'CREATE DATABASE IF NOT EXISTS {database}')
+    for layer in ('silver','gold'):
+        folder=root/'lake'/layer
+        if not folder.exists():
+            continue
+        for table in sorted(folder.iterdir()):
+            if not table.is_dir() or table.name.startswith('.') or not any(table.rglob('*.parquet')):
+                continue
+            escaped=str(table).replace("'","''")
+            session.sql(f"CREATE TABLE IF NOT EXISTS {database}.{layer}_{table.name} USING PARQUET LOCATION '{escaped}'")
+            session.read.parquet(str(table)).createOrReplaceTempView(f'{layer}_{table.name}')
+    return session
 
 
 def publish(df, root, layer, table, partitions=()):
     root = Path(root).resolve()
+    if layer == 'gold' and (root / 'bronze/manifest.json').exists():
+        from pyspark.sql import functions as F
+        records = json.loads((root / 'bronze/manifest.json').read_text(encoding='utf-8'))
+        canonical = json.dumps(records, sort_keys=True, separators=(',', ':'))
+        lineage_id = hashlib.sha256(canonical.encode()).hexdigest()
+        lineage = root / 'lake/lineage' / (lineage_id + '.json')
+        if not lineage.exists():
+            json_write(lineage, {'lineage_id':lineage_id, 'granularity':'conservative run-level dependencies',
+                                'bronze_batches':records})
+        df = df.withColumn('lineage_id', F.lit(lineage_id))
     parent = root / 'lake' / layer
     parent.mkdir(parents=True, exist_ok=True)
     target = parent / table
@@ -98,7 +122,7 @@ def get_salt(root):
             raise ValueError('EPISCOPE_SALT must contain at least 32 characters')
         return supplied
     import secrets
-    repository = Path(root).resolve().parent
+    repository = Path(__file__).resolve().parents[1]
     folder = repository.parent / '.episcope-secrets'
     folder.mkdir(mode=0o700, exist_ok=True)
     path = folder / 'patient-salt'

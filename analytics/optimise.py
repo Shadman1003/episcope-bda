@@ -139,7 +139,7 @@ def demand_from_forecasts(forecasts, districts, stocks):
         combined = combined.unionByName(part)
     combined = combined.join(districts.select("district_id", "population", "division"), "district_id")
     # Only 64 districts x six resources reaches the driver-side solver.
-    return combined.toPandas()
+    return combined.orderBy('district_id','resource').toPandas()
 
 
 def scenario_grid(demand):

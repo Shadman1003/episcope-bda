@@ -18,3 +18,15 @@ IMPLEMENTATION_CONTRACT.md
 brief-extracted.txt
 *.zip
 *.tar.gz
+results/*
+!results/README.md
+!results/scalability.json
+!results/evaluation_summary.json
+!results/forecast_summary.csv
+!results/detection_tradeoff.csv
+!results/incremental_acceptance.json
+!results/validation_summary.json
+!results/performance/
+results/performance/*
+!results/performance/optimisations.json
+!results/performance/*_plan.txt

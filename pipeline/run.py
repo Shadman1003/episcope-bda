@@ -12,31 +12,58 @@ from .common import checksum, get_salt, json_write, publish
 from .quality import clean_encounters
 
 
+def source_contract(path):
+    """Identify record contracts from a bounded sample, never from filenames."""
+    with open(path, encoding='utf-8-sig', newline='') as stream:
+        sample = stream.read(65536)
+    if path.suffix.lower() == '.csv':
+        fields = set(next(csv.reader(sample.splitlines()), []))
+        multiline = False
+    else:
+        text = sample.lstrip()
+        multiline = text.startswith('[')
+        if not multiline and text:
+            try:
+                json.JSONDecoder().raw_decode(text.splitlines()[0])
+            except json.JSONDecodeError:
+                multiline = True
+        if text.startswith('['):
+            text = text[1:].lstrip()
+        try:
+            record, _ = json.JSONDecoder().raw_decode(text)
+        except json.JSONDecodeError as exc:
+            raise ValueError(f'Cannot inspect JSON record contract in {path.name}') from exc
+        if not isinstance(record, dict):
+            raise ValueError(f'Expected JSON object records in {path.name}')
+        fields = set(record)
+    if fields & {'encounter_id','patient_id','onset_date','icd10_code'}:
+        return 'encounters', multiline
+    if fields & {'occupied_beds','iv_saline','ns1_kits','antimalarials'}:
+        return 'stocks', multiline
+    if fields & {'facility_type','facility_name','icu_beds'}:
+        return 'facilities', multiline
+    if fields & {'files','encounter_files','stock_files','schema_version','manifest'}:
+        return None, multiline  # Nonrecord sidecar metadata, not a patient feed.
+    raise ValueError(f'Unrecognised incremental record schema in {path.name}')
+
+
 def ingest(root, drop=None):
     root = Path(root).resolve()
     manifest_path = root / 'bronze' / 'manifest.json'
     manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else []
     known = {(item['source'], item['checksum']) for item in manifest}
     paths = []
+    formats = {}
     incoming = Path(drop).resolve() if drop else root / 'incoming'
     if incoming.is_file():
         candidates = [incoming]
     else:
         candidates = sorted(p for p in incoming.rglob('*') if p.is_file() and p.suffix.lower() in ('.csv', '.json', '.jsonl', '.ndjson'))
     for source_path in candidates:
-        lowered = str(source_path.relative_to(incoming) if incoming.is_dir() else source_path.name).lower()
-        source = 'stocks' if any(k in lowered for k in ('stock', 'occupancy', 'snapshot')) else 'encounters'
-        # Hidden drops may have arbitrary filenames; identify the contract by header.
-        with open(source_path, encoding='utf-8-sig') as stream:
-            first = stream.readline()
-        if 'encounter_id' in first:
-            source = 'encounters'
-        elif 'occupied_beds' in first or 'iv_saline' in first:
-            source = 'stocks'
-        elif 'facility_type' in first:
-            source = 'facilities'
-        else:
-            raise ValueError(f'Unrecognised incremental file schema: {source_path.name}')
+        source, multiline = source_contract(source_path)
+        if source is None:
+            continue
+        formats[str(source_path)] = multiline
         paths.append((source_path, source))
     # All public and generated reference sources also retain their original bytes in bronze.
     paths += [(p, 'reference') for p in sorted((root / 'reference').rglob('*')) if p.is_file() and not p.name.startswith('.')]
@@ -52,6 +79,7 @@ def ingest(root, drop=None):
         row = {'batch_id': batch, 'source': source, 'loaded_at': datetime.now(timezone.utc).isoformat(),
                'checksum': sha, 'original_name': source_path.name, 'path': str(dest.relative_to(root)),
                'bytes': source_path.stat().st_size}
+        row['json_multiline'] = formats.get(str(source_path), False)
         manifest.append(row)
         new.append(row)
         known.add((source, sha))
@@ -70,13 +98,13 @@ def read_raw(spark, root, manifest, source):
             if extension == '.csv':
                 with open(root / item['path'], encoding='utf-8-sig', newline='') as stream:
                     header = tuple(next(csv.reader(stream)))
-            key = (extension, header)
+            key = (extension, header, item.get('json_multiline',False))
             grouped.setdefault(key, []).append(str(root / item['path']))
-    for (extension, _header), paths in grouped.items():
+    for (extension, _header, multiline), paths in grouped.items():
         if extension == '.csv':
             df = spark.read.option('header', True).option('mode', 'PERMISSIVE').csv(paths)
         else:
-            df = spark.read.option('primitivesAsString', True).json(paths)
+            df = spark.read.option('primitivesAsString', True).option('multiLine',multiline).json(paths)
         df = (df.withColumn('_source_file', F.input_file_name())
               .withColumn('_batch_id', F.regexp_extract('_source_file', r'/([a-f0-9]{20})/[^/]+$', 1)))
         frames.append(df)
@@ -96,6 +124,17 @@ def read_facilities(spark, root, manifest):
         f = f.withColumn('_loaded_at', F.lit('')).unionByName(revisions.drop('_batch_id', '_source_file'), allowMissingColumns=True)
         f = f.withColumn('_rn', F.row_number().over(Window.partitionBy('facility_id').orderBy(F.desc('_loaded_at')))).filter('_rn=1').drop('_rn', '_loaded_at')
     return f.withColumn('district_id', F.lpad('district_id', 2, '0')).withColumn('beds', F.col('beds').cast('int')).withColumn('icu_beds', F.col('icu_beds').cast('int'))
+
+
+def validate_facilities(facilities):
+    invalid = F.col('facility_id').isNull() | (F.length(F.trim('facility_id')) == 0)
+    invalid = invalid | F.col('district_id').isNull() | ~F.col('district_id').rlike(r'^(0[1-9]|[1-5][0-9]|6[0-4])$')
+    invalid = invalid | F.col('beds').isNull() | (F.col('beds') < 0)
+    invalid = invalid | F.col('icu_beds').isNull() | (F.col('icu_beds') < 0) | (F.col('icu_beds') > F.col('beds'))
+    if facilities.filter(invalid).limit(1).count():
+        raise ValueError('Facility registry has missing/invalid identifiers, geography or bed capacities')
+    if facilities.groupBy('facility_id').count().filter('count > 1').limit(1).count():
+        raise ValueError('Facility registry must have one unambiguous row per facility_id')
 
 
 def build_gold(spark, root):
@@ -170,8 +209,7 @@ def run_pipeline(spark, root, drop=None):
     if processed.get('input_signature') == signature and (root / 'lake/gold/weekly').exists():
         return {'idempotent_noop': True, 'new_batches': 0, 'seconds': time.monotonic() - started}
     facilities = read_facilities(spark, root, manifest)
-    if facilities.filter(F.col('facility_id').isNull() | ~F.col('district_id').rlike(r'^(0[1-9]|[1-5][0-9]|6[0-4])$') | (F.col('beds') < 0)).limit(1).count():
-        raise ValueError('Facility registry violates its schema; correct the reference source')
+    validate_facilities(facilities)
     publish(facilities.coalesce(1), root, 'silver', 'facilities')
     raw = read_raw(spark, root, manifest, 'encounters')
     if raw is None:
@@ -181,11 +219,13 @@ def run_pipeline(spark, root, drop=None):
     stats = cleaned.groupBy('_batch_id').agg(F.count('*').alias('rows_in'),
              F.sum((F.size('reason_codes') > 0).cast('long')).alias('quarantined'),
              *[F.sum(F.array_contains('reason_codes', rule).cast('long')).alias(rule) for rule in rules]).collect()
-    quarantine = cleaned.filter(F.size('reason_codes') > 0).drop('age_band')
-    publish(quarantine.repartition(2), root, 'silver', 'quarantine')
     valid = cleaned.filter(F.size('reason_codes') == 0).drop('reason_codes')
-    latest = Window.partitionBy('encounter_id').orderBy(F.desc('_loaded_at'), F.desc('_batch_id'))
-    valid = valid.withColumn('_rn', F.row_number().over(latest)).filter('_rn=1').drop('_rn')
+    latest = Window.partitionBy('encounter_id').orderBy(F.desc('_loaded_at'), F.desc('revision'), F.desc('_payload_hash'), F.desc('_batch_id'))
+    ranked = valid.withColumn('_rn', F.row_number().over(latest))
+    removed = ranked.filter('_rn > 1').drop('_rn').withColumn('reason_codes', F.array(F.lit('duplicate_or_superseded_encounter_id')))
+    quarantine = cleaned.filter(F.size('reason_codes') > 0).unionByName(removed)
+    publish(quarantine.repartition(2), root, 'silver', 'quarantine')
+    valid = ranked.filter('_rn=1').drop('_rn')
     valid = valid.join(F.broadcast(facilities.select('facility_id', 'district_id').dropDuplicates()), ['facility_id', 'district_id'])
     valid = valid.withColumn('epi_year', F.year(F.date_add(F.to_date(F.date_trunc('week', 'onset_date')), 3)))
     publish(valid.repartition(8, 'epi_year'), root, 'silver', 'encounters', ['epi_year'])
@@ -196,12 +236,15 @@ def run_pipeline(spark, root, drop=None):
     for row in stats:
         row = row.asDict()
         batch = row['_batch_id']
+        duplicates = row['rows_in'] - row['quarantined'] - out_counts.get(batch, 0)
+        rule_values = {rule:row[rule] for rule in rules}
+        rule_values['duplicate_or_superseded_encounter_id'] = duplicates
         quality.append({'batch_id': batch, 'source': 'encounters', 'loaded_at': meta[batch]['loaded_at'],
                         'rows_in': row['rows_in'], 'rows_out': out_counts.get(batch, 0),
-                        'quarantined': row['quarantined'],
-                        'duplicates': row['rows_in'] - row['quarantined'] - out_counts.get(batch, 0),
-                        'rule_counts_json': json.dumps({rule: row[rule] for rule in rules}),
-                        'rule_pass_rates_json': json.dumps({rule: 1-row[rule]/max(1,row['rows_in']) for rule in rules}),
+                        'quarantined': row['quarantined'] + duplicates,
+                        'duplicates': duplicates,
+                        'rule_counts_json': json.dumps(rule_values),
+                        'rule_pass_rates_json': json.dumps({rule: 1-value/max(1,row['rows_in']) for rule,value in rule_values.items()}),
                         'checksum': meta[batch]['checksum']})
     cleaned.unpersist()
     stocks = read_raw(spark, root, manifest, 'stocks')
@@ -210,20 +253,38 @@ def run_pipeline(spark, root, drop=None):
         stocks = stocks.withColumn('date', F.to_date('date'))
         for c in fields:
             stocks = stocks.withColumn(c, F.col(c).cast('long'))
-        stocks = stocks.join(F.broadcast(facilities.select('facility_id').distinct()), 'facility_id', 'left_semi')
-        condition = F.col('date').isNotNull()
+        stocks = stocks.join(F.broadcast(facilities.select('facility_id').distinct().withColumn('_known_facility',F.lit(True))), 'facility_id', 'left')
+        condition = F.col('date').isNotNull() & F.coalesce(F.col('_known_facility'),F.lit(False))
         for c in fields:
             condition = condition & F.col(c).isNotNull() & (F.col(c) >= 0)
-        bad = stocks.filter(~F.coalesce(condition, F.lit(False))).withColumn('reason_code', F.lit('invalid_stock_snapshot'))
+        stocks = stocks.withColumn('_valid_stock', F.coalesce(condition,F.lit(False))).persist(StorageLevel.DISK_ONLY)
+        stock_stats = stocks.groupBy('_batch_id').agg(F.count('*').alias('rows_in'),
+                        F.sum((~F.col('_valid_stock')).cast('long')).alias('invalid_stock_snapshot'),
+                        F.sum(F.col('_known_facility').isNull().cast('long')).alias('orphan_stock_facility')).collect()
+        bad = stocks.filter(~F.coalesce(condition, F.lit(False))).withColumn('reason_code', F.when(F.col('_known_facility').isNull(),F.lit('orphan_stock_facility')).otherwise(F.lit('invalid_stock_snapshot'))).drop('_known_facility')
         publish(bad.coalesce(1), root, 'silver', 'stock_quarantine')
-        stocks = stocks.filter(condition).withColumn('_rn', F.row_number().over(Window.partitionBy('facility_id', 'date').orderBy(F.desc('_loaded_at')))).filter('_rn=1').drop('_rn')
-        publish(stocks.repartition(4).withColumn('year', F.year('date')), root, 'silver', 'stocks', ['year'])
+        ranked_stock = stocks.filter('_valid_stock').drop('_known_facility','_valid_stock').withColumn('_rn', F.row_number().over(Window.partitionBy('facility_id', 'date').orderBy(F.desc('_loaded_at'),F.desc('_batch_id'))))
+        publish(ranked_stock.filter('_rn > 1').drop('_rn').withColumn('reason_code',F.lit('duplicate_or_superseded_stock_snapshot')).coalesce(1),root,'silver','stock_duplicate_quarantine')
+        publish(ranked_stock.filter('_rn=1').drop('_rn').repartition(4).withColumn('year', F.year('date')), root, 'silver', 'stocks', ['year'])
+        stock_out = {r['_batch_id']:r['count'] for r in spark.read.parquet(str(root/'lake/silver/stocks')).groupBy('_batch_id').count().collect()}
+        stock_meta = {m['batch_id']:m for m in manifest if m['source']=='stocks'}
+        for record in stock_stats:
+            values=record.asDict(); batch=values['_batch_id']; duplicates=values['rows_in']-values['invalid_stock_snapshot']-stock_out.get(batch,0)
+            rule_values={key:values[key] for key in ('invalid_stock_snapshot','orphan_stock_facility')}
+            rule_values['duplicate_or_superseded_stock_snapshot']=duplicates
+            quality.append({'batch_id':batch,'source':'stocks','loaded_at':stock_meta[batch]['loaded_at'],
+                            'rows_in':values['rows_in'],'rows_out':stock_out.get(batch,0),
+                            'quarantined':values['invalid_stock_snapshot']+duplicates,'duplicates':duplicates,
+                            'rule_counts_json':json.dumps(rule_values),
+                            'rule_pass_rates_json':json.dumps({key:1-value/max(1,values['rows_in']) for key,value in rule_values.items()}),
+                            'checksum':stock_meta[batch]['checksum']})
+        stocks.unpersist()
     publish(spark.createDataFrame(quality).coalesce(1), root, 'gold', 'quality')
     result = build_gold(spark, root)
     result.update({'new_batches': len(new), 'seconds': time.monotonic() - started,
                    'rows_in': sum(x['rows_in'] for x in quality), 'rows_out': sum(x['rows_out'] for x in quality),
                    'quarantined': sum(x['quarantined'] for x in quality), 'duplicates': sum(x['duplicates'] for x in quality),
-                   'rule_counts': {rule: sum(json.loads(x['rule_counts_json'])[rule] for x in quality) for rule in rules}})
+                   'rule_counts': {rule: sum(json.loads(x['rule_counts_json']).get(rule,0) for x in quality) for rule in rules}})
     json_write(root.parent / 'results/quality_latest.json', result)
     json_write(state, {'input_signature':signature, 'processed_at':datetime.now(timezone.utc).isoformat()})
     return result
