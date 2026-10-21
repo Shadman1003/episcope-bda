@@ -1,0 +1,30 @@
+x-episcope: &episcope
+  build:
+    context: .
+    dockerfile: Dockerfile
+  image: episcope:local
+  init: true
+  working_dir: /workspace
+  environment:
+    EPISCOPE_SALT: ${EPISCOPE_SALT:-}
+    EPISCOPE_DRIVER_MEMORY: ${EPISCOPE_DRIVER_MEMORY:-1g}
+    EPISCOPE_SPARK_MASTER: ${EPISCOPE_SPARK_MASTER:-local[2]}
+    EPISCOPE_SHUFFLE_PARTITIONS: ${EPISCOPE_SHUFFLE_PARTITIONS:-8}
+  volumes:
+    - ./data:/workspace/data
+    - ./results:/workspace/results
+    - ./dashboard/data:/workspace/dashboard/data
+    - ./runs:/workspace/runs
+    # get_salt() resolves /workspace's parent, outside the copied repository.
+    - ../.episcope-secrets:/.episcope-secrets
+
+services:
+  pipeline:
+    <<: *episcope
+    command: ["all", "--scale", "1"]
+  dashboard:
+    <<: *episcope
+    # The application intentionally binds only to loopback. Linux host
+    # networking preserves that contract without changing the server.
+    network_mode: host
+    command: ["serve", "--port", "8765"]

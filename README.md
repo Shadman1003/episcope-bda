@@ -38,6 +38,8 @@ Run the production checks:
 bash run_wsl.sh test
 ```
 
+An optional [Docker environment](docs/docker.md) is included for Linux hosts. It has not been executed on this machine; the validation evidence applies to Ubuntu WSL.
+
 ## Hidden 14-day incremental drop (ING-4)
 
 The drop may contain CSV, JSONL or newline-delimited JSON files in a directory, including `encounters/`, `stocks/` and optional facility registry additions. Filenames and dates are not hardcoded. Source type is identified from the schema; CSV header order can vary. The encounter contract is:
@@ -111,7 +113,7 @@ The assignment originally requested a private repository and three members. The 
 | ING-4 | `pipeline/run.py`, processed signature and incremental fixture | Incremental evaluation |
 | DQ-1 | `pipeline/quality.py`, quarantine and adversarial tests | Quality |
 | DQ-2 | gold quality table, `results/quality_latest.json`, dashboard quality panel | Quality evaluation |
-| DQ-3 | bronze SHA256 manifests, daily/weekly batch-ID arrays | Provenance |
+| DQ-3 | bronze SHA256 manifests, every gold row's `lineage_id` and immutable dependency manifest | Provenance |
 | PRV-1 | `pipeline/quality.py`, salt outside Git working tree, age bands | Privacy |
 | PRV-2 | `serving/privacy.py`, safe nonoverlapping bins and coupled suppression | Disclosure control |
 | PRV-3 | `serving/server.py`, server-side district scope and denied static data | Access control |
