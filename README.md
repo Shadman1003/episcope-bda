@@ -1,8 +1,8 @@
 # EpiScope
 
-**Bangladesh disease surveillance, forecasting and response planning.** CSE 4345 Big Data Analytics, Premier University. Four-member group approved by the instructor, as confirmed by the team on 21 October 2026.
+**Bangladesh disease surveillance, forecasting and response planning.** CSE 4345 Big Data Analytics, Premier University.
 
-**Presentation/video: deferred. Technical report and policy brief: deferred.** This repository contains the implementation and technical documentation. The current validation state is recorded in `docs/validation.md`; do not treat an unexecuted benchmark or an automated usability check as completed field evidence.
+This repository contains the implementation and technical documentation. The current validation state is recorded in `docs/validation.md`; do not treat an unexecuted benchmark or an automated usability check as completed field evidence.
 
 All patient encounters, facilities, stocks and outbreak events are synthetic. District boundaries, age/sex population estimates and daily weather are attributable public inputs. This is a teaching prototype; its constructed disease burden and generic planning costs are not validated operational estimates.
 
@@ -185,18 +185,6 @@ The importer checks file inventories, SHA256/size, exact scale/source/count cons
 
 Fresh local experiments can be run with `bash run_wsl.sh benchmark`. The controlled query study uses `bash run_wsl.sh optimisations --root runs/EXPERIMENT_ID/sf1_0/data`. It compares sort-merge/broadcast joins and opaque/native partition predicates with three fresh executions per case. Timings, per-sample execution IDs and plans belong in [`results/performance/`](results/performance/); query speedups have a narrower scope than the end-to-end run.
 
-## Team and contribution records
-
-| Member | Student ID | Suggested lead area |
-|---|---|---|
-| Shadman Al Muksit | 0222220005101003 | Data engineering and integration |
-| Md. Tarek Hossen | 0222220005101004 | Analytics and evaluation |
-| Abir Ahamed Omi | 0222220005101021 | D3 dashboard and serving |
-| Md. Sariful Islam | 0222220005101023 | Quality, privacy and performance |
-
-These areas are suggestions for the team to agree. Each member should review the entire system and make meaningful, attributable changes. No student contribution percentages, signatures, reflections or retrospective commits have been invented. `AI_USAGE.md` discloses the implementation assistance. The final submission tag, report, policy brief and recorded presentation remain for the later handover phase.
-
-The assignment originally requested a private repository and three members. The group size is instructor-approved; repository visibility follows the user's explicit request for a public repository in their own account. Teammates and instructor have not been added automatically.
 
 ## Requirement traceability
 
