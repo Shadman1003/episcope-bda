@@ -81,7 +81,9 @@ const {verifyDistrictPolicyHidden}=require('./browser_policy_helpers.cjs');
   const resourceOptions=await page.locator('#resource option').count();
   for(let i=0;i<resourceOptions&&!await page.locator('#allocation g.bar').count();i++)await page.locator('#resource').selectOption(String(i));
   const bar=page.locator('#allocation g.bar').first();assert.ok(await bar.count());
-  await bar.hover();assert.equal(await page.locator('#tooltip').isVisible(),true);await bar.focus();await bar.press('Enter');
+  // The group spans stock, demand and baseline markers; its box centre can be
+  // an unpainted gap. Hover a real painted marker so the user event bubbles.
+  await bar.locator('rect').last().hover();assert.equal(await page.locator('#tooltip').isVisible(),true);await bar.focus();await bar.press('Enter');
   assert.notEqual((await state()).district,'all');assert.equal(await page.locator('#warning-body tr').count(),1);
   checks.push('allocation_budget_equity_resource_and_keyboard_link');
   await page.locator('#reset').click();
@@ -98,6 +100,7 @@ const {verifyDistrictPolicyHidden}=require('./browser_policy_helpers.cjs');
     await page.setViewportSize({width,height:width===390?844:1100});await page.waitForTimeout(200);
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>window.innerWidth),false,`horizontal overflow at ${width}`);
     if(width===390){
+      await page.evaluate(()=>window.scrollTo({top:0,left:0,behavior:'instant'}));
       await page.screenshot({path:path.join(evidence,'dashboard-mobile-overview.png')});
       await page.screenshot({path:path.join(evidence,'dashboard-national-mobile.png'),fullPage:true});
     }
