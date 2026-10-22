@@ -12,12 +12,16 @@ spark-warehouse/
 metastore_db/
 derby.log
 .episcope-secrets/
+!dashboard/data/
 dashboard/data/*.json
 !dashboard/data/.gitkeep
+!dashboard/data/dashboard.json
+!dashboard/data/manifest.json
 IMPLEMENTATION_CONTRACT.md
 brief-extracted.txt
 *.zip
 !resources/public-reference-cache.zip
+!resources/validation-evidence.zip
 *.tar.gz
 results/*
 !results/README.md

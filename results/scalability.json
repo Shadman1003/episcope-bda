@@ -1,60 +1,109 @@
 {
-  "experiment_id": "20261021T200536722646Z",
+  "experiment_id": "github-actions/39705416049",
   "runs": [
     {
       "status": "ok",
-      "started_at": "2026-10-21T20:05:37.551371+00:00",
-      "completed_at": "2026-10-21T20:24:41.215225+00:00",
-      "total_seconds": 1143.6638930000001,
       "hardware": {
-        "platform": "Linux-4.4.0-19041-Microsoft-x86_64-with-glibc2.39",
+        "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
         "python": "3.12.3",
         "logical_cpus": 4,
-        "memory_bytes": 8464728064,
-        "available_memory_bytes": 729726976,
-        "spark_master": "local[2]",
-        "driver_memory": "1g"
+        "cpu_model": "AMD EPYC 7763 64-Core Processor",
+        "physical_cores": 2,
+        "memory_bytes": 16760344576,
+        "available_memory_bytes": 11240906752,
+        "spark_master": "local[4]",
+        "driver_memory": "4g"
       },
+      "source_revision": "b25ea19783c9ad49a7d55fb206a7311abe079c66",
       "scale": 0.25,
       "seed": 4345,
       "generated_encounter_rows": 6412101,
       "generated_unique_encounters": 6286618,
       "facilities": 640,
       "stock_rows": 1168640,
-      "output_bytes": 958029666,
-      "input_bytes": 713880263,
+      "output_bytes": 959030026,
+      "started_at": "2026-10-22T01:24:46.318241+00:00",
+      "completed_at": "2026-10-22T01:30:05.430025+00:00",
+      "total_seconds": 319.1117627,
+      "orchestrator_seconds": 317.430000257,
       "under_45_minutes": true,
-      "experiment_id": "20261021T200536722646Z",
       "measurement": "fresh generated feed and lake; cached public references",
-      "profile": "runs/20261021T200536722646Z/sf0_25",
+      "timer_scope": "child command start through exit, including Python/JVM startup and shutdown; dependency install and reference-cache extraction excluded",
+      "input_bytes": 713880263,
+      "profile": "github-actions/39705416049/sf0.25",
+      "github": {
+        "GITHUB_RUN_ID": "39705416049",
+        "GITHUB_JOB": "scaling",
+        "GITHUB_SHA": "b25ea19783c9ad49a7d55fb206a7311abe079c66",
+        "RUNNER_OS": "Linux",
+        "RUNNER_ARCH": "X64"
+      },
+      "cache_archive_sha256": "198cf70977443d25fd6286feb21cf15e2e5a0b0f5013d245fbf801018e905ebb",
+      "source_files": [
+        {
+          "path": "results/run_all.json",
+          "bytes": 7381,
+          "sha256": "a93ac75f47b6055fd6245634c7be4d2f574177ec636df77f730da4376041424f"
+        },
+        {
+          "path": "results/analytics_latest.json",
+          "bytes": 3558,
+          "sha256": "558251aa0091997dc3afaeff886710b4aada0970419d1628243ecc07f97aa17c"
+        },
+        {
+          "path": "results/quality_latest.json",
+          "bytes": 724,
+          "sha256": "cb066ef525f875ef2498c1a96e083639f853821ab890aebad753bf6926579b80"
+        },
+        {
+          "path": "results/forecast_summary.csv",
+          "bytes": 2903,
+          "sha256": "37c30833e4f40aaf7ae2fa8077298ada83818e1caf9c9689ec67abc7edf6de5c"
+        },
+        {
+          "path": "results/detection_tradeoff.csv",
+          "bytes": 3230,
+          "sha256": "6cd2bfe8d86cf65a2b491e061029f2df4e429b03205d9d76caa75c85bac98941"
+        },
+        {
+          "path": "results/allocation_scenarios.csv",
+          "bytes": 3593,
+          "sha256": "3ac14c341d359629cfa46d35bbd197e4f71d6329d44e929cdae9ac2d1fcc149e"
+        }
+      ],
+      "diagnostic_policy": "National aggregates only; district artefact comparators are summed in packaged analytics/run_all copies; source file checksums above identify originals",
+      "dashboard": {
+        "sha256": "f991c4424b52f8c81267c21d89206710aed915beddc36905d033b85fc2a43325",
+        "bytes": 2417944
+      },
       "stages": [
         {
           "stage": "public_references",
-          "seconds": 6.1799496000000005,
+          "seconds": 1.6758155939999995,
           "attempt": 1,
           "status": "ok"
         },
         {
           "stage": "synthetic_generator",
-          "seconds": 93.4577098,
+          "seconds": 35.36106722800001,
           "attempt": 1,
           "status": "ok"
         },
         {
           "stage": "bronze_silver_gold",
-          "seconds": 664.7428828,
+          "seconds": 184.58767757399997,
           "attempt": 1,
           "status": "ok"
         },
         {
           "stage": "analytics",
-          "seconds": 345.5772895000001,
+          "seconds": 81.43792698699997,
           "attempt": 1,
           "status": "ok"
         },
         {
           "stage": "dashboard_export",
-          "seconds": 14.697423599999865,
+          "seconds": 4.084154395999974,
           "attempt": 1,
           "status": "ok"
         }
@@ -62,62 +111,220 @@
     },
     {
       "status": "ok",
-      "started_at": "2026-10-21T20:24:44.086458+00:00",
-      "completed_at": "2026-10-21T20:56:02.489504+00:00",
-      "total_seconds": 1878.4030916000002,
       "hardware": {
-        "platform": "Linux-4.4.0-19041-Microsoft-x86_64-with-glibc2.39",
+        "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
         "python": "3.12.3",
         "logical_cpus": 4,
-        "memory_bytes": 8464728064,
-        "available_memory_bytes": 870068224,
-        "spark_master": "local[2]",
-        "driver_memory": "1g"
+        "cpu_model": "AMD EPYC 7763 64-Core Processor",
+        "physical_cores": 2,
+        "memory_bytes": 16766406656,
+        "available_memory_bytes": 10276618240,
+        "spark_master": "local[4]",
+        "driver_memory": "4g"
       },
+      "source_revision": "b25ea19783c9ad49a7d55fb206a7311abe079c66",
       "scale": 0.5,
       "seed": 4345,
       "generated_encounter_rows": 12858721,
       "generated_unique_encounters": 12606672,
       "facilities": 640,
       "stock_rows": 1168640,
-      "output_bytes": 1881259162,
-      "input_bytes": 1281660282,
+      "output_bytes": 1889522728,
+      "started_at": "2026-10-22T01:24:51.622347+00:00",
+      "completed_at": "2026-10-22T01:32:42.373250+00:00",
+      "total_seconds": 470.750879869,
+      "orchestrator_seconds": 469.073778728,
       "under_45_minutes": true,
-      "experiment_id": "20261021T200536722646Z",
       "measurement": "fresh generated feed and lake; cached public references",
-      "profile": "runs/20261021T200536722646Z/sf0_5",
+      "timer_scope": "child command start through exit, including Python/JVM startup and shutdown; dependency install and reference-cache extraction excluded",
+      "input_bytes": 1281660282,
+      "profile": "github-actions/39705416049/sf0.5",
+      "github": {
+        "GITHUB_RUN_ID": "39705416049",
+        "GITHUB_JOB": "scaling",
+        "GITHUB_SHA": "b25ea19783c9ad49a7d55fb206a7311abe079c66",
+        "RUNNER_OS": "Linux",
+        "RUNNER_ARCH": "X64"
+      },
+      "cache_archive_sha256": "198cf70977443d25fd6286feb21cf15e2e5a0b0f5013d245fbf801018e905ebb",
+      "source_files": [
+        {
+          "path": "results/run_all.json",
+          "bytes": 7360,
+          "sha256": "9265cd8390455d171fc4cc6b63a85902c90957ac08d5b329b59904689ee22644"
+        },
+        {
+          "path": "results/analytics_latest.json",
+          "bytes": 3534,
+          "sha256": "24ce8c86b93e7d2d898020cee4f39eb4cb81b4ad38cb73989de7e16464d8e0e1"
+        },
+        {
+          "path": "results/quality_latest.json",
+          "bytes": 729,
+          "sha256": "87834bfb783fb303e9f81a49006afb5d19b2fc79ae0608bf076a67befb40d33f"
+        },
+        {
+          "path": "results/forecast_summary.csv",
+          "bytes": 2884,
+          "sha256": "fd434d6217836d670e2780f28b3a7283f04619a7271e30f494c8491cb5ca1da0"
+        },
+        {
+          "path": "results/detection_tradeoff.csv",
+          "bytes": 2795,
+          "sha256": "c9f4917b49828cb0675826f49ce83af4d0fdfb42af0e16921d7f1a7b8df86739"
+        },
+        {
+          "path": "results/allocation_scenarios.csv",
+          "bytes": 3623,
+          "sha256": "ecb5a835ced78af44874474b9c4639e53f55abfcf5593de1f3113a5c9373672f"
+        }
+      ],
+      "diagnostic_policy": "National aggregates only; district artefact comparators are summed in packaged analytics/run_all copies; source file checksums above identify originals",
+      "dashboard": {
+        "sha256": "c662f34746e18668864a4ab2374e6c7f8f68d6465d2fa6fea2e3ce1ba6eedc1c",
+        "bytes": 2449819
+      },
       "stages": [
         {
           "stage": "public_references",
-          "seconds": 10.397122399999944,
+          "seconds": 1.8100083600000119,
           "attempt": 1,
           "status": "ok"
         },
         {
           "stage": "synthetic_generator",
-          "seconds": 234.32239210000012,
+          "seconds": 72.23919253899999,
           "attempt": 1,
           "status": "ok"
         },
         {
           "stage": "bronze_silver_gold",
-          "seconds": 1290.0841685999999,
+          "seconds": 297.056910405,
           "attempt": 1,
           "status": "ok"
         },
         {
           "stage": "analytics",
-          "seconds": 318.4019863999997,
+          "seconds": 85.55379462400003,
           "attempt": 1,
           "status": "ok"
         },
         {
           "stage": "dashboard_export",
-          "seconds": 23.000642599999992,
+          "seconds": 3.9893016510000052,
+          "attempt": 1,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "hardware": {
+        "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+        "python": "3.12.3",
+        "logical_cpus": 4,
+        "cpu_model": "INTEL(R) XEON(R) PLATINUM 8573C",
+        "physical_cores": 2,
+        "memory_bytes": 16759308288,
+        "available_memory_bytes": 10177404928,
+        "spark_master": "local[4]",
+        "driver_memory": "4g"
+      },
+      "source_revision": "b25ea19783c9ad49a7d55fb206a7311abe079c66",
+      "scale": 1.0,
+      "seed": 4345,
+      "generated_encounter_rows": 25708357,
+      "generated_unique_encounters": 25204173,
+      "facilities": 640,
+      "stock_rows": 1168640,
+      "output_bytes": 3729563409,
+      "started_at": "2026-10-22T01:24:45.314016+00:00",
+      "completed_at": "2026-10-22T01:36:00.229117+00:00",
+      "total_seconds": 674.9150706390001,
+      "orchestrator_seconds": 673.064007176,
+      "under_45_minutes": true,
+      "measurement": "fresh generated feed and lake; cached public references",
+      "timer_scope": "child command start through exit, including Python/JVM startup and shutdown; dependency install and reference-cache extraction excluded",
+      "input_bytes": 2413371796,
+      "profile": "github-actions/39705416049/sf1.0",
+      "github": {
+        "GITHUB_RUN_ID": "39705416049",
+        "GITHUB_JOB": "scaling",
+        "GITHUB_SHA": "b25ea19783c9ad49a7d55fb206a7311abe079c66",
+        "RUNNER_OS": "Linux",
+        "RUNNER_ARCH": "X64"
+      },
+      "cache_archive_sha256": "198cf70977443d25fd6286feb21cf15e2e5a0b0f5013d245fbf801018e905ebb",
+      "source_files": [
+        {
+          "path": "results/run_all.json",
+          "bytes": 7364,
+          "sha256": "b6921609d5fa1898f6aa059401d2bd7c7d7f2d5cfa8ae736e19d26f59995ee08"
+        },
+        {
+          "path": "results/analytics_latest.json",
+          "bytes": 3527,
+          "sha256": "e5066f4470c93c24e9a5cdf37e851f27cdfd1990aaac7f580051b98e307897a6"
+        },
+        {
+          "path": "results/quality_latest.json",
+          "bytes": 738,
+          "sha256": "16921715eb9e60bfaf28e8e84aa6dde508fa06791238a30f6f9c9de9f1c5700b"
+        },
+        {
+          "path": "results/forecast_summary.csv",
+          "bytes": 2881,
+          "sha256": "8a0d6139af7c1dbd91df5993cdeca2f7bbba309d6630720aa250b9bcd01f5e71"
+        },
+        {
+          "path": "results/detection_tradeoff.csv",
+          "bytes": 2778,
+          "sha256": "e9127bfc679eebf5499bf77b97d42a1452f64a12ce7b91e05ccc4a5c70299730"
+        },
+        {
+          "path": "results/allocation_scenarios.csv",
+          "bytes": 3557,
+          "sha256": "c77051b64cce1d8e426b3c68b09126ab73a28e52ae8a5be840ca2baf3ebd7cf1"
+        }
+      ],
+      "diagnostic_policy": "National aggregates only; district artefact comparators are summed in packaged analytics/run_all copies; source file checksums above identify originals",
+      "dashboard": {
+        "sha256": "981094cba6b256b1dc3d429eb2130c46dc5b5251985627bbc8588322a89b3416",
+        "bytes": 2568942
+      },
+      "stages": [
+        {
+          "stage": "public_references",
+          "seconds": 1.529952260999977,
+          "attempt": 1,
+          "status": "ok"
+        },
+        {
+          "stage": "synthetic_generator",
+          "seconds": 119.14587382100001,
+          "attempt": 1,
+          "status": "ok"
+        },
+        {
+          "stage": "bronze_silver_gold",
+          "seconds": 466.47318583799995,
+          "attempt": 1,
+          "status": "ok"
+        },
+        {
+          "stage": "analytics",
+          "seconds": 73.20449131300006,
+          "attempt": 1,
+          "status": "ok"
+        },
+        {
+          "stage": "dashboard_export",
+          "seconds": 3.78700792799998,
           "attempt": 1,
           "status": "ok"
         }
       ]
     }
-  ]
+  ],
+  "interpretation": "Three fresh generated-feed/lake runs with cached public references. Complete-command timings include Python/JVM startup and shutdown. Different runner hardware can affect scaling; earlier local baselines cannot isolate code speedup across hosts."
 }

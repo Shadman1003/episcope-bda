@@ -1,0 +1,2838 @@
+{
+  "schema_version": "1.0",
+  "synthetic": true,
+  "scale": 1.0,
+  "seed": 4345,
+  "period": [
+    "2021-01-01",
+    "2025-12-31"
+  ],
+  "minimum_required_rows": 25000000,
+  "unique_encounters": 25204173,
+  "duplicate_resubmissions": 504184,
+  "encounter_rows": 25708357,
+  "facilities": 640,
+  "unique_outbreak_events": 36,
+  "district_event_rows": 99,
+  "background_topup_rows": 0,
+  "elapsed_seconds": 118.783,
+  "generated_utc": "2026-10-22T01:26:46.554421+00:00",
+  "encounter_files": [
+    {
+      "path": "incoming/encounters/encounters_d01_2021_000.csv",
+      "rows": 44033,
+      "bytes": 3862429,
+      "sha256": "61702d4afabd6519891b01133f852360dad27d3471106b113ce369d406bb0c6c"
+    },
+    {
+      "path": "incoming/encounters/encounters_d01_2022_000.csv",
+      "rows": 43263,
+      "bytes": 3794695,
+      "sha256": "acd2fe30ecb27484b65ed5ba8b71d8393237071223ec1759a94e2187ec4ba096"
+    },
+    {
+      "path": "incoming/encounters/encounters_d01_2023_000.csv",
+      "rows": 43682,
+      "bytes": 3831642,
+      "sha256": "652aee33fefec73ad0c41514ae66772b57f2a31bf1304b0a79a99ad75262fbbf"
+    },
+    {
+      "path": "incoming/encounters/encounters_d01_2024_000.csv",
+      "rows": 45334,
+      "bytes": 3976370,
+      "sha256": "c803ee49f29b67b45abb43ae9dc0709d2f9b17e68434256e55582c0089f3956b"
+    },
+    {
+      "path": "incoming/encounters/encounters_d01_2025_000.csv",
+      "rows": 48256,
+      "bytes": 4232802,
+      "sha256": "84e8ced354e814e9fe45f4f542f36cdef28febca5a5accafb442cd1aa9deac50"
+    },
+    {
+      "path": "incoming/encounters/encounters_d02_2021_000.csv",
+      "rows": 24435,
+      "bytes": 2133598,
+      "sha256": "71559ae664c6726ec64bb20efb414b5f8bfeb38069c7346a2dd9561326e4342e"
+    },
+    {
+      "path": "incoming/encounters/encounters_d02_2022_000.csv",
+      "rows": 24084,
+      "bytes": 2103120,
+      "sha256": "3433a7bdf8453156462c9706e8569c23cdcf55acf0de243936b0efd9df887475"
+    },
+    {
+      "path": "incoming/encounters/encounters_d02_2023_000.csv",
+      "rows": 27345,
+      "bytes": 2387760,
+      "sha256": "17fb193ec849f9a788a088d7b1e0cf3f1c00de7377e916702681039440eac8c4"
+    },
+    {
+      "path": "incoming/encounters/encounters_d02_2024_000.csv",
+      "rows": 27666,
+      "bytes": 2415594,
+      "sha256": "0e6395bba699de210567aa9ff234500cc8f2c2233b20ab0118a9cc627a8e700e"
+    },
+    {
+      "path": "incoming/encounters/encounters_d02_2025_000.csv",
+      "rows": 34029,
+      "bytes": 2971007,
+      "sha256": "196ce9b1488b9b9f8b01ab497db64fe3d23b930b49d42a700b8cad2319737bc8"
+    },
+    {
+      "path": "incoming/encounters/encounters_d03_2021_000.csv",
+      "rows": 26557,
+      "bytes": 2326396,
+      "sha256": "f582e16136e0c9cadc3a0d1e6d16bca4066e2e6b86ddf2c323845e6f9a9e8dcf"
+    },
+    {
+      "path": "incoming/encounters/encounters_d03_2022_000.csv",
+      "rows": 26306,
+      "bytes": 2304212,
+      "sha256": "7bba955eef70f80f8da77c5bff88b438bdbe67044b3c659879848a38400d0e83"
+    },
+    {
+      "path": "incoming/encounters/encounters_d03_2023_000.csv",
+      "rows": 26615,
+      "bytes": 2331796,
+      "sha256": "d8be04bb3f3ee6cb4fee87a6bfa24818e78cdfa180d9deb055859015d4656336"
+    },
+    {
+      "path": "incoming/encounters/encounters_d03_2024_000.csv",
+      "rows": 27256,
+      "bytes": 2387525,
+      "sha256": "879be02831e9261d4609c08ca3bc184386591328bfac46a5b238b787db7d704a"
+    },
+    {
+      "path": "incoming/encounters/encounters_d03_2025_000.csv",
+      "rows": 38614,
+      "bytes": 3382410,
+      "sha256": "3a701d244e83a6acb3a0033c5f6a68f331e1ddacabb232496c4a21671ec57e9e"
+    },
+    {
+      "path": "incoming/encounters/encounters_d04_2021_000.csv",
+      "rows": 69229,
+      "bytes": 6078092,
+      "sha256": "196eeefe1739bde9ca3fa52bea570ec9b2c0c2a5130898e59847f237c97cdcc7"
+    },
+    {
+      "path": "incoming/encounters/encounters_d04_2022_000.csv",
+      "rows": 66722,
+      "bytes": 5857982,
+      "sha256": "224f7f14b2a5eeaa2edefe603d3921f4ef4adffe9ceaf56ce3fbc4c3b63d7b39"
+    },
+    {
+      "path": "incoming/encounters/encounters_d04_2023_000.csv",
+      "rows": 67334,
+      "bytes": 5912020,
+      "sha256": "ebc381401cb2b1f4be14f752e02da97bd7e07db19c95c68aa7d634ae66b75c2e"
+    },
+    {
+      "path": "incoming/encounters/encounters_d04_2024_000.csv",
+      "rows": 70170,
+      "bytes": 6160991,
+      "sha256": "a321b3d17fc1fa4a15ef74a8dc05fb63f81700be805b4188d366c4b0304b494f"
+    },
+    {
+      "path": "incoming/encounters/encounters_d04_2025_000.csv",
+      "rows": 72852,
+      "bytes": 6395940,
+      "sha256": "000fe00f7f6f9300a3245b96ecbc1f411c4f04911e8f6cbdf886a0b7f79b3d85"
+    },
+    {
+      "path": "incoming/encounters/encounters_d05_2021_000.csv",
+      "rows": 52371,
+      "bytes": 4591769,
+      "sha256": "4025299854d37604b83f3d7815a7807c5e92fc7f17366d5d412f38ee6a11774d"
+    },
+    {
+      "path": "incoming/encounters/encounters_d05_2022_000.csv",
+      "rows": 51069,
+      "bytes": 4477519,
+      "sha256": "94bb840fd68e6f5717917127e6902abf485d2e13b454ac78a63c0709c1814435"
+    },
+    {
+      "path": "incoming/encounters/encounters_d05_2023_000.csv",
+      "rows": 50937,
+      "bytes": 4465729,
+      "sha256": "8cc6cd00d17c6dcf55327f194dc03e4a0e28c09a2d87657c6dc1fa38cc9371ad"
+    },
+    {
+      "path": "incoming/encounters/encounters_d05_2024_000.csv",
+      "rows": 54155,
+      "bytes": 4748190,
+      "sha256": "682bf04aecabc0210959eb7e4e8526484ebf6cfd06e7520fb2f7f533b2060897"
+    },
+    {
+      "path": "incoming/encounters/encounters_d05_2025_000.csv",
+      "rows": 57160,
+      "bytes": 5011822,
+      "sha256": "12100b0dd75fa1eb54f7e61c5ce888f0d516dadfcc137469f1723a4d68723225"
+    },
+    {
+      "path": "incoming/encounters/encounters_d06_2021_000.csv",
+      "rows": 97245,
+      "bytes": 8572391,
+      "sha256": "f44afe4707c2052dc78c4e467fb972a58cd721c93badfed9ece3aba43b1629dc"
+    },
+    {
+      "path": "incoming/encounters/encounters_d06_2022_000.csv",
+      "rows": 97582,
+      "bytes": 8602309,
+      "sha256": "aa50b22744673b33fb59466eaa768483f5124f593ca0c8941a62e3fa035494f8"
+    },
+    {
+      "path": "incoming/encounters/encounters_d06_2023_000.csv",
+      "rows": 99491,
+      "bytes": 8770152,
+      "sha256": "8a351f578c1bb443086abd3f82e256fee5db06d4e65946768e0ba31e2d692344"
+    },
+    {
+      "path": "incoming/encounters/encounters_d06_2024_000.csv",
+      "rows": 98046,
+      "bytes": 8643392,
+      "sha256": "aa34326a64ddcc30ac1814c8564a8502fefc7066fee1127fdd004656cfc950a6"
+    },
+    {
+      "path": "incoming/encounters/encounters_d06_2025_000.csv",
+      "rows": 101941,
+      "bytes": 8986536,
+      "sha256": "4c53ac2dc6ae02d8b35fe62e8668104d556a4c0a61b16883ff1aa13f6aaa7bdf"
+    },
+    {
+      "path": "incoming/encounters/encounters_d06_2025_001.csv",
+      "rows": 1440,
+      "bytes": 127098,
+      "sha256": "324231e95bac63c371f2b1113bf9c4cec036eb3ce2fe6cd2310d5d91b92d58a1"
+    },
+    {
+      "path": "incoming/encounters/encounters_d07_2021_000.csv",
+      "rows": 86113,
+      "bytes": 7575315,
+      "sha256": "73487564d8faad6f3ab3b8161dc5b2d656cfe7b76d5f3cfb86437f130bfe87ee"
+    },
+    {
+      "path": "incoming/encounters/encounters_d07_2022_000.csv",
+      "rows": 84225,
+      "bytes": 7409687,
+      "sha256": "10536ebe741dd4d56dc36ac0ac2e5bddb0ddec77eca2b70a22a8d4db2cda3477"
+    },
+    {
+      "path": "incoming/encounters/encounters_d07_2023_000.csv",
+      "rows": 85583,
+      "bytes": 7528661,
+      "sha256": "cdafb1d12d7deed4a38588845bbfbf7c48e95c00bff0c3c1c4903346c41787b6"
+    },
+    {
+      "path": "incoming/encounters/encounters_d07_2024_000.csv",
+      "rows": 89852,
+      "bytes": 7904441,
+      "sha256": "ac4477d9f74e8475daf590a6086e8302f8576cb33263e7fd13bc042595d79c32"
+    },
+    {
+      "path": "incoming/encounters/encounters_d07_2025_000.csv",
+      "rows": 94067,
+      "bytes": 8274563,
+      "sha256": "48d1f5b4da51bccfd245e0e0bd8196e062f89e986b57ca32d731c92d95022f44"
+    },
+    {
+      "path": "incoming/encounters/encounters_d08_2021_000.csv",
+      "rows": 67856,
+      "bytes": 5956717,
+      "sha256": "e99aa027504ed52209213a88bd7b9d5a03de66589a264878a2bac7fb1c74ba02"
+    },
+    {
+      "path": "incoming/encounters/encounters_d08_2022_000.csv",
+      "rows": 64556,
+      "bytes": 5667045,
+      "sha256": "6d60c92c8884b8b6a50dc4faa0db9e8788ea436eebd10c9265a23a19bbd44184"
+    },
+    {
+      "path": "incoming/encounters/encounters_d08_2023_000.csv",
+      "rows": 65873,
+      "bytes": 5782929,
+      "sha256": "ac480ebaf43f98f26cbf85f722809265829ff985245c4a140dac23cf8b0a5237"
+    },
+    {
+      "path": "incoming/encounters/encounters_d08_2024_000.csv",
+      "rows": 69099,
+      "bytes": 6065525,
+      "sha256": "8116c7c3658dcf0b90dcf663ffd2a25a858e95e1cba3f297c0a6d79fb325ff77"
+    },
+    {
+      "path": "incoming/encounters/encounters_d08_2025_000.csv",
+      "rows": 72576,
+      "bytes": 6370621,
+      "sha256": "105cf515d5f332f94219c4368ef67eb5c8008fbdad1b891102a287cc66c7a167"
+    },
+    {
+      "path": "incoming/encounters/encounters_d09_2021_000.csv",
+      "rows": 102072,
+      "bytes": 9039687,
+      "sha256": "7f4caf9a49694c40aa066a42f2173222537569dda4653f375384cab60d437e24"
+    },
+    {
+      "path": "incoming/encounters/encounters_d09_2021_001.csv",
+      "rows": 101871,
+      "bytes": 9022311,
+      "sha256": "7827232d460e13f23b6066c7e97b8593a5e35d801b4655e580fcedff6f360d63"
+    },
+    {
+      "path": "incoming/encounters/encounters_d09_2021_002.csv",
+      "rows": 101983,
+      "bytes": 9032192,
+      "sha256": "8f8604a446f5408597619e5f7a71c33310f4a8a91da6b5e5762d93bcf276b1e4"
+    },
+    {
+      "path": "incoming/encounters/encounters_d09_2021_003.csv",
+      "rows": 48346,
+      "bytes": 4281846,
+      "sha256": "1e366d4c322e2387f9fc89342fb21ae91f6b9d0f245da9d57c0ca343b3eadb4e"
+    },
+    {
+      "path": "incoming/encounters/encounters_d09_2022_000.csv",
+      "rows": 101975,
+      "bytes": 9031669,
+      "sha256": "da046f899a643cb7a5e6297e65d8879b257a280edec58004cad29c6bf68ddc34"
+    },
+    {
+      "path": "incoming/encounters/encounters_d09_2022_001.csv",
+      "rows": 101982,
+      "bytes": 9031952,
+      "sha256": "bea2f29b95d7a840c6ef8dfc336189bc480a9ab3074216411efb4cc954c1eace"
+    },
+    {
+      "path": "incoming/encounters/encounters_d09_2022_002.csv",
+      "rows": 101984,
+      "bytes": 9032174,
+      "sha256": "9320da4a87bf0c2ca5df7070db62112deaf68258453f8eef277314e60b946089"
+    },
+    {
+      "path": "incoming/encounters/encounters_d09_2022_003.csv",
+      "rows": 18786,
+      "bytes": 1664008,
+      "sha256": "3ebe8f2ee826582f3270ad2480f5d0328e25a88ccab18d51f6b8f032caeba31f"
+    },
+    {
+      "path": "incoming/encounters/encounters_d09_2023_000.csv",
+      "rows": 102019,
+      "bytes": 9035529,
+      "sha256": "877584c68d2bb28ee2c807c1b13c5445abdbbdca48c18bd75d4da9bae8686369"
+    },
+    {
+      "path": "incoming/encounters/encounters_d09_2023_001.csv",
+      "rows": 102058,
+      "bytes": 9038392,
+      "sha256": "2c4cdb16f31023e0fa3824901a1539fac9035e553dd7bc6a2dc63726d29f7b77"
+    },
+    {
+      "path": "incoming/encounters/encounters_d09_2023_002.csv",
+      "rows": 101951,
+      "bytes": 9028914,
+      "sha256": "b5125f2fee41e231fc86ef2bfca53967a608f6a0d150dfed2e3a6f990915c921"
+    },
+    {
+      "path": "incoming/encounters/encounters_d09_2023_003.csv",
+      "rows": 46685,
+      "bytes": 4134918,
+      "sha256": "38654564f3ba65646139a9dd6fe5e7179befc6f60a8b8df17878c5c57dc903ab"
+    },
+    {
+      "path": "incoming/encounters/encounters_d09_2024_000.csv",
+      "rows": 102083,
+      "bytes": 9041853,
+      "sha256": "c40c66c27a1311c62f17aa7c809d468415e9e1a7621a9504645a0a3b77b7fef5"
+    },
+    {
+      "path": "incoming/encounters/encounters_d09_2024_001.csv",
+      "rows": 102022,
+      "bytes": 9035513,
+      "sha256": "af58f5054d835508ee3724601490fb3a250c5d7ac45d21b69ba1d3a9984ff5d5"
+    },
+    {
+      "path": "incoming/encounters/encounters_d09_2024_002.csv",
+      "rows": 101982,
+      "bytes": 9031779,
+      "sha256": "23a6148558ba746ff4fc10486550f849605b0b89cbb7e9b598ec24f24fd1f5f1"
+    },
+    {
+      "path": "incoming/encounters/encounters_d09_2024_003.csv",
+      "rows": 87082,
+      "bytes": 7711925,
+      "sha256": "59ea623061fbe04e26d5dd71f00422785ca23d43804ccdd9adac5a24dae2c1b9"
+    },
+    {
+      "path": "incoming/encounters/encounters_d09_2025_000.csv",
+      "rows": 102002,
+      "bytes": 9033942,
+      "sha256": "48065c73f91f896bf7e482a79728b0d801fe858c6e14acf43d562850c4f72aec"
+    },
+    {
+      "path": "incoming/encounters/encounters_d09_2025_001.csv",
+      "rows": 101993,
+      "bytes": 9032060,
+      "sha256": "52220d1c813598bbea72b94835df28878a885daabb53cc1984fc24432d2fa792"
+    },
+    {
+      "path": "incoming/encounters/encounters_d09_2025_002.csv",
+      "rows": 102061,
+      "bytes": 9038719,
+      "sha256": "c751a067356abddad9e1e8089f1498dd449e9e74af43ba5aa66b0e4bcff60003"
+    },
+    {
+      "path": "incoming/encounters/encounters_d09_2025_003.csv",
+      "rows": 84945,
+      "bytes": 7523270,
+      "sha256": "611cf8b0c466be23836b363582ebec16a01176e8ea58511f90d77ecc7293a222"
+    },
+    {
+      "path": "incoming/encounters/encounters_d10_2021_000.csv",
+      "rows": 32845,
+      "bytes": 2879566,
+      "sha256": "cb0ef4b7ce9f869d386b368038645802382f54f53ad0bba9a56b523d918a9c0b"
+    },
+    {
+      "path": "incoming/encounters/encounters_d10_2022_000.csv",
+      "rows": 31876,
+      "bytes": 2794526,
+      "sha256": "4c6e97dc14fa01fc2fdf197560f51bb227f9a060308ffa366f9f217f2b346889"
+    },
+    {
+      "path": "incoming/encounters/encounters_d10_2023_000.csv",
+      "rows": 31877,
+      "bytes": 2794542,
+      "sha256": "f26c5be37d78279a184ec907468131dacc02f42b682ad21946971d433c44f51f"
+    },
+    {
+      "path": "incoming/encounters/encounters_d10_2024_000.csv",
+      "rows": 32778,
+      "bytes": 2873661,
+      "sha256": "82f22f006d53f9e4ba6c491e3530e18fce47191dfdc50759a4d07af369142912"
+    },
+    {
+      "path": "incoming/encounters/encounters_d10_2025_000.csv",
+      "rows": 34743,
+      "bytes": 3045885,
+      "sha256": "0ee4963202f0ca712d59f67e4c14cc000901bd74a73ddcccab197cb79057cd7a"
+    },
+    {
+      "path": "incoming/encounters/encounters_d11_2021_000.csv",
+      "rows": 102044,
+      "bytes": 9020304,
+      "sha256": "a57007e6e7bcbdcbd006d6fa0aa0bea92736929acad9809ef31e91919256010a"
+    },
+    {
+      "path": "incoming/encounters/encounters_d11_2021_001.csv",
+      "rows": 60604,
+      "bytes": 5356784,
+      "sha256": "1ce46ca6d91c2b409b0bdcce5137b73ff333e4bd6697b1ab56ea4d9c17dd370e"
+    },
+    {
+      "path": "incoming/encounters/encounters_d11_2022_000.csv",
+      "rows": 101989,
+      "bytes": 9015563,
+      "sha256": "ea42eac94a3e94164b088dab3559dc62fa8c20bb243b80367d2a215a92c66bef"
+    },
+    {
+      "path": "incoming/encounters/encounters_d11_2022_001.csv",
+      "rows": 58621,
+      "bytes": 5181753,
+      "sha256": "d82788d654f0be13b05002dd790d33815b11190258cb402714e0bfa5c00fe702"
+    },
+    {
+      "path": "incoming/encounters/encounters_d11_2023_000.csv",
+      "rows": 102006,
+      "bytes": 9016988,
+      "sha256": "5d2276b3e8d4259bc23043dc5ad7ea67595c841997d0f6b7c10e265e0bd6833f"
+    },
+    {
+      "path": "incoming/encounters/encounters_d11_2023_001.csv",
+      "rows": 61412,
+      "bytes": 5428244,
+      "sha256": "13fadbfbeed54a00744a67830aad8f720c99c5baf1718d847a7132bdcba76b0a"
+    },
+    {
+      "path": "incoming/encounters/encounters_d11_2024_000.csv",
+      "rows": 102023,
+      "bytes": 9018177,
+      "sha256": "c32bfb2e53bbce0017be6c265338dc55328fbb03cfd2264b4b7743832ea4a690"
+    },
+    {
+      "path": "incoming/encounters/encounters_d11_2024_001.csv",
+      "rows": 69048,
+      "bytes": 6103488,
+      "sha256": "e7ac1ec01d713cfa2fb9cda1336cc7e7de14f19a8186086882d63668e569b117"
+    },
+    {
+      "path": "incoming/encounters/encounters_d11_2025_000.csv",
+      "rows": 101998,
+      "bytes": 9016205,
+      "sha256": "611ad4d57f2d0681842398e4962c5d60793e5616c7568d846d18eaf5f12ba8b7"
+    },
+    {
+      "path": "incoming/encounters/encounters_d11_2025_001.csv",
+      "rows": 72724,
+      "bytes": 6428270,
+      "sha256": "771be41e7007c975c65fa5101aded3efb8cb9ad4ceee7a100d8d904e4ec93444"
+    },
+    {
+      "path": "incoming/encounters/encounters_d12_2021_000.csv",
+      "rows": 90323,
+      "bytes": 7930543,
+      "sha256": "e08818cd06eee527f794a4367b19eeb120e9482d963bd44f9fc85cfd2dd8cade"
+    },
+    {
+      "path": "incoming/encounters/encounters_d12_2022_000.csv",
+      "rows": 82094,
+      "bytes": 7207420,
+      "sha256": "36e7a6157c7676d023c7d8d72429b2401a79458c43751b83e13779b9a03c2774"
+    },
+    {
+      "path": "incoming/encounters/encounters_d12_2023_000.csv",
+      "rows": 89248,
+      "bytes": 7835881,
+      "sha256": "70af07a34bcac50daed5666dfe533233c2c7ab7c9902dadb9daeaa76ba402a48"
+    },
+    {
+      "path": "incoming/encounters/encounters_d12_2024_000.csv",
+      "rows": 93203,
+      "bytes": 8183015,
+      "sha256": "3435d524d5547873f34b9a1eaada7efc34763c52ac0d86737d0845c4ace8a0c8"
+    },
+    {
+      "path": "incoming/encounters/encounters_d12_2025_000.csv",
+      "rows": 102004,
+      "bytes": 8955718,
+      "sha256": "1d4dbc71110f99a4cfc29a98ee6499d3ea4d5de7f94ad02c4d72a9f1f76ae1e1"
+    },
+    {
+      "path": "incoming/encounters/encounters_d12_2025_001.csv",
+      "rows": 3009,
+      "bytes": 264219,
+      "sha256": "031c33929a190397ac3af573e57beacf057e59164b422ade41ddef3a5e046cec"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2021_000.csv",
+      "rows": 102038,
+      "bytes": 9052429,
+      "sha256": "8acb4d3dfcb4404626d11d89061c4965d194b7adb756b4c121bf1de122ce9eda"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2021_001.csv",
+      "rows": 101960,
+      "bytes": 9045585,
+      "sha256": "987378c564143997954332456faa1cad18936277e78a507434401c6f6074ba54"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2021_002.csv",
+      "rows": 101979,
+      "bytes": 9047290,
+      "sha256": "0e2970b5769c348888ccab8edd9703bd71a52a93641fd28bf5ca59ae243aac17"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2021_003.csv",
+      "rows": 101986,
+      "bytes": 9047469,
+      "sha256": "e6473038d82f1fb8b13cd57511290fc5cbdb0f396c02d7bb2b137c42d9295057"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2021_004.csv",
+      "rows": 101980,
+      "bytes": 9047362,
+      "sha256": "af1df5d7bee7b5e354b5445b466db6992b580e42c39693dac4e4d2541f113919"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2021_005.csv",
+      "rows": 102039,
+      "bytes": 9052044,
+      "sha256": "b54e89cff27ff46e314b1308cf8f5a940e551e17097c61e136613e87c75e0aaa"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2021_006.csv",
+      "rows": 102059,
+      "bytes": 9054129,
+      "sha256": "4d5fc711536351d51527bd2176df5d2c30af7f42c8f9145a0efd154385639139"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2021_007.csv",
+      "rows": 9925,
+      "bytes": 880531,
+      "sha256": "be48e7f28da58b0c674b450ce2c813fd07373ffc021285a0569f5599b1cf9137"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2022_000.csv",
+      "rows": 101959,
+      "bytes": 9045756,
+      "sha256": "979ccbce754675419676a7b21fdca433c247a7aab655f4fc9a8d1fe80e5ce61f"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2022_001.csv",
+      "rows": 102006,
+      "bytes": 9049498,
+      "sha256": "aca13595686a1ee736e1e86292041ba5e37661273dafbcb43c1ba8ac5c88f29e"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2022_002.csv",
+      "rows": 102045,
+      "bytes": 9052392,
+      "sha256": "6032889a8c598c144a4c2392dbe479cf8799908be17a42ea0f6d6eb9976b0e67"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2022_003.csv",
+      "rows": 101963,
+      "bytes": 9046000,
+      "sha256": "9013844450b97a1f759da8ae228887ce2e02c04cef0f35fa9ceef73f0fcc03c7"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2022_004.csv",
+      "rows": 101940,
+      "bytes": 9043593,
+      "sha256": "bd4ece7fa74625ce901726eaf253b4d2c55f94cc3f92c2b96de92421da3cb9d8"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2022_005.csv",
+      "rows": 102027,
+      "bytes": 9051013,
+      "sha256": "b71bb0e03112de04a403f5238b21986a2bf923625f7b6dafd8e7aea5f550597b"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2022_006.csv",
+      "rows": 54705,
+      "bytes": 4853347,
+      "sha256": "d9592bfdeb8e08a2e8e45e5ed4280f8eaa3fd7fbcabcb14845d357447a0405cc"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2023_000.csv",
+      "rows": 101991,
+      "bytes": 9048016,
+      "sha256": "37737e982b2da131f7892335c9fb1c93285abc5a601b143b8fd0c6f67ed646fb"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2023_001.csv",
+      "rows": 101985,
+      "bytes": 9047772,
+      "sha256": "13ed8d555c13ebec9db46be56215845e4b4117ff0c7af5485280c3f09930aa44"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2023_002.csv",
+      "rows": 101980,
+      "bytes": 9047048,
+      "sha256": "972e18969986b61bcd17f26f7bd65be536f7c2be1b8c456bf228e9d3496bb531"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2023_003.csv",
+      "rows": 102019,
+      "bytes": 9050381,
+      "sha256": "27fd31506a01bd9fb43d3ed1028055d8ec6b9066c64f5f87649ba53ecf12bd29"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2023_004.csv",
+      "rows": 101980,
+      "bytes": 9046753,
+      "sha256": "d54b300fca169eb85ef1af55daf7f3416e7858a78bdcd3e6da00f18e39c55843"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2023_005.csv",
+      "rows": 101960,
+      "bytes": 9045828,
+      "sha256": "d74e4e70ffd37bb7cdc4a45c7bad11f056e0373a2f9922aee3a987255366f8d8"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2023_006.csv",
+      "rows": 89515,
+      "bytes": 7941076,
+      "sha256": "50e2d71e3bc1320a0db37849eb60cc9ce03550622edaa625d2af3d282914a300"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2024_000.csv",
+      "rows": 102041,
+      "bytes": 9052496,
+      "sha256": "7416b00bea052e90bf7fac8c1fd7fd83f093bba38d0ca003eab17b6fb4a9c527"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2024_001.csv",
+      "rows": 102014,
+      "bytes": 9049251,
+      "sha256": "b38c3012c86cd4502c55a65cd225731a58787e19840e136ff6dc81370faea7d5"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2024_002.csv",
+      "rows": 101999,
+      "bytes": 9047868,
+      "sha256": "3f966628ad7accfea68ba68056463700140474d503bbe924d6f026af5703a71f"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2024_003.csv",
+      "rows": 102023,
+      "bytes": 9049725,
+      "sha256": "13ac1141dc2ffc850c060a42f1a9c8d9b24d8bab78972d9be66df872f1029643"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2024_004.csv",
+      "rows": 102027,
+      "bytes": 9050179,
+      "sha256": "3679879b9d1fc3207357cd6369c8e0cda52df898e69b088c82edc24dba0d2b92"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2024_005.csv",
+      "rows": 101940,
+      "bytes": 9043135,
+      "sha256": "28dcc40081a5a1ffc3440d4250638e7cb3e0cb6c67a9a930e31da123f21f5bd7"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2024_006.csv",
+      "rows": 101988,
+      "bytes": 9047939,
+      "sha256": "a9810b63e9c2813e1988ddb7b549c337ef0f2cd64cbc129db8b35f16e3a447e3"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2024_007.csv",
+      "rows": 102064,
+      "bytes": 9054855,
+      "sha256": "bedfc1a3fdfc5b17a63a9d0ce0bd8940f5397d1ec8782ac966b9522b531b75ed"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2024_008.csv",
+      "rows": 101951,
+      "bytes": 9044188,
+      "sha256": "3ca460b8ad643345eab597d022b2f78baf6e79b85c772a00ec24e4ee77d7a367"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2024_009.csv",
+      "rows": 102005,
+      "bytes": 9049093,
+      "sha256": "5f4bf7804f94d62fedee6abfb11c08ee35d4ee0cd91d3fe7aa4f19866e6dd5cf"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2024_010.csv",
+      "rows": 261,
+      "bytes": 23240,
+      "sha256": "8d6bbaee8eb818d01a1056562316030599b2e2b2138cfcfccafdb2c453682ade"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2025_000.csv",
+      "rows": 102006,
+      "bytes": 9049771,
+      "sha256": "4cd3398a5536be64aa1e63ee368dd7492b296c7a3050460946e802efd60dc2c8"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2025_001.csv",
+      "rows": 101894,
+      "bytes": 9039719,
+      "sha256": "63436580c0b25faf818097ae0645636dc8ab3e5582d123bbcccaa4626c39b585"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2025_002.csv",
+      "rows": 101984,
+      "bytes": 9047570,
+      "sha256": "8548360d06644ecb1b3f9d4cddf3d987703cb123d1876015058d85f1b1b0003c"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2025_003.csv",
+      "rows": 102075,
+      "bytes": 9055537,
+      "sha256": "b3b4cbd1195b218cbf9a3a104954ebd7e4313df8dbd8dcd0bb65d4f3e2d81573"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2025_004.csv",
+      "rows": 102021,
+      "bytes": 9050307,
+      "sha256": "b817fd7396803ff92ecf946f9f5ba53616d2ab82e1d6097f6d5e6acd78392974"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2025_005.csv",
+      "rows": 102005,
+      "bytes": 9049339,
+      "sha256": "2d23dbdc0f4534898006113a154fb5ca6de0fe500e1e6ce11e7db048704b006b"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2025_006.csv",
+      "rows": 102075,
+      "bytes": 9054892,
+      "sha256": "a22101278c688cb6f9e11fc7c7e3e7a49c08d611db5a1e5cc453a21cc5c95c32"
+    },
+    {
+      "path": "incoming/encounters/encounters_d13_2025_007.csv",
+      "rows": 30317,
+      "bytes": 2689838,
+      "sha256": "89d552b72228d448c7fe6b80ce98c2ce7ebcfd29b84c3e687295a030c1f7fe96"
+    },
+    {
+      "path": "incoming/encounters/encounters_d14_2021_000.csv",
+      "rows": 88948,
+      "bytes": 7831548,
+      "sha256": "b4b2089b7ea5e459ef36e61a8ae325e54dd40359fa79df59b28286daa5c6d8d3"
+    },
+    {
+      "path": "incoming/encounters/encounters_d14_2022_000.csv",
+      "rows": 87755,
+      "bytes": 7727326,
+      "sha256": "ee61f17b42afd5124fb9676c6cc3a351e922a125c44734bdb96374c1ef6054af"
+    },
+    {
+      "path": "incoming/encounters/encounters_d14_2023_000.csv",
+      "rows": 91411,
+      "bytes": 8048987,
+      "sha256": "bd901b4e2916e4b87b6ca5544ec3379116542351b9356b49ca56eb2e6da009d4"
+    },
+    {
+      "path": "incoming/encounters/encounters_d14_2024_000.csv",
+      "rows": 95705,
+      "bytes": 8427111,
+      "sha256": "c8ea99093df2bfb20e872f8e80cf563572191c65f44c80b6bf06701c57c694ff"
+    },
+    {
+      "path": "incoming/encounters/encounters_d14_2025_000.csv",
+      "rows": 93074,
+      "bytes": 8195151,
+      "sha256": "b82d5e951567e4f414f766bf60cd6c94c0d1ab69416a1166d8e6b4098c6e4f9d"
+    },
+    {
+      "path": "incoming/encounters/encounters_d15_2021_000.csv",
+      "rows": 58846,
+      "bytes": 5162474,
+      "sha256": "4c577abec1e39fd1051b0f51cf7df545b0be806d36a1f3cf2119c312331581f0"
+    },
+    {
+      "path": "incoming/encounters/encounters_d15_2022_000.csv",
+      "rows": 54076,
+      "bytes": 4744204,
+      "sha256": "8c2661f068f3efc5b11df4ed0cc09ac48568891d93d6dd3f3b6b031fd27d996b"
+    },
+    {
+      "path": "incoming/encounters/encounters_d15_2023_000.csv",
+      "rows": 56206,
+      "bytes": 4930687,
+      "sha256": "31f3db04a9bfa6118414f4eb1b04e2b8f84e59b68ae82004ee361c71aeaf26ed"
+    },
+    {
+      "path": "incoming/encounters/encounters_d15_2024_000.csv",
+      "rows": 57254,
+      "bytes": 5022807,
+      "sha256": "01bd7b0079e42b2a5c7571e84048cc5ad30b87fa4b3c4790844374fa08cf5318"
+    },
+    {
+      "path": "incoming/encounters/encounters_d15_2025_000.csv",
+      "rows": 60396,
+      "bytes": 5298508,
+      "sha256": "733a17db3fdf08c444f8f8d0eadc8259f1739a7d3d3006939bd5d4de37e52448"
+    },
+    {
+      "path": "incoming/encounters/encounters_d16_2021_000.csv",
+      "rows": 45356,
+      "bytes": 3977430,
+      "sha256": "db1f113d990bfe69ee3a681b40d5bcb39f0f057d2e6aef8decd0a98fda04b0b3"
+    },
+    {
+      "path": "incoming/encounters/encounters_d16_2022_000.csv",
+      "rows": 42691,
+      "bytes": 3744073,
+      "sha256": "b3f5885aa8f418cce35962f0621bb303b46da813b44c5a05f3a13e2dadb25fe6"
+    },
+    {
+      "path": "incoming/encounters/encounters_d16_2023_000.csv",
+      "rows": 45352,
+      "bytes": 3976655,
+      "sha256": "478a7d204d45dd189cbc89b3372694ccff5f77a3e4bd79c3ed718d08e9b04929"
+    },
+    {
+      "path": "incoming/encounters/encounters_d16_2024_000.csv",
+      "rows": 47312,
+      "bytes": 4148891,
+      "sha256": "dd8e8a78b13dcb057bbdb62dc536844c135689054536404553a59224d61a6262"
+    },
+    {
+      "path": "incoming/encounters/encounters_d16_2025_000.csv",
+      "rows": 49541,
+      "bytes": 4344521,
+      "sha256": "ad05dae4e0ad1f2bbda68daf0694237da3655f5899144180d2d9c475d30919ef"
+    },
+    {
+      "path": "incoming/encounters/encounters_d17_2021_000.csv",
+      "rows": 66030,
+      "bytes": 5796305,
+      "sha256": "09c1cdb459b8b6fa9f4e583b3a0a458dfbcf1539eca464e6c5cec6fca4adec57"
+    },
+    {
+      "path": "incoming/encounters/encounters_d17_2022_000.csv",
+      "rows": 66574,
+      "bytes": 5843586,
+      "sha256": "24f7024bbe7e9e48b6e037c829b0e2b60f8b56263c53b2ead850b36b980c0f5d"
+    },
+    {
+      "path": "incoming/encounters/encounters_d17_2023_000.csv",
+      "rows": 67948,
+      "bytes": 5964795,
+      "sha256": "0e5ba7ba739e6ddcc7f190e358af8ee7fdde1eea76d4459356686f506676eba9"
+    },
+    {
+      "path": "incoming/encounters/encounters_d17_2024_000.csv",
+      "rows": 69483,
+      "bytes": 6099329,
+      "sha256": "706d0f328e96f97cd14a37e6194beb5f412afed02c1b4a8cbfbfc8e7926a4773"
+    },
+    {
+      "path": "incoming/encounters/encounters_d17_2025_000.csv",
+      "rows": 72856,
+      "bytes": 6395753,
+      "sha256": "fdb1677afd45e9d1150b9bbc73972757e98148cf9aa1c6eaca35a1144c331d71"
+    },
+    {
+      "path": "incoming/encounters/encounters_d18_2021_000.csv",
+      "rows": 102025,
+      "bytes": 9016532,
+      "sha256": "f0080548ee6fddd687a9a128d9899b0edaa5852692519fae23b61ed29258e87f"
+    },
+    {
+      "path": "incoming/encounters/encounters_d18_2021_001.csv",
+      "rows": 89086,
+      "bytes": 7872713,
+      "sha256": "6f3c160ae408205a9a3f565e729608b33d9897f6710605fcc1b60b3572164f60"
+    },
+    {
+      "path": "incoming/encounters/encounters_d18_2022_000.csv",
+      "rows": 101939,
+      "bytes": 9009315,
+      "sha256": "e4bc46b674c053281d05cce075023789e421c101a238c9f07d43c3181672e959"
+    },
+    {
+      "path": "incoming/encounters/encounters_d18_2022_001.csv",
+      "rows": 94545,
+      "bytes": 8356832,
+      "sha256": "ec3b1a253ccdf1ce31272ca8d03fcc22d7d089852b8898ce415b175e50407e28"
+    },
+    {
+      "path": "incoming/encounters/encounters_d18_2023_000.csv",
+      "rows": 101999,
+      "bytes": 9014945,
+      "sha256": "8a2a4c3b5176942558de93dd673e8c7ee923f913297b1f7f883db3fedd86eb8d"
+    },
+    {
+      "path": "incoming/encounters/encounters_d18_2023_001.csv",
+      "rows": 86385,
+      "bytes": 7635124,
+      "sha256": "5aeec283a3e0123884c420d8685ea683275604fea410b04ccbb3f45bd0f09651"
+    },
+    {
+      "path": "incoming/encounters/encounters_d18_2024_000.csv",
+      "rows": 101962,
+      "bytes": 9011004,
+      "sha256": "ed6cd820bbd4839059cf72f0bc387fef7afc26da35103ed83f26c644e678a4ef"
+    },
+    {
+      "path": "incoming/encounters/encounters_d18_2024_001.csv",
+      "rows": 100340,
+      "bytes": 8867999,
+      "sha256": "864dab0b2041e8c2dbb044be21e304a89d63ea61b90d0150e79ab3823dce4c9c"
+    },
+    {
+      "path": "incoming/encounters/encounters_d18_2025_000.csv",
+      "rows": 102000,
+      "bytes": 9015021,
+      "sha256": "82f1ba9c7cb16f60631245c1e273aa4c025d03aae7c351635d7c50a480efdc1d"
+    },
+    {
+      "path": "incoming/encounters/encounters_d18_2025_001.csv",
+      "rows": 102059,
+      "bytes": 9020021,
+      "sha256": "1f8695aa7220b2556d67a08a211bd7eb779f0129a31b1c79e7b4f6a54cf81595"
+    },
+    {
+      "path": "incoming/encounters/encounters_d18_2025_002.csv",
+      "rows": 7931,
+      "bytes": 701059,
+      "sha256": "8bd53a12d76474bac9ed78f749a8204beb95dcf8f1977508ba66576ac09d82a5"
+    },
+    {
+      "path": "incoming/encounters/encounters_d19_2021_000.csv",
+      "rows": 34678,
+      "bytes": 3038891,
+      "sha256": "fa8ad653082a64637739930b76ef7aa890bb0ec7b23b9d144a22778c16c0cdba"
+    },
+    {
+      "path": "incoming/encounters/encounters_d19_2022_000.csv",
+      "rows": 32908,
+      "bytes": 2883955,
+      "sha256": "9c7b2c9f4c0ce9ee10bae0428d2699b7977375c30e554b98e88e28d4de8e2677"
+    },
+    {
+      "path": "incoming/encounters/encounters_d19_2023_000.csv",
+      "rows": 33648,
+      "bytes": 2948947,
+      "sha256": "6f5f4647238cb06ec18800ccb75363f451a1be034faccb0c1cfa04c5a37b12a0"
+    },
+    {
+      "path": "incoming/encounters/encounters_d19_2024_000.csv",
+      "rows": 35082,
+      "bytes": 3074664,
+      "sha256": "ea3960551b50d9f91f76e4a4486032d2c0f9ad2ed1f845d9998ddfa4dc56fc4b"
+    },
+    {
+      "path": "incoming/encounters/encounters_d19_2025_000.csv",
+      "rows": 38298,
+      "bytes": 3356413,
+      "sha256": "b0766f173e4daf1e38c332ccd06440083b69bb6587a69b2319bda21c363b3b7e"
+    },
+    {
+      "path": "incoming/encounters/encounters_d20_2021_000.csv",
+      "rows": 59865,
+      "bytes": 5249706,
+      "sha256": "f214aa0aca18a9279ad3c1c065409f34130dfa58e253ac91805a460c4ef54293"
+    },
+    {
+      "path": "incoming/encounters/encounters_d20_2022_000.csv",
+      "rows": 60752,
+      "bytes": 5327041,
+      "sha256": "f61f78d19e6b531c5340a6b9dde5fe4cefeca33ecce4449cb3352a1277d8842c"
+    },
+    {
+      "path": "incoming/encounters/encounters_d20_2023_000.csv",
+      "rows": 61230,
+      "bytes": 5368652,
+      "sha256": "085b6f2e4dc9c965ae280dbcf3f364641ede037e93ffd76108c9351d5603b47d"
+    },
+    {
+      "path": "incoming/encounters/encounters_d20_2024_000.csv",
+      "rows": 64603,
+      "bytes": 5664912,
+      "sha256": "7f5ad2f9c371d236994f27c2b43029b576ab4909dbe6a0a0d39d9804eee86807"
+    },
+    {
+      "path": "incoming/encounters/encounters_d20_2025_000.csv",
+      "rows": 66468,
+      "bytes": 5828597,
+      "sha256": "a05a8a4b20d5918ad641bdbf974f05550dd563bd27e2529e562e121eea2b87a9"
+    },
+    {
+      "path": "incoming/encounters/encounters_d21_2021_000.csv",
+      "rows": 65989,
+      "bytes": 5791302,
+      "sha256": "5bb51719ed6a5bf3f781ebc358bcb07f056be172628324256dfe0561c73995c3"
+    },
+    {
+      "path": "incoming/encounters/encounters_d21_2022_000.csv",
+      "rows": 65563,
+      "bytes": 5753836,
+      "sha256": "61dd68780583b54075bd724c0e7195b11d1609964554358e824bea31ec7cc05d"
+    },
+    {
+      "path": "incoming/encounters/encounters_d21_2023_000.csv",
+      "rows": 68388,
+      "bytes": 6002186,
+      "sha256": "ae2a57a00b60aa0c569d04544f6599cee0176590c78ff1d637e2ed5e9427c6d4"
+    },
+    {
+      "path": "incoming/encounters/encounters_d21_2024_000.csv",
+      "rows": 68126,
+      "bytes": 5978660,
+      "sha256": "0c10f4427a9531fa70e109b3de6e3457d050ff4bb5f87f3670b9442360ef08a0"
+    },
+    {
+      "path": "incoming/encounters/encounters_d21_2025_000.csv",
+      "rows": 71403,
+      "bytes": 6266417,
+      "sha256": "ca6f9b01dcac09b0e179b51113192bc5455d51e2dcfdaa0cd7b06027d6e16f38"
+    },
+    {
+      "path": "incoming/encounters/encounters_d22_2021_000.csv",
+      "rows": 82873,
+      "bytes": 7294548,
+      "sha256": "f792eae9621518e02abc653e968c1de1f85c431e8d75d8920c8b1da9ebe931c0"
+    },
+    {
+      "path": "incoming/encounters/encounters_d22_2022_000.csv",
+      "rows": 78441,
+      "bytes": 6904299,
+      "sha256": "0740d2726bcc370f49e9b35b295df441aea8dbb85bb11434dc43e337ad6c6102"
+    },
+    {
+      "path": "incoming/encounters/encounters_d22_2023_000.csv",
+      "rows": 81578,
+      "bytes": 7179860,
+      "sha256": "128bf560ce034d383d676eeade5305ba3b3d033adef31faa0da31644e67304e3"
+    },
+    {
+      "path": "incoming/encounters/encounters_d22_2024_000.csv",
+      "rows": 82161,
+      "bytes": 7231277,
+      "sha256": "92c99c0f225fa34c34c85de3396628df6879f780de0c1dde2329311a5350b958"
+    },
+    {
+      "path": "incoming/encounters/encounters_d22_2025_000.csv",
+      "rows": 88974,
+      "bytes": 7831322,
+      "sha256": "79cc3ba1e10c97601136ec4d0b67e5213380a31d95045255f41f9312742c481e"
+    },
+    {
+      "path": "incoming/encounters/encounters_d23_2021_000.csv",
+      "rows": 17762,
+      "bytes": 1553430,
+      "sha256": "5c70f0ba64e74c903b0a4763ac4fe971fa7cfec8a30b572c69701bb88a325157"
+    },
+    {
+      "path": "incoming/encounters/encounters_d23_2022_000.csv",
+      "rows": 17104,
+      "bytes": 1495908,
+      "sha256": "a07d2d73ac16ad5722806a7c823891420a3daaf585c5e73d3f695bb9dc089c8b"
+    },
+    {
+      "path": "incoming/encounters/encounters_d23_2023_000.csv",
+      "rows": 17437,
+      "bytes": 1525130,
+      "sha256": "b3e99a537d75805fa9d1f294d531da4f2c29d1a79e23112aea99badbf7fc504a"
+    },
+    {
+      "path": "incoming/encounters/encounters_d23_2024_000.csv",
+      "rows": 17952,
+      "bytes": 1570245,
+      "sha256": "8736d0c061f52526baee6e73878fc428c5b07cfb62fa1150c9c78774b69d4a8d"
+    },
+    {
+      "path": "incoming/encounters/encounters_d23_2025_000.csv",
+      "rows": 19116,
+      "bytes": 1672062,
+      "sha256": "84caf51b489ee5489ed829aefd6a8483c75dfb25a134d6939d623cda77372cbe"
+    },
+    {
+      "path": "incoming/encounters/encounters_d24_2021_000.csv",
+      "rows": 52284,
+      "bytes": 4587622,
+      "sha256": "f01ecdfcdf4bda7df7b485f36a6490758973e835193ce641ff19f81900a44dd9"
+    },
+    {
+      "path": "incoming/encounters/encounters_d24_2022_000.csv",
+      "rows": 50302,
+      "bytes": 4413787,
+      "sha256": "920ad0ec82ff3473886981ef88e3cfe3fd85f9f41382c4e8a9862b9b1de27dc4"
+    },
+    {
+      "path": "incoming/encounters/encounters_d24_2023_000.csv",
+      "rows": 55496,
+      "bytes": 4870034,
+      "sha256": "0a21ad6ee4ba381e36e46cca246c7132f2abc5c92da1943009672ce5d9756223"
+    },
+    {
+      "path": "incoming/encounters/encounters_d24_2024_000.csv",
+      "rows": 62751,
+      "bytes": 5506175,
+      "sha256": "6ba02e28c08d5d887009f6c672df2c8392d09f9efd1aa20e88d5866b89f8a7fc"
+    },
+    {
+      "path": "incoming/encounters/encounters_d24_2025_000.csv",
+      "rows": 54902,
+      "bytes": 4817658,
+      "sha256": "76e7fe4ffc3ba2ffcf9d048b6cb1f438ce4014d5bfc1de9abb7dee2f74585dfc"
+    },
+    {
+      "path": "incoming/encounters/encounters_d25_2021_000.csv",
+      "rows": 24472,
+      "bytes": 2144100,
+      "sha256": "f8e390a43cb35e06f0e60c934428b77dffdc2470d3bf9535d5e0702d557e3178"
+    },
+    {
+      "path": "incoming/encounters/encounters_d25_2022_000.csv",
+      "rows": 24944,
+      "bytes": 2185599,
+      "sha256": "5e28fcf41c3e92dea5e9cf4d97e8cd8afa8a17e244489dbae8e84232b038cc9e"
+    },
+    {
+      "path": "incoming/encounters/encounters_d25_2023_000.csv",
+      "rows": 25412,
+      "bytes": 2226649,
+      "sha256": "c7ca4e9a4536c9be6accf6fe8eb3501fc788e1796b9b0eba305bb01ecd2496f1"
+    },
+    {
+      "path": "incoming/encounters/encounters_d25_2024_000.csv",
+      "rows": 25053,
+      "bytes": 2194895,
+      "sha256": "75ec5fdcc1f1f4c06e58f5e8e357761d7242e03ed875fc89eabcce8e8d380eb7"
+    },
+    {
+      "path": "incoming/encounters/encounters_d25_2025_000.csv",
+      "rows": 26809,
+      "bytes": 2348909,
+      "sha256": "4a0545718c56cb87c8a8cb893a993580f7d73a0b36e16a1d7bba6c5041e358d0"
+    },
+    {
+      "path": "incoming/encounters/encounters_d26_2021_000.csv",
+      "rows": 33894,
+      "bytes": 2964910,
+      "sha256": "75f322bb32c471aa2963b3a00cf5b5c9a5955ed245d150bd31d4749fc80ba4f3"
+    },
+    {
+      "path": "incoming/encounters/encounters_d26_2022_000.csv",
+      "rows": 33647,
+      "bytes": 2943390,
+      "sha256": "613a1fa82ba1f36be8c6355011730dbe9da048ecb9f451b0e638df46428d4c09"
+    },
+    {
+      "path": "incoming/encounters/encounters_d26_2023_000.csv",
+      "rows": 43480,
+      "bytes": 3803096,
+      "sha256": "56ed42488557b522a20db2ab9c92cf3e76b68455e3c72296bbb29ab04b84848c"
+    },
+    {
+      "path": "incoming/encounters/encounters_d26_2024_000.csv",
+      "rows": 34709,
+      "bytes": 3036408,
+      "sha256": "8a70c637c822eba63bb631dd83dff0aa7daa4cbc3df4bae42e8b7264aa1647a9"
+    },
+    {
+      "path": "incoming/encounters/encounters_d26_2025_000.csv",
+      "rows": 35156,
+      "bytes": 3075116,
+      "sha256": "b988d972e95c2070cab83f2e9cf29cf05991b6f0f590be0e058bd0fb1fbd7300"
+    },
+    {
+      "path": "incoming/encounters/encounters_d27_2021_000.csv",
+      "rows": 70131,
+      "bytes": 6161242,
+      "sha256": "6a303dffae3e3c7307606b3853839d714dbe26fc1fc353b3d2304b2e88ac4a21"
+    },
+    {
+      "path": "incoming/encounters/encounters_d27_2022_000.csv",
+      "rows": 67147,
+      "bytes": 5899093,
+      "sha256": "817dde923ac0377cc71b822abea5ad0ac35ac641169badf5525c09206006bd0f"
+    },
+    {
+      "path": "incoming/encounters/encounters_d27_2023_000.csv",
+      "rows": 67940,
+      "bytes": 5968968,
+      "sha256": "29322adcb3fe27b03dcfa705f4c90088301bdd58896962ae2ddc78f86cfa6d8f"
+    },
+    {
+      "path": "incoming/encounters/encounters_d27_2024_000.csv",
+      "rows": 70956,
+      "bytes": 6233212,
+      "sha256": "1a351d9d5bf667bd4b6d218a41fe03b1a542ddf785c64eacc099ced7545cd437"
+    },
+    {
+      "path": "incoming/encounters/encounters_d27_2025_000.csv",
+      "rows": 75586,
+      "bytes": 6640403,
+      "sha256": "ad1f1420ffa602774a16d5a08854de7c92d4461cc8c8447ec1f66cf759b72904"
+    },
+    {
+      "path": "incoming/encounters/encounters_d28_2021_000.csv",
+      "rows": 86237,
+      "bytes": 7587139,
+      "sha256": "9fcd4af0daabaf74a62fa379ec56a334d39b66b64e4953da85a0f89744213803"
+    },
+    {
+      "path": "incoming/encounters/encounters_d28_2022_000.csv",
+      "rows": 91287,
+      "bytes": 8031648,
+      "sha256": "51a128a22ab96022c495b9731622848235dc85b83d9d2ae844a83705e79abe95"
+    },
+    {
+      "path": "incoming/encounters/encounters_d28_2023_000.csv",
+      "rows": 89442,
+      "bytes": 7868771,
+      "sha256": "84de66667b55e24c382b555fa1abf5cea4fb3835993ee676c8feb708e4e0ad26"
+    },
+    {
+      "path": "incoming/encounters/encounters_d28_2024_000.csv",
+      "rows": 91905,
+      "bytes": 8086110,
+      "sha256": "f0a56974b912e3ed3c567e36dee1e47635dd76ac0445e51dbe73e990cd2c7cd8"
+    },
+    {
+      "path": "incoming/encounters/encounters_d28_2025_000.csv",
+      "rows": 94338,
+      "bytes": 8300445,
+      "sha256": "c5372fa54fc69250d40cc905aa33f2aedf07e878019c774c55418f50ecbd2c69"
+    },
+    {
+      "path": "incoming/encounters/encounters_d29_2021_000.csv",
+      "rows": 62231,
+      "bytes": 5459118,
+      "sha256": "83e67ac8544c45a55a5c143a7122522c1c66bccd80d92e02289e365db43c57ca"
+    },
+    {
+      "path": "incoming/encounters/encounters_d29_2022_000.csv",
+      "rows": 64839,
+      "bytes": 5688042,
+      "sha256": "5fdb6a671c46d2f0a7bcc9c739f840d8e9613ba4288b95ed46c48051bb490568"
+    },
+    {
+      "path": "incoming/encounters/encounters_d29_2023_000.csv",
+      "rows": 64304,
+      "bytes": 5641352,
+      "sha256": "f0e43399e3b03dd5145e2f7168d268c195e70e518ebdbf1d478b0a39db841fcf"
+    },
+    {
+      "path": "incoming/encounters/encounters_d29_2024_000.csv",
+      "rows": 69740,
+      "bytes": 6118070,
+      "sha256": "bf589c825115b25909d50e90523b784e04928aec70b8f2de4c47a24dd1fc26eb"
+    },
+    {
+      "path": "incoming/encounters/encounters_d29_2025_000.csv",
+      "rows": 66333,
+      "bytes": 5819395,
+      "sha256": "7f9938c6dd9488373d8beda12db64e7c973badd9fa37775dcfa2551df215742c"
+    },
+    {
+      "path": "incoming/encounters/encounters_d30_2021_000.csv",
+      "rows": 57179,
+      "bytes": 5017894,
+      "sha256": "56c7b021d7ad37ec64c2f3f9a6825d944029a729428d76b1cd34dff734c1046e"
+    },
+    {
+      "path": "incoming/encounters/encounters_d30_2022_000.csv",
+      "rows": 54269,
+      "bytes": 4762371,
+      "sha256": "c7fbf1dbf344f777056e5618e98e88f047f1dc0da8ba5a0495d69df17d37cba1"
+    },
+    {
+      "path": "incoming/encounters/encounters_d30_2023_000.csv",
+      "rows": 56003,
+      "bytes": 4914065,
+      "sha256": "96b9882aabb58932010bf0a07ad437062cf3da9d41f82a75170aeec4b46d589e"
+    },
+    {
+      "path": "incoming/encounters/encounters_d30_2024_000.csv",
+      "rows": 56320,
+      "bytes": 4942667,
+      "sha256": "45b61b99dd647ae98546f2ced8c12f5793c35ea2deb5efb6d83508d6a6485954"
+    },
+    {
+      "path": "incoming/encounters/encounters_d30_2025_000.csv",
+      "rows": 59490,
+      "bytes": 5220537,
+      "sha256": "2fb1315fb08d4c55d5b9c46f195f8ce13a6add53fe5cb4938de164003ff9468e"
+    },
+    {
+      "path": "incoming/encounters/encounters_d31_2021_000.csv",
+      "rows": 52353,
+      "bytes": 4590929,
+      "sha256": "1a45e7e8dfc2fb1eca5c1c98825c9191dbf2ce6ccc53c0543cad683b36f070a7"
+    },
+    {
+      "path": "incoming/encounters/encounters_d31_2022_000.csv",
+      "rows": 49926,
+      "bytes": 4377856,
+      "sha256": "800ad8b46e704ce22d0614e9196896f9638b5d9b85918f45344301c78dccf7f9"
+    },
+    {
+      "path": "incoming/encounters/encounters_d31_2023_000.csv",
+      "rows": 51867,
+      "bytes": 4548003,
+      "sha256": "c1455a3e00977ef11099c52f4afc957b53e762eeb1f466ddfd2c39c8d2ae4495"
+    },
+    {
+      "path": "incoming/encounters/encounters_d31_2024_000.csv",
+      "rows": 53950,
+      "bytes": 4730497,
+      "sha256": "6fb6463df214f41fe4909b03a6ad42613dea6d6ce72e6704dedaafb03acf3d24"
+    },
+    {
+      "path": "incoming/encounters/encounters_d31_2025_000.csv",
+      "rows": 56517,
+      "bytes": 4956198,
+      "sha256": "a76336e5e7a22204079783d59fae5718b787ee1cc86c29d6b2a69aa422aea01a"
+    },
+    {
+      "path": "incoming/encounters/encounters_d32_2021_000.csv",
+      "rows": 38424,
+      "bytes": 3368141,
+      "sha256": "bea4dd3b0df54b733ce67a53feae382b09dcb67ae0219fe901d7628f23afd257"
+    },
+    {
+      "path": "incoming/encounters/encounters_d32_2022_000.csv",
+      "rows": 38110,
+      "bytes": 3340665,
+      "sha256": "99d5975d06e787fbab1f5f369dccec7f9434fb16b2607c29c312d2d913b1080f"
+    },
+    {
+      "path": "incoming/encounters/encounters_d32_2023_000.csv",
+      "rows": 40265,
+      "bytes": 3529481,
+      "sha256": "996030e77e08d78e7fc0e51620f3a9e3fa4da5ff47ae0aadb088192434a0d8da"
+    },
+    {
+      "path": "incoming/encounters/encounters_d32_2024_000.csv",
+      "rows": 39563,
+      "bytes": 3467988,
+      "sha256": "c07d320ca328df5ca6ffdd74eb50c2ae158629f50c15d65868b46c427efd0b9b"
+    },
+    {
+      "path": "incoming/encounters/encounters_d32_2025_000.csv",
+      "rows": 41452,
+      "bytes": 3633315,
+      "sha256": "7e58b4aba52166662e6ceb0cd28ca62594c9c3cdfbb1ab132dc4673bfa6d212f"
+    },
+    {
+      "path": "incoming/encounters/encounters_d33_2021_000.csv",
+      "rows": 34525,
+      "bytes": 3026052,
+      "sha256": "35b2364c39bcdc0d093e80d150bf479f4da7fd488c78ab90eff9c5bf6f3634da"
+    },
+    {
+      "path": "incoming/encounters/encounters_d33_2022_000.csv",
+      "rows": 33177,
+      "bytes": 2907678,
+      "sha256": "86819183412c58562ea15a6d8e7e007aec476da067480050c49c20025285aa06"
+    },
+    {
+      "path": "incoming/encounters/encounters_d33_2023_000.csv",
+      "rows": 33413,
+      "bytes": 2928375,
+      "sha256": "5353f32630da7c1cda9591ded23af7e6a0eb5b6d3387ba7f1fca24b068fbe6fd"
+    },
+    {
+      "path": "incoming/encounters/encounters_d33_2024_000.csv",
+      "rows": 34997,
+      "bytes": 3067034,
+      "sha256": "904432de78aab3f582d7f8cddef573caca9b6fa15f9881dc718e2494537f9eed"
+    },
+    {
+      "path": "incoming/encounters/encounters_d33_2025_000.csv",
+      "rows": 37531,
+      "bytes": 3289305,
+      "sha256": "0cc8ccc1a6b2aa4d9912d58c06c0e69049f7da2f947caecee171f00bd626af11"
+    },
+    {
+      "path": "incoming/encounters/encounters_d34_2021_000.csv",
+      "rows": 27585,
+      "bytes": 2416537,
+      "sha256": "48db9f260ba785e96a7ab64c077931052e31cb1898e7f5a85edf3e332270b607"
+    },
+    {
+      "path": "incoming/encounters/encounters_d34_2022_000.csv",
+      "rows": 25344,
+      "bytes": 2220029,
+      "sha256": "8bed8805c2241a5535b655517c6901070fcacf8610d7780fd5fcc222db409d7b"
+    },
+    {
+      "path": "incoming/encounters/encounters_d34_2023_000.csv",
+      "rows": 26538,
+      "bytes": 2324434,
+      "sha256": "f4e8b253f7c56fc910bd4e3aed00377ef2cbceca71442cc8c1801a3b6c392a0c"
+    },
+    {
+      "path": "incoming/encounters/encounters_d34_2024_000.csv",
+      "rows": 26719,
+      "bytes": 2340774,
+      "sha256": "4be3ad839469ce7c636493b0596b403cc5635cd6df6e4654bc6c139ffa7ad853"
+    },
+    {
+      "path": "incoming/encounters/encounters_d34_2025_000.csv",
+      "rows": 28466,
+      "bytes": 2493476,
+      "sha256": "45089826fd7073631b78418e02a258de1ea36fd3a3ee935d1d11407109cc7aba"
+    },
+    {
+      "path": "incoming/encounters/encounters_d35_2021_000.csv",
+      "rows": 40552,
+      "bytes": 3556423,
+      "sha256": "d101beeeac19ef474b2ebeb256263d7f97fa2e9d5d6d15c904d5c19c256e3512"
+    },
+    {
+      "path": "incoming/encounters/encounters_d35_2022_000.csv",
+      "rows": 38786,
+      "bytes": 3401574,
+      "sha256": "55f28f53fe07654972fefa88578da2a3a37c47491126f72cd197f44d2ae0f857"
+    },
+    {
+      "path": "incoming/encounters/encounters_d35_2023_000.csv",
+      "rows": 39608,
+      "bytes": 3473552,
+      "sha256": "c5b3e67a25445c4a924de6fdfcf49ccf89d30ba8e8399891bb21b58e351f19f0"
+    },
+    {
+      "path": "incoming/encounters/encounters_d35_2024_000.csv",
+      "rows": 42720,
+      "bytes": 3746567,
+      "sha256": "4a9393a4a89507f1bb5bfcdde380643e8221c5bb4c326e71cf82dfa93b7332c2"
+    },
+    {
+      "path": "incoming/encounters/encounters_d35_2025_000.csv",
+      "rows": 42582,
+      "bytes": 3734583,
+      "sha256": "6f8f19cfbcc7b8448f602804c29246b957f6655ea42c2eeb0291e35dca6a12e4"
+    },
+    {
+      "path": "incoming/encounters/encounters_d36_2021_000.csv",
+      "rows": 56269,
+      "bytes": 4935553,
+      "sha256": "a34687d67f9ee029156737876064ed24951c5b584f37c905b0c81b30b81fbc2b"
+    },
+    {
+      "path": "incoming/encounters/encounters_d36_2022_000.csv",
+      "rows": 56540,
+      "bytes": 4958867,
+      "sha256": "83eff4c3e71a6387a9de40dbf71550f440efb71e76f2f7142ccd6d7ed97f6a87"
+    },
+    {
+      "path": "incoming/encounters/encounters_d36_2023_000.csv",
+      "rows": 58002,
+      "bytes": 5087559,
+      "sha256": "31e9985f4d689fc75d26e55af1e5418503f53fe3945a1b66a85321f8960fd57b"
+    },
+    {
+      "path": "incoming/encounters/encounters_d36_2024_000.csv",
+      "rows": 68961,
+      "bytes": 6048267,
+      "sha256": "ef2054cfe2af419cc8200a6b28241529e6f75e2811b7ebd5635a20d5c064f4d2"
+    },
+    {
+      "path": "incoming/encounters/encounters_d36_2025_000.csv",
+      "rows": 62505,
+      "bytes": 5482401,
+      "sha256": "dc17acfb1c2d278f38cc094cdbe1ee9eadfc2b8ce4d0f0088c19cddd2f67527a"
+    },
+    {
+      "path": "incoming/encounters/encounters_d37_2021_000.csv",
+      "rows": 18117,
+      "bytes": 1585275,
+      "sha256": "fbcd1b4864ebc63aa219c9b8c5d31b63216c5f9ed00ea18e0247c8aaff31898e"
+    },
+    {
+      "path": "incoming/encounters/encounters_d37_2022_000.csv",
+      "rows": 16890,
+      "bytes": 1477830,
+      "sha256": "00c4a50aa60e440d27c2ab5d57737eb035f8b4deb0f6a003048e8e17f38c480a"
+    },
+    {
+      "path": "incoming/encounters/encounters_d37_2023_000.csv",
+      "rows": 17552,
+      "bytes": 1535903,
+      "sha256": "79e5e3438a67aa251ed199cfcfebba5267ff574dc236d6c1897d755fec0dcf1c"
+    },
+    {
+      "path": "incoming/encounters/encounters_d37_2024_000.csv",
+      "rows": 17880,
+      "bytes": 1564635,
+      "sha256": "9fbaed17da9c0c1f9dcab91bc284d7285a4134ef8c6f58cad7a29286fd1ad360"
+    },
+    {
+      "path": "incoming/encounters/encounters_d37_2025_000.csv",
+      "rows": 18594,
+      "bytes": 1626890,
+      "sha256": "b0e05079c58c01b11d17ec4f621d4ba0125cca6d82ce4ac2cb64fd6eb954fb4b"
+    },
+    {
+      "path": "incoming/encounters/encounters_d38_2021_000.csv",
+      "rows": 44595,
+      "bytes": 3911484,
+      "sha256": "bd4aba8dbab2544e2120712711f6748eb5d56acef022737a9d9ae6ab145c0759"
+    },
+    {
+      "path": "incoming/encounters/encounters_d38_2022_000.csv",
+      "rows": 42876,
+      "bytes": 3760774,
+      "sha256": "f8bac695faaf2d190c54eeaad07d6dd2df550e08d3ffc319543f4f2af61b90d3"
+    },
+    {
+      "path": "incoming/encounters/encounters_d38_2023_000.csv",
+      "rows": 44563,
+      "bytes": 3908881,
+      "sha256": "14b23d0ade461cab2fc330d1a6520f8400134ebf13e11ff0ba542dc5336bbdf7"
+    },
+    {
+      "path": "incoming/encounters/encounters_d38_2024_000.csv",
+      "rows": 58026,
+      "bytes": 5089365,
+      "sha256": "3117ca208496c6937d78ae4f7ecd402c995dd4317899073817798dabd6d965b8"
+    },
+    {
+      "path": "incoming/encounters/encounters_d38_2025_000.csv",
+      "rows": 47361,
+      "bytes": 4154040,
+      "sha256": "5a9a756397eb677632a419d7fc62d06a0ab941077272572af0b4eee83b7ad19e"
+    },
+    {
+      "path": "incoming/encounters/encounters_d39_2021_000.csv",
+      "rows": 102047,
+      "bytes": 9018438,
+      "sha256": "0bce9efdba511605bb508c68c22f0538ac0f919e733ea97ea1cd2d856eeddedf"
+    },
+    {
+      "path": "incoming/encounters/encounters_d39_2021_001.csv",
+      "rows": 58448,
+      "bytes": 5164469,
+      "sha256": "aa0f25f1fe91f1e13539183db84991fa9e58e61c427d8d5144482229df8271e2"
+    },
+    {
+      "path": "incoming/encounters/encounters_d39_2022_000.csv",
+      "rows": 101939,
+      "bytes": 9008384,
+      "sha256": "4d1d79f5f06300eab72fb5b29d1438880dd10b19e78c8cf1aa942b831825ff57"
+    },
+    {
+      "path": "incoming/encounters/encounters_d39_2022_001.csv",
+      "rows": 59032,
+      "bytes": 5216944,
+      "sha256": "086c25f732bb5e26c456c1abd4aa9bb58176cbbfb57043baf52de99d1a90177b"
+    },
+    {
+      "path": "incoming/encounters/encounters_d39_2023_000.csv",
+      "rows": 102023,
+      "bytes": 9016473,
+      "sha256": "4add9db8dceea5603c569b3c1a86231f081a42691d33e3c8acaf484f1dad788b"
+    },
+    {
+      "path": "incoming/encounters/encounters_d39_2023_001.csv",
+      "rows": 64721,
+      "bytes": 5719414,
+      "sha256": "dafd69981c95bc74a75b9f21a84ffbfcc7552f71ab26230e000e4b41b2819456"
+    },
+    {
+      "path": "incoming/encounters/encounters_d39_2024_000.csv",
+      "rows": 102072,
+      "bytes": 9020336,
+      "sha256": "0a4258d7feb6801b74ac98e0fcdd64d453fd5dd25014116b9f635f1796da7d46"
+    },
+    {
+      "path": "incoming/encounters/encounters_d39_2024_001.csv",
+      "rows": 66559,
+      "bytes": 5881851,
+      "sha256": "2d89b2d438733b67f6627fb51009244dea306e488f246185104a14d3166e1744"
+    },
+    {
+      "path": "incoming/encounters/encounters_d39_2025_000.csv",
+      "rows": 101982,
+      "bytes": 9012502,
+      "sha256": "054ef0f189df1a82cfcf23ae076f9525454bbffa7e4eea95162b37560105ca63"
+    },
+    {
+      "path": "incoming/encounters/encounters_d39_2025_001.csv",
+      "rows": 71480,
+      "bytes": 6316830,
+      "sha256": "67408b943b5d7eb92ae6a384bf59653616dd860366eb919c1b96e3d4df21d656"
+    },
+    {
+      "path": "incoming/encounters/encounters_d40_2021_000.csv",
+      "rows": 72312,
+      "bytes": 6357467,
+      "sha256": "379995d0167fe01e9a8db6d5b9f251ff9d90d9ba64c25bd48fd8ceedd2e1a6d8"
+    },
+    {
+      "path": "incoming/encounters/encounters_d40_2022_000.csv",
+      "rows": 72052,
+      "bytes": 6334302,
+      "sha256": "4269731e3ae4656f444a4a9b959ae29dacfa0d06a661ed3602b67adb98a4953a"
+    },
+    {
+      "path": "incoming/encounters/encounters_d40_2023_000.csv",
+      "rows": 72585,
+      "bytes": 6381565,
+      "sha256": "e02f9dbf4251c0c75b34057526f56d4bfc35b9aeee3902601d05a9674908a4b8"
+    },
+    {
+      "path": "incoming/encounters/encounters_d40_2024_000.csv",
+      "rows": 74090,
+      "bytes": 6513979,
+      "sha256": "c38a46489954e76246e8d7849fd88fbf9085eb9d26d3f6e91e55ac21522a5941"
+    },
+    {
+      "path": "incoming/encounters/encounters_d40_2025_000.csv",
+      "rows": 78336,
+      "bytes": 6886814,
+      "sha256": "35e77c991cc2c6f0b4364c3be4403a0c3957e7a1a5f2eb6c9353a22d5fffd064"
+    },
+    {
+      "path": "incoming/encounters/encounters_d41_2021_000.csv",
+      "rows": 22136,
+      "bytes": 1937662,
+      "sha256": "b30ee081113e6c9a186e37686b17ebe9006309b7449ad41103a04a1ab0a8fa86"
+    },
+    {
+      "path": "incoming/encounters/encounters_d41_2022_000.csv",
+      "rows": 20875,
+      "bytes": 1827352,
+      "sha256": "015203a7ecff7edc08715a4068b7c1f07bd8259352f73a87638bcd0e21b3b758"
+    },
+    {
+      "path": "incoming/encounters/encounters_d41_2023_000.csv",
+      "rows": 21474,
+      "bytes": 1879585,
+      "sha256": "45c5d469ba91134f35eb5d5a9f1bc3f498e1fa55ba204f703846e69923b73774"
+    },
+    {
+      "path": "incoming/encounters/encounters_d41_2024_000.csv",
+      "rows": 21597,
+      "bytes": 1890324,
+      "sha256": "90e3449cbfe40070fd9115eea21f6eb42a0459783438efc5546dded596292522"
+    },
+    {
+      "path": "incoming/encounters/encounters_d41_2025_000.csv",
+      "rows": 23223,
+      "bytes": 2032849,
+      "sha256": "82e8afdd2e56879313fc1a1d8eb54bc845bc8451252aa1dcf10a006457326e9b"
+    },
+    {
+      "path": "incoming/encounters/encounters_d42_2021_000.csv",
+      "rows": 102010,
+      "bytes": 8992910,
+      "sha256": "f4c8c0165ce0f4a724b03dc9a912606b8ab2549ec3aa896b40c86d26bc34c356"
+    },
+    {
+      "path": "incoming/encounters/encounters_d42_2021_001.csv",
+      "rows": 36367,
+      "bytes": 3206307,
+      "sha256": "68496bd2dce0d6744cbb6496b17177b9e8c790164a0a22daf2779e9be3c3647e"
+    },
+    {
+      "path": "incoming/encounters/encounters_d42_2022_000.csv",
+      "rows": 102016,
+      "bytes": 8994190,
+      "sha256": "92f91beac40b038e918397fbd3816f933f067abb15d3804085ef027bdb7e3f3b"
+    },
+    {
+      "path": "incoming/encounters/encounters_d42_2022_001.csv",
+      "rows": 30348,
+      "bytes": 2675768,
+      "sha256": "2d4d15aeeb2bf5c7ff24f6af800cd473708ac497a40b734a9ca4a7f5b48cd2e3"
+    },
+    {
+      "path": "incoming/encounters/encounters_d42_2023_000.csv",
+      "rows": 102037,
+      "bytes": 8995135,
+      "sha256": "e4e848eb4d5fb11f8439dd59872f23aacf0b94b5aa604a58902b7d1ef1bc41a8"
+    },
+    {
+      "path": "incoming/encounters/encounters_d42_2023_001.csv",
+      "rows": 32599,
+      "bytes": 2873987,
+      "sha256": "47f1228198d17022dc339784fd607a8937c5d9d0992afa9f94910291b0a2e949"
+    },
+    {
+      "path": "incoming/encounters/encounters_d42_2024_000.csv",
+      "rows": 102002,
+      "bytes": 8992159,
+      "sha256": "72a21fd69f95201aded4cc8dd7bd62130a422d3105bd175c42a300488b7d3c3a"
+    },
+    {
+      "path": "incoming/encounters/encounters_d42_2024_001.csv",
+      "rows": 39437,
+      "bytes": 3476828,
+      "sha256": "c7bd01887231862acb1eec034af0b4eca9ee7e2e13cb4f892fcd4b56f1b78fe2"
+    },
+    {
+      "path": "incoming/encounters/encounters_d42_2025_000.csv",
+      "rows": 101956,
+      "bytes": 8988355,
+      "sha256": "20080b24bfe4e238ce2e2b6fe344c28df5d564c52e9db6debdae06f07c91ce21"
+    },
+    {
+      "path": "incoming/encounters/encounters_d42_2025_001.csv",
+      "rows": 46319,
+      "bytes": 4082952,
+      "sha256": "b7af8dc7672005cc2fad35356686958852c9bb86c43a112b4a7bc7a4221fe0a1"
+    },
+    {
+      "path": "incoming/encounters/encounters_d43_2021_000.csv",
+      "rows": 69859,
+      "bytes": 6134654,
+      "sha256": "e7fec7fe3aa4bf46185e45ba2eed9f0278f0138b74416f01fe96731155964cbd"
+    },
+    {
+      "path": "incoming/encounters/encounters_d43_2022_000.csv",
+      "rows": 68966,
+      "bytes": 6056340,
+      "sha256": "6e4b6f97078bc169cec6de58b4a72a19eac0f85119ce6045b050848760e18784"
+    },
+    {
+      "path": "incoming/encounters/encounters_d43_2023_000.csv",
+      "rows": 68224,
+      "bytes": 5990907,
+      "sha256": "483231afcf63cd191be05861f16fb82327eb614c1c575f5250ccac195f926009"
+    },
+    {
+      "path": "incoming/encounters/encounters_d43_2024_000.csv",
+      "rows": 72621,
+      "bytes": 6376587,
+      "sha256": "1014ccead4bd2ddc4795dcb3edacefa31f9365466eb1eb746f9089d59f4b5639"
+    },
+    {
+      "path": "incoming/encounters/encounters_d43_2025_000.csv",
+      "rows": 76335,
+      "bytes": 6702276,
+      "sha256": "f2e69b1ff47b1fea251ffe199368c85a7559388a80c17de90ef9e0d94c79d8ca"
+    },
+    {
+      "path": "incoming/encounters/encounters_d44_2021_000.csv",
+      "rows": 48404,
+      "bytes": 4246682,
+      "sha256": "73053063ab84d4296841e574613db486aa2e06de830cc0b7e913b66ea0ee5428"
+    },
+    {
+      "path": "incoming/encounters/encounters_d44_2022_000.csv",
+      "rows": 47956,
+      "bytes": 4207888,
+      "sha256": "6975205609076d1ac3c7e6444cbb060cd493f23a1683a66410661ae44e714a44"
+    },
+    {
+      "path": "incoming/encounters/encounters_d44_2023_000.csv",
+      "rows": 48122,
+      "bytes": 4221904,
+      "sha256": "fdd6e4e2362a4b2c0611b631c9b35deff58bce270084261e2559e9f464806a9b"
+    },
+    {
+      "path": "incoming/encounters/encounters_d44_2024_000.csv",
+      "rows": 48945,
+      "bytes": 4294328,
+      "sha256": "f9fe997da99393e14e7a9d7e0c10ccc0caac92bd7a98cd8401e3438bcdcce170"
+    },
+    {
+      "path": "incoming/encounters/encounters_d44_2025_000.csv",
+      "rows": 50744,
+      "bytes": 4452254,
+      "sha256": "ba09b930e8f8e2ca353bb07440536374768d65b6a074164cffd9d2cf6f50b3fb"
+    },
+    {
+      "path": "incoming/encounters/encounters_d45_2021_000.csv",
+      "rows": 45505,
+      "bytes": 3990981,
+      "sha256": "884765b53b23a4730b53485937d8f200ec5751c0a0c13c727d2b5150c1daac0b"
+    },
+    {
+      "path": "incoming/encounters/encounters_d45_2022_000.csv",
+      "rows": 45507,
+      "bytes": 3991128,
+      "sha256": "c088a2e26f4b9d4a78b2114c6e0c3e6341b849f6d0f495a125452f33fcd9b745"
+    },
+    {
+      "path": "incoming/encounters/encounters_d45_2023_000.csv",
+      "rows": 46470,
+      "bytes": 4075912,
+      "sha256": "d8da5f182e011747bf3ea64b55459d5673a08e9a0b99ec8783a2506c596e8405"
+    },
+    {
+      "path": "incoming/encounters/encounters_d45_2024_000.csv",
+      "rows": 46969,
+      "bytes": 4119573,
+      "sha256": "f2bcbdbaeb760a0d755c195bb7034f98ece0a45103a9e94560955fb7b205d3d4"
+    },
+    {
+      "path": "incoming/encounters/encounters_d45_2025_000.csv",
+      "rows": 50969,
+      "bytes": 4470383,
+      "sha256": "8aed33176ac5f7266abd88388db94718b87655ca51cbaca6ce087e02eda1a5ff"
+    },
+    {
+      "path": "incoming/encounters/encounters_d46_2021_000.csv",
+      "rows": 62726,
+      "bytes": 5500588,
+      "sha256": "b2e4c9a683ba72b231a0eb8beedd1afc0c340580834cd673eb47f8b6947cf544"
+    },
+    {
+      "path": "incoming/encounters/encounters_d46_2022_000.csv",
+      "rows": 63049,
+      "bytes": 5529142,
+      "sha256": "f3d7e1135a4ed0925b1bccf8ac06425b54721ed240fae1cbb31f9f001f9ce840"
+    },
+    {
+      "path": "incoming/encounters/encounters_d46_2023_000.csv",
+      "rows": 88708,
+      "bytes": 7779192,
+      "sha256": "c1f74cbe677268a60f080daf1db559865a148da4ad7efeeae9df7cc241db272c"
+    },
+    {
+      "path": "incoming/encounters/encounters_d46_2024_000.csv",
+      "rows": 66391,
+      "bytes": 5821777,
+      "sha256": "09b04ed40e6864fb4c3bf38e75c71da0a844635ade454e69897db26aaba25a4c"
+    },
+    {
+      "path": "incoming/encounters/encounters_d46_2025_000.csv",
+      "rows": 67960,
+      "bytes": 5959978,
+      "sha256": "58fd28f3f9110e5607d4c9e477f0a9e77dcded0f5890943eb5ad3b0e8d13f5c5"
+    },
+    {
+      "path": "incoming/encounters/encounters_d47_2021_000.csv",
+      "rows": 54051,
+      "bytes": 4740404,
+      "sha256": "7eeee4d61d1c56aa3cf4170e9225e2efa558c241d2f725d7450fdd42dbb37b88"
+    },
+    {
+      "path": "incoming/encounters/encounters_d47_2022_000.csv",
+      "rows": 53278,
+      "bytes": 4672955,
+      "sha256": "bf4cc8c0b1559777169158535216a9c6b2891a605e5d5a5f695902ad79789d3f"
+    },
+    {
+      "path": "incoming/encounters/encounters_d47_2023_000.csv",
+      "rows": 56712,
+      "bytes": 4973829,
+      "sha256": "eb93ee339a8241b39cbcee672e2ed2932bf89392077214beada7ec95cad77277"
+    },
+    {
+      "path": "incoming/encounters/encounters_d47_2024_000.csv",
+      "rows": 55110,
+      "bytes": 4833199,
+      "sha256": "60ead012937b35afd33c5d6845d76ef48031846abc8cb6cff7b4896cd9388725"
+    },
+    {
+      "path": "incoming/encounters/encounters_d47_2025_000.csv",
+      "rows": 57956,
+      "bytes": 5082945,
+      "sha256": "a669b3f7a8bb5b29b11159d37945c2539abca0b70de9905d34264b5f1c9122ef"
+    },
+    {
+      "path": "incoming/encounters/encounters_d48_2021_000.csv",
+      "rows": 97225,
+      "bytes": 8562007,
+      "sha256": "a7d307684db47b789a1edf7c9bc3768d370e81273ed2d98265821c60f7534724"
+    },
+    {
+      "path": "incoming/encounters/encounters_d48_2022_000.csv",
+      "rows": 94090,
+      "bytes": 8285884,
+      "sha256": "03d36b53404cf87a84feddc3572f662b4f3ff3fb269ad5ef79f42abb0cf98980"
+    },
+    {
+      "path": "incoming/encounters/encounters_d48_2023_000.csv",
+      "rows": 94350,
+      "bytes": 8308720,
+      "sha256": "b6a11aa6922966c382f0bd1b94c5d8af8674a9d04fb2c45aba11fc135e13a69e"
+    },
+    {
+      "path": "incoming/encounters/encounters_d48_2024_000.csv",
+      "rows": 101433,
+      "bytes": 8932311,
+      "sha256": "8b8bdcfacd5daf6f05d03da67c3683cfe2905611bfc5943092e754620023ca7e"
+    },
+    {
+      "path": "incoming/encounters/encounters_d48_2025_000.csv",
+      "rows": 101995,
+      "bytes": 8982119,
+      "sha256": "e476a599ff7f12410c4776ab3cf378ded548b5fb3dbacb6a1411a9d4bd5d891c"
+    },
+    {
+      "path": "incoming/encounters/encounters_d48_2025_001.csv",
+      "rows": 2616,
+      "bytes": 230435,
+      "sha256": "2cf6e6c6f550d9e79cc41d3ac4749cef0a22cf21f8554c668fd0b7803f94acf4"
+    },
+    {
+      "path": "incoming/encounters/encounters_d49_2021_000.csv",
+      "rows": 75078,
+      "bytes": 6599817,
+      "sha256": "1988800e108c747e8c51e68266239b3ed7c58642d6ac69d6fc2e9a3ec9c0ae9f"
+    },
+    {
+      "path": "incoming/encounters/encounters_d49_2022_000.csv",
+      "rows": 71877,
+      "bytes": 6318532,
+      "sha256": "5018f3a306d5ec18856c04c1c9c90554b7aa41022deae95e139831014feb4857"
+    },
+    {
+      "path": "incoming/encounters/encounters_d49_2023_000.csv",
+      "rows": 82031,
+      "bytes": 7210861,
+      "sha256": "f90aaabc00f76b9cfe6775f376e1002a79aa84300237cb92847f0ed38f555f3e"
+    },
+    {
+      "path": "incoming/encounters/encounters_d49_2024_000.csv",
+      "rows": 74262,
+      "bytes": 6528495,
+      "sha256": "59206d2be722f3fc3a167e4d03813e414645d3c0f203f20c5938c1a2689d7321"
+    },
+    {
+      "path": "incoming/encounters/encounters_d49_2025_000.csv",
+      "rows": 78697,
+      "bytes": 6917854,
+      "sha256": "2f345c09b2553eaea98092a83aef199c7a670c100124e3483206d2a8c8bb9ad3"
+    },
+    {
+      "path": "incoming/encounters/encounters_d50_2021_000.csv",
+      "rows": 32780,
+      "bytes": 2872296,
+      "sha256": "4eadd0a2ebdb3f42d4ad52b4d9d512d4ac3b111156ef716e440a57e9f2f7f6a0"
+    },
+    {
+      "path": "incoming/encounters/encounters_d50_2022_000.csv",
+      "rows": 32276,
+      "bytes": 2828271,
+      "sha256": "569306a4ebdd857a1812bd9e7afa253ee7c62d0917e94ed9e229aa24e18a448d"
+    },
+    {
+      "path": "incoming/encounters/encounters_d50_2023_000.csv",
+      "rows": 33373,
+      "bytes": 2924321,
+      "sha256": "d1cc684eaff160d5b7edb95fdcf5f38258b894d50821d345869731d4e64a0c2e"
+    },
+    {
+      "path": "incoming/encounters/encounters_d50_2024_000.csv",
+      "rows": 33471,
+      "bytes": 2932880,
+      "sha256": "ab6c0e05cb1620ddc10a40de526ab8662123eed2a82d3858d34e6e25bf359d41"
+    },
+    {
+      "path": "incoming/encounters/encounters_d50_2025_000.csv",
+      "rows": 34799,
+      "bytes": 3049228,
+      "sha256": "6237e98b3489ef2021cc24d177b875bf461db1abf927be0f4c38516537f342ad"
+    },
+    {
+      "path": "incoming/encounters/encounters_d51_2021_000.csv",
+      "rows": 46182,
+      "bytes": 4049915,
+      "sha256": "b02a9cce4879647a0966354930b0e857fc422ece6611cdd2d0116de976cc1c00"
+    },
+    {
+      "path": "incoming/encounters/encounters_d51_2022_000.csv",
+      "rows": 45136,
+      "bytes": 3958260,
+      "sha256": "e34febb2255ea622d600d937566dfa8a3ab85409215cefe4dd7a4f15959c9f0f"
+    },
+    {
+      "path": "incoming/encounters/encounters_d51_2023_000.csv",
+      "rows": 46101,
+      "bytes": 4042879,
+      "sha256": "c0f0ea8bae0048190ad5842960d52d8df73ff4549ddbfc1c165a76822aa5b373"
+    },
+    {
+      "path": "incoming/encounters/encounters_d51_2024_000.csv",
+      "rows": 47865,
+      "bytes": 4197533,
+      "sha256": "af2f058190924796b99255393cf617b75120b0e630a40346c2fcb6b746768bf9"
+    },
+    {
+      "path": "incoming/encounters/encounters_d51_2025_000.csv",
+      "rows": 54631,
+      "bytes": 4790819,
+      "sha256": "6f043b32cee181b0d53e0a43e7f2e79ecbc0dbf61c6dee4e1d513dad6ca83eaf"
+    },
+    {
+      "path": "incoming/encounters/encounters_d52_2021_000.csv",
+      "rows": 32762,
+      "bytes": 2871235,
+      "sha256": "06392e2e67541361c4b487d45b68fb510f2b4ecbe1bf278d7342275b1e46ae0d"
+    },
+    {
+      "path": "incoming/encounters/encounters_d52_2022_000.csv",
+      "rows": 30835,
+      "bytes": 2702512,
+      "sha256": "10d9aac7d9710e9c80e0685d40d4c2e146e741238c81361d605269caf8a641e1"
+    },
+    {
+      "path": "incoming/encounters/encounters_d52_2023_000.csv",
+      "rows": 30951,
+      "bytes": 2712613,
+      "sha256": "609a36f86bb0ad14b4f32e31c82803e3a29c9061ccc7460c0879c377ae46e73b"
+    },
+    {
+      "path": "incoming/encounters/encounters_d52_2024_000.csv",
+      "rows": 33151,
+      "bytes": 2905540,
+      "sha256": "09940d573d2d7fc01070b0bc694ca8c43d06c75a56d7aef1cd086d14d61b1ba5"
+    },
+    {
+      "path": "incoming/encounters/encounters_d52_2025_000.csv",
+      "rows": 36669,
+      "bytes": 3213991,
+      "sha256": "0a9ae1f464544f2ff596ca7132a80f1b23bf3882a3d0deb4980a2336fce22198"
+    },
+    {
+      "path": "incoming/encounters/encounters_d53_2021_000.csv",
+      "rows": 31975,
+      "bytes": 2802389,
+      "sha256": "b6f7bb6006c0bec8dfd93e4984953b192ce84ba2281e433896a5bcf9cf811972"
+    },
+    {
+      "path": "incoming/encounters/encounters_d53_2022_000.csv",
+      "rows": 29589,
+      "bytes": 2593044,
+      "sha256": "2fca9714394af99f1e5cb9f166ea934c50ef86ecf891596a5a71836f334213b2"
+    },
+    {
+      "path": "incoming/encounters/encounters_d53_2023_000.csv",
+      "rows": 30661,
+      "bytes": 2687382,
+      "sha256": "b6750009a9afcedb9ce024be178056db66c4cbdc13789f8874ad0182fd92dace"
+    },
+    {
+      "path": "incoming/encounters/encounters_d53_2024_000.csv",
+      "rows": 31582,
+      "bytes": 2767820,
+      "sha256": "78783bfaee6c017ed091039c7f00d95b351a3d1b64f8aad4f38edc4f1f0f742e"
+    },
+    {
+      "path": "incoming/encounters/encounters_d53_2025_000.csv",
+      "rows": 33392,
+      "bytes": 2926342,
+      "sha256": "207aa8d29ed017ed3a28bdec6707f8bc7cf0cdc04a034fa5310d37b1da8329ee"
+    },
+    {
+      "path": "incoming/encounters/encounters_d54_2021_000.csv",
+      "rows": 76214,
+      "bytes": 6704460,
+      "sha256": "89088748b4a4f32f247b422c4d7b4a36379b34d2d3e15d25029e2e75adeccedb"
+    },
+    {
+      "path": "incoming/encounters/encounters_d54_2022_000.csv",
+      "rows": 75516,
+      "bytes": 6642340,
+      "sha256": "77fcda7ec258f4ad60abbd6681b6cbbd91cb9df795ed5dab1c5c3020bc76f303"
+    },
+    {
+      "path": "incoming/encounters/encounters_d54_2023_000.csv",
+      "rows": 75621,
+      "bytes": 6652264,
+      "sha256": "5f5a4405164d506f3c0c7bb27df1149f6c75c718eccf1c2f7090a358109443c0"
+    },
+    {
+      "path": "incoming/encounters/encounters_d54_2024_000.csv",
+      "rows": 77227,
+      "bytes": 6793770,
+      "sha256": "49437dcbf43ac69368e29e04508b812ba06e342bd1ea30b8aad9ca0e50975a6e"
+    },
+    {
+      "path": "incoming/encounters/encounters_d54_2025_000.csv",
+      "rows": 79978,
+      "bytes": 7035620,
+      "sha256": "f6e2975f2ae4d9f563e5b0ef4802130dc7099e797f8013f7617e4e0b3d43f31f"
+    },
+    {
+      "path": "incoming/encounters/encounters_d55_2021_000.csv",
+      "rows": 31530,
+      "bytes": 2757942,
+      "sha256": "8704f41c34d6dc5b37d763f88a5cd03556cd4a15eb892ed2daf18b7d9cf7b45f"
+    },
+    {
+      "path": "incoming/encounters/encounters_d55_2022_000.csv",
+      "rows": 41187,
+      "bytes": 3601887,
+      "sha256": "221354aba11a064942f10163a35ec90538840780f243324d958eadc18e00b5cf"
+    },
+    {
+      "path": "incoming/encounters/encounters_d55_2023_000.csv",
+      "rows": 43486,
+      "bytes": 3802918,
+      "sha256": "53778cbd9bdbaf3157d72b0d46af7850256a27169532b846de87f1ee84c6f6f6"
+    },
+    {
+      "path": "incoming/encounters/encounters_d55_2024_000.csv",
+      "rows": 32018,
+      "bytes": 2800118,
+      "sha256": "833255fcca5422e138a86038cef59df695853152016fe478768b2c8fa822f79e"
+    },
+    {
+      "path": "incoming/encounters/encounters_d55_2025_000.csv",
+      "rows": 32903,
+      "bytes": 2877860,
+      "sha256": "f786922e5f7e48fb0e35d35c0b51427d878e0456b540c6bef337ff24039482c5"
+    },
+    {
+      "path": "incoming/encounters/encounters_d56_2021_000.csv",
+      "rows": 84614,
+      "bytes": 7446754,
+      "sha256": "ae5cf6e6ad264fbdd0a9bdf7587403d5d40aa35200cfc06be28b8886537e2402"
+    },
+    {
+      "path": "incoming/encounters/encounters_d56_2022_000.csv",
+      "rows": 85898,
+      "bytes": 7560170,
+      "sha256": "79f2658049348ee5cb73616005c74d2c3eebc0d2ea3fe7efff41494f6eaba8f6"
+    },
+    {
+      "path": "incoming/encounters/encounters_d56_2023_000.csv",
+      "rows": 89278,
+      "bytes": 7857150,
+      "sha256": "db1740ef697c3cf6e39d44a73a49568cec2f7dc556bb00495ff4b565c956e1dc"
+    },
+    {
+      "path": "incoming/encounters/encounters_d56_2024_000.csv",
+      "rows": 87064,
+      "bytes": 7662473,
+      "sha256": "d3116fd8e27e31d438d04c4013dfcc49db932213889f3c74017611bafaf90f6f"
+    },
+    {
+      "path": "incoming/encounters/encounters_d56_2025_000.csv",
+      "rows": 93987,
+      "bytes": 8271623,
+      "sha256": "93422c42c0614b4e044c49a63202b3379bbfb8fd8b79c2cc0d3bbfb140eed8b1"
+    },
+    {
+      "path": "incoming/encounters/encounters_d57_2021_000.csv",
+      "rows": 58412,
+      "bytes": 5126413,
+      "sha256": "1cfa9f368e2990aa9106f00c87269c65051f11210c5008a2b4223b0070d5a32b"
+    },
+    {
+      "path": "incoming/encounters/encounters_d57_2022_000.csv",
+      "rows": 55818,
+      "bytes": 4898758,
+      "sha256": "97b45eb5f20ccd405a1f2c7ea82cee2eb8e08e050ea85733a250554887d2e353"
+    },
+    {
+      "path": "incoming/encounters/encounters_d57_2023_000.csv",
+      "rows": 56504,
+      "bytes": 4959086,
+      "sha256": "e22a8c5bde321252975950618378838ba35f28a6e9a56615a21c7d2ac782ea47"
+    },
+    {
+      "path": "incoming/encounters/encounters_d57_2024_000.csv",
+      "rows": 57637,
+      "bytes": 5058606,
+      "sha256": "2b40ce374970b1db5b0e355c04299cb148cec5f75419a7f1fb2d3f041c891f25"
+    },
+    {
+      "path": "incoming/encounters/encounters_d57_2025_000.csv",
+      "rows": 74843,
+      "bytes": 6568517,
+      "sha256": "ed6d0da16d0485065572a9efb7a99e79af499b59a8fb58eb531a477e6d73454c"
+    },
+    {
+      "path": "incoming/encounters/encounters_d58_2021_000.csv",
+      "rows": 33907,
+      "bytes": 2971206,
+      "sha256": "b6c20c5d9ff3e3684efbc56b1286f8b1bac454dfbf415f1c9d2c7181a2577cda"
+    },
+    {
+      "path": "incoming/encounters/encounters_d58_2022_000.csv",
+      "rows": 32473,
+      "bytes": 2845495,
+      "sha256": "ab99c9337b06fb9333a63dd5073ea9dbd3f8fef6592cd5b73bffe55f390bcadb"
+    },
+    {
+      "path": "incoming/encounters/encounters_d58_2023_000.csv",
+      "rows": 33134,
+      "bytes": 2903507,
+      "sha256": "2036d00aba94994be025e9da1ea0025511ca5f0f8a2b0aafe67ba73c3109ecf3"
+    },
+    {
+      "path": "incoming/encounters/encounters_d58_2024_000.csv",
+      "rows": 34463,
+      "bytes": 3019923,
+      "sha256": "5b571a5e671a5413fb1f88cf69a78037d1f6268d9c2c70526d9365813a4881e1"
+    },
+    {
+      "path": "incoming/encounters/encounters_d58_2025_000.csv",
+      "rows": 36325,
+      "bytes": 3182724,
+      "sha256": "5235ea348160e70bd434b01ef618cefa41be349ab9fd737be04690de22bb19e6"
+    },
+    {
+      "path": "incoming/encounters/encounters_d59_2021_000.csv",
+      "rows": 38679,
+      "bytes": 3390362,
+      "sha256": "042c4c3edf613ffa1ed85790e1aa06f1e6965906c85c8789a287aef314ef29e7"
+    },
+    {
+      "path": "incoming/encounters/encounters_d59_2022_000.csv",
+      "rows": 39027,
+      "bytes": 3420966,
+      "sha256": "112303df4862179921e71a0a8c6ce1e441132cad840ca6e5f866f7a0a090f5ab"
+    },
+    {
+      "path": "incoming/encounters/encounters_d59_2023_000.csv",
+      "rows": 40890,
+      "bytes": 3583930,
+      "sha256": "3c7fb89b2ccc03c11646bbba4d2bc8ee79a00aafac63cf3dff800ccb2f233cb5"
+    },
+    {
+      "path": "incoming/encounters/encounters_d59_2024_000.csv",
+      "rows": 40912,
+      "bytes": 3586065,
+      "sha256": "317fe73b79d4cf7519192633df3b95948c7c50e46bc0985ce1c8aa0939ad9619"
+    },
+    {
+      "path": "incoming/encounters/encounters_d59_2025_000.csv",
+      "rows": 41777,
+      "bytes": 3662025,
+      "sha256": "57e0a40fa316756c8a2993180a4d23d21f7e8e081ef856aa8e79c5b2500d4e74"
+    },
+    {
+      "path": "incoming/encounters/encounters_d60_2021_000.csv",
+      "rows": 87651,
+      "bytes": 7715581,
+      "sha256": "c4d45567451f1bf7d3c17ee4bb5614e83edb301d27cc901e2a6928ade4c81ef3"
+    },
+    {
+      "path": "incoming/encounters/encounters_d60_2022_000.csv",
+      "rows": 85018,
+      "bytes": 7483744,
+      "sha256": "c4a9af18bf9999b8bd3e7a0c1364d1f8e7e3fb36397fd692e2c3a636522cea82"
+    },
+    {
+      "path": "incoming/encounters/encounters_d60_2023_000.csv",
+      "rows": 87373,
+      "bytes": 7692009,
+      "sha256": "782cc9d779c95765ab2c2d78ed2141786550fd4faf18e699ee0aa3f2c2e75020"
+    },
+    {
+      "path": "incoming/encounters/encounters_d60_2024_000.csv",
+      "rows": 89566,
+      "bytes": 7884588,
+      "sha256": "5a552aba3c2ce22003a1aeebe32dd79f7ac2b2f537f13cea92da9e1d8caf5b0f"
+    },
+    {
+      "path": "incoming/encounters/encounters_d60_2025_000.csv",
+      "rows": 93469,
+      "bytes": 8228218,
+      "sha256": "20b91d3741491d25cc684105c0867baa789f2b4f7c334e200e9e5904d8d0f0b2"
+    },
+    {
+      "path": "incoming/encounters/encounters_d61_2021_000.csv",
+      "rows": 77700,
+      "bytes": 6818378,
+      "sha256": "d25dcf4b57852c08ea79011b0ba98c23830c02179b15529cd9f06bf0b9a37554"
+    },
+    {
+      "path": "incoming/encounters/encounters_d61_2022_000.csv",
+      "rows": 75241,
+      "bytes": 6603148,
+      "sha256": "caab4316b71083b1b5d2135ae988f3d68a4068a18a9fe6667ed8a44e454a1171"
+    },
+    {
+      "path": "incoming/encounters/encounters_d61_2023_000.csv",
+      "rows": 78945,
+      "bytes": 6927681,
+      "sha256": "3bae45054f5f2446efb9d3f57f57383d3570668d4ae07a91c5777b80b8d86320"
+    },
+    {
+      "path": "incoming/encounters/encounters_d61_2024_000.csv",
+      "rows": 89983,
+      "bytes": 7896570,
+      "sha256": "307cf51c20ca2cb9562cb2a6f278b3639a3401426d99406b9519251a80511e4f"
+    },
+    {
+      "path": "incoming/encounters/encounters_d61_2025_000.csv",
+      "rows": 82412,
+      "bytes": 7232492,
+      "sha256": "4a4a249de718c3c95ef341985f44fa442a9a8c7d83e0a44265648e102f14365c"
+    },
+    {
+      "path": "incoming/encounters/encounters_d62_2021_000.csv",
+      "rows": 101949,
+      "bytes": 8983994,
+      "sha256": "bc774529d250b33a5525853ddeb2ee1ca6b4c1c8425e518095832ac8f06a0f6e"
+    },
+    {
+      "path": "incoming/encounters/encounters_d62_2021_001.csv",
+      "rows": 12522,
+      "bytes": 1103581,
+      "sha256": "e7512ca4f3a778660fe04922f4dd3fd1f92e82766e312322446473964d4d3b6d"
+    },
+    {
+      "path": "incoming/encounters/encounters_d62_2022_000.csv",
+      "rows": 101936,
+      "bytes": 8982739,
+      "sha256": "f69541b695b190a24a418fe596bae5e309ca8becc04d0fe5ee20d292129a6b7c"
+    },
+    {
+      "path": "incoming/encounters/encounters_d62_2022_001.csv",
+      "rows": 11227,
+      "bytes": 989497,
+      "sha256": "ce1721782ebbc8341dc5673edbb6172d655b4f57e24bf2776905a96f9c553827"
+    },
+    {
+      "path": "incoming/encounters/encounters_d62_2023_000.csv",
+      "rows": 101951,
+      "bytes": 8983783,
+      "sha256": "2f402b01939f2296aac164addd41e5416e85936432984dbde0bcf213b27785dd"
+    },
+    {
+      "path": "incoming/encounters/encounters_d62_2023_001.csv",
+      "rows": 16503,
+      "bytes": 1454132,
+      "sha256": "4ccae3694827044dcdf8df934f33462c6defce8fc2ab31ee14b432b3a2257183"
+    },
+    {
+      "path": "incoming/encounters/encounters_d62_2024_000.csv",
+      "rows": 101931,
+      "bytes": 8982403,
+      "sha256": "fe2669dfb5a9950a3ff79655213a8de7a2b0d152577acf98f682c556a66ba0ae"
+    },
+    {
+      "path": "incoming/encounters/encounters_d62_2024_001.csv",
+      "rows": 26244,
+      "bytes": 2312823,
+      "sha256": "e418d9b1ae83d502bfd7aaa55c042662421099f435d8edeb75d3936ea4682048"
+    },
+    {
+      "path": "incoming/encounters/encounters_d62_2025_000.csv",
+      "rows": 101983,
+      "bytes": 8987071,
+      "sha256": "fa344ad1c173c89e7ea4df6ecdeb1dd1a30d165178cf812fa1fc82a8f6a3e6aa"
+    },
+    {
+      "path": "incoming/encounters/encounters_d62_2025_001.csv",
+      "rows": 17476,
+      "bytes": 1540070,
+      "sha256": "e14a95fa1bd8cb5eae28fc4e4e8e1858307af2b08e1c2de179f949bf04c82db6"
+    },
+    {
+      "path": "incoming/encounters/encounters_d63_2021_000.csv",
+      "rows": 101974,
+      "bytes": 8994518,
+      "sha256": "c642112e4f804fb9e4f5323bd4818754ee0f11efedce0e4993090410d695b1ea"
+    },
+    {
+      "path": "incoming/encounters/encounters_d63_2021_001.csv",
+      "rows": 2455,
+      "bytes": 216645,
+      "sha256": "a87e2a545f0fcf417be29b69e6b1f6a88564c6a507f0c5c1f370c7f284d3bb1a"
+    },
+    {
+      "path": "incoming/encounters/encounters_d63_2022_000.csv",
+      "rows": 102052,
+      "bytes": 9001464,
+      "sha256": "9ca4f164f0fa21502ccfda192b51098117f785002bd04aac29488898f3f2853d"
+    },
+    {
+      "path": "incoming/encounters/encounters_d63_2022_001.csv",
+      "rows": 3088,
+      "bytes": 272523,
+      "sha256": "e48d61e5b40507c115bca3db3e7442c823fef08ce46c9f4f5f5f38ab934cf955"
+    },
+    {
+      "path": "incoming/encounters/encounters_d63_2023_000.csv",
+      "rows": 101946,
+      "bytes": 8991819,
+      "sha256": "607427e412a5b8ff57b55e863ecb2f3ce48adbc43259ab9aaac6faf6c35f7a0a"
+    },
+    {
+      "path": "incoming/encounters/encounters_d63_2023_001.csv",
+      "rows": 4781,
+      "bytes": 421866,
+      "sha256": "f1108c453e1486c817f9fc0889f047b7608bec26af2bb1e168af01ef3e8a9153"
+    },
+    {
+      "path": "incoming/encounters/encounters_d63_2024_000.csv",
+      "rows": 102033,
+      "bytes": 8999332,
+      "sha256": "9981d5083bd80c246bc666a98db1f3cca6462e63e2ad3d5fc02202b19ce8e15b"
+    },
+    {
+      "path": "incoming/encounters/encounters_d63_2024_001.csv",
+      "rows": 15702,
+      "bytes": 1384899,
+      "sha256": "ed4fafd98dfadf8c127cd77a520553d5474895b792be929575af970d04511320"
+    },
+    {
+      "path": "incoming/encounters/encounters_d63_2025_000.csv",
+      "rows": 101983,
+      "bytes": 8994584,
+      "sha256": "aa0932f44415f8dc928894f85ec269286e346b0fde645bb505d4c75c6e7fe2ad"
+    },
+    {
+      "path": "incoming/encounters/encounters_d63_2025_001.csv",
+      "rows": 12159,
+      "bytes": 1072581,
+      "sha256": "3e0225805369f68fa3df21bf03a2b35ce7c236e24dd1a964d2369932a6380fbd"
+    },
+    {
+      "path": "incoming/encounters/encounters_d64_2021_000.csv",
+      "rows": 40128,
+      "bytes": 3517932,
+      "sha256": "29d6220a34a830ac77b3b467403ce3d71e25d442d0bbc85d12964b52bb8e95e7"
+    },
+    {
+      "path": "incoming/encounters/encounters_d64_2022_000.csv",
+      "rows": 40278,
+      "bytes": 3531640,
+      "sha256": "c025882ac1068ff97166748b1420f736902a0cb6720f37860ffdcb71195f64dc"
+    },
+    {
+      "path": "incoming/encounters/encounters_d64_2023_000.csv",
+      "rows": 42059,
+      "bytes": 3687584,
+      "sha256": "6837ff935f6f26833f60c6874f90cb5cc50f72a4b0c21266892550a8cc7dcbbf"
+    },
+    {
+      "path": "incoming/encounters/encounters_d64_2024_000.csv",
+      "rows": 40748,
+      "bytes": 3572677,
+      "sha256": "41b0acb509ab8eedcb86145eaa6c76220e685c8b17b5174848486e1c42234f30"
+    },
+    {
+      "path": "incoming/encounters/encounters_d64_2025_000.csv",
+      "rows": 42849,
+      "bytes": 3756978,
+      "sha256": "ebbf8f8ab3f210e15bd6f5009eec938f289f2e67bf4a2fa6e648c879ec6a886d"
+    }
+  ],
+  "stock_files": [
+    {
+      "path": "incoming/stocks/stocks_2021-01.jsonl",
+      "rows": 19840,
+      "bytes": 2534467,
+      "sha256": "f6d00f6cfc0f3058380eb7763a73ca0832a6c2aa51c0412f838a96aefcc39c5c"
+    },
+    {
+      "path": "incoming/stocks/stocks_2021-02.jsonl",
+      "rows": 17920,
+      "bytes": 2290384,
+      "sha256": "6506982fd5ed7e333e1818e6884f881744a019098373aa679ac7c4a7d7c8d625"
+    },
+    {
+      "path": "incoming/stocks/stocks_2021-03.jsonl",
+      "rows": 19840,
+      "bytes": 2536453,
+      "sha256": "0903241d05896d28f9a1ce71fa40ee5410ee5c8e3225721a5ebcf085015d6336"
+    },
+    {
+      "path": "incoming/stocks/stocks_2021-04.jsonl",
+      "rows": 19200,
+      "bytes": 2454649,
+      "sha256": "b9f593679d7d84d6cf2ef82305b5a3fc31ee024ffc1b047b0c0db2034f06b6bd"
+    },
+    {
+      "path": "incoming/stocks/stocks_2021-05.jsonl",
+      "rows": 19840,
+      "bytes": 2535848,
+      "sha256": "492a5831ae50b76026012b01c215749bbb0e0a19b9f8b69e621f28ee275c00ea"
+    },
+    {
+      "path": "incoming/stocks/stocks_2021-06.jsonl",
+      "rows": 19200,
+      "bytes": 2452511,
+      "sha256": "39cd23e4af26c8da7e1fa463975c62fb5203ad2fa0f323dbf2d208ff700c92bf"
+    },
+    {
+      "path": "incoming/stocks/stocks_2021-07.jsonl",
+      "rows": 19840,
+      "bytes": 2530934,
+      "sha256": "c6d3042cb7ab991703596c0d5ccdf958f0d1e49cb18f164a41df8aea14e8ef26"
+    },
+    {
+      "path": "incoming/stocks/stocks_2021-08.jsonl",
+      "rows": 19840,
+      "bytes": 2526270,
+      "sha256": "4111799d40051ccd34b44ce24d727ead57b118f76b408dde81c19ab5491d7d64"
+    },
+    {
+      "path": "incoming/stocks/stocks_2021-09.jsonl",
+      "rows": 19200,
+      "bytes": 2442442,
+      "sha256": "b51f1ff2151732e273387485e85f1aa52d7a7843ecbf85397b739e90738ec633"
+    },
+    {
+      "path": "incoming/stocks/stocks_2021-10.jsonl",
+      "rows": 19840,
+      "bytes": 2524942,
+      "sha256": "94e056cd764e2fc70092ca912d86f689e1f5a77805c5ab0400cdc757b235e3c3"
+    },
+    {
+      "path": "incoming/stocks/stocks_2021-11.jsonl",
+      "rows": 19200,
+      "bytes": 2446254,
+      "sha256": "c0c647e3518ad78cdbcb4adb2be0c33174ea4fde61b10cf0d26b152cd53abb74"
+    },
+    {
+      "path": "incoming/stocks/stocks_2021-12.jsonl",
+      "rows": 19840,
+      "bytes": 2531653,
+      "sha256": "561573670bfbef9fa4eb7294a178a49c24ee2b3fcd4d3c002596b1fc8e87afa6"
+    },
+    {
+      "path": "incoming/stocks/stocks_2022-01.jsonl",
+      "rows": 19840,
+      "bytes": 2534372,
+      "sha256": "2bac436ea48ae04954bdf8e6a48cc357f53afb15ace83e87cac859dad027665c"
+    },
+    {
+      "path": "incoming/stocks/stocks_2022-02.jsonl",
+      "rows": 17920,
+      "bytes": 2290425,
+      "sha256": "e9752f33d4dc699489b64c5cce6e0857a7e2c03568d761594c31736eeaccf266"
+    },
+    {
+      "path": "incoming/stocks/stocks_2022-03.jsonl",
+      "rows": 19840,
+      "bytes": 2536439,
+      "sha256": "2a5612dea45ad0e1ccbcd7737497e373ea5bfa5ee6f6a9210535e6d09ea26027"
+    },
+    {
+      "path": "incoming/stocks/stocks_2022-04.jsonl",
+      "rows": 19200,
+      "bytes": 2454605,
+      "sha256": "240c8aaf6afdb37329d2bb257d77e988d86da021024c9f920f3912dcae3ac267"
+    },
+    {
+      "path": "incoming/stocks/stocks_2022-05.jsonl",
+      "rows": 19840,
+      "bytes": 2535761,
+      "sha256": "0ab607580168cb2cb8c3f10bf882afca5cd1d49b4de4cdae4a20c5fbb121fea2"
+    },
+    {
+      "path": "incoming/stocks/stocks_2022-06.jsonl",
+      "rows": 19200,
+      "bytes": 2452470,
+      "sha256": "0dff8a70502f70660a96d5a82fe0ddf42988af9d6083d6feeed112113624abc0"
+    },
+    {
+      "path": "incoming/stocks/stocks_2022-07.jsonl",
+      "rows": 19840,
+      "bytes": 2530838,
+      "sha256": "44a90102345e47f7fa0e133796434132797039bd36a20a73b3d1f9814b025454"
+    },
+    {
+      "path": "incoming/stocks/stocks_2022-08.jsonl",
+      "rows": 19840,
+      "bytes": 2527069,
+      "sha256": "3705e13558442d87dd4bb78f10aff63882f7b33b67a3fb31e76d5bc55e6c4345"
+    },
+    {
+      "path": "incoming/stocks/stocks_2022-09.jsonl",
+      "rows": 19200,
+      "bytes": 2443256,
+      "sha256": "3b787b0d38bda3112fb68a847d0baa4894bb3e95d20276481ed1fa743fbbc26a"
+    },
+    {
+      "path": "incoming/stocks/stocks_2022-10.jsonl",
+      "rows": 19840,
+      "bytes": 2525062,
+      "sha256": "a4eb8f6188b2b0a23028353751a7ab2ab42bc31a206e16c7fb73ee83cb72a362"
+    },
+    {
+      "path": "incoming/stocks/stocks_2022-11.jsonl",
+      "rows": 19200,
+      "bytes": 2446116,
+      "sha256": "2191de278ab74978b71a23eb4ddcc3db9c8b7893b62c3c29bb7c8091d337ddff"
+    },
+    {
+      "path": "incoming/stocks/stocks_2022-12.jsonl",
+      "rows": 19840,
+      "bytes": 2531621,
+      "sha256": "e7c7047d5173963fbac07a435bb2c6fa21c1028037253fd0ad6843dfbb33bcba"
+    },
+    {
+      "path": "incoming/stocks/stocks_2023-01.jsonl",
+      "rows": 19840,
+      "bytes": 2534439,
+      "sha256": "2ec4d2c968b1a055caf4d56e961bbb884b9419b36d6f8497884f488646718248"
+    },
+    {
+      "path": "incoming/stocks/stocks_2023-02.jsonl",
+      "rows": 17920,
+      "bytes": 2290446,
+      "sha256": "c38a7c32cc3b75b38eee00709be9765b23990049f359873e628addf1faacde14"
+    },
+    {
+      "path": "incoming/stocks/stocks_2023-03.jsonl",
+      "rows": 19840,
+      "bytes": 2536435,
+      "sha256": "f7e10a84417f8322ecbfa8b6d83d7d91473ed3317304d3867ef73304eaddc3a9"
+    },
+    {
+      "path": "incoming/stocks/stocks_2023-04.jsonl",
+      "rows": 19200,
+      "bytes": 2454602,
+      "sha256": "bbf218906709f2e430b04c5c2ee16cd8bfcbbb64c0c064917b17706105036a21"
+    },
+    {
+      "path": "incoming/stocks/stocks_2023-05.jsonl",
+      "rows": 19840,
+      "bytes": 2535831,
+      "sha256": "71af5165cd0605264efe7ed40ca9ec9bb60d19134ef0f624e066eb36a9bc2798"
+    },
+    {
+      "path": "incoming/stocks/stocks_2023-06.jsonl",
+      "rows": 19200,
+      "bytes": 2452525,
+      "sha256": "e918d54e2fbb6f99a32a98c415362bf09eaa7aedab533328b7764a804439052b"
+    },
+    {
+      "path": "incoming/stocks/stocks_2023-07.jsonl",
+      "rows": 19840,
+      "bytes": 2531273,
+      "sha256": "fe1fb8ace1db16ddd567432f15b6693c79f9a9b465724c81bf5887182f4fa465"
+    },
+    {
+      "path": "incoming/stocks/stocks_2023-08.jsonl",
+      "rows": 19840,
+      "bytes": 2526540,
+      "sha256": "5a6c957f6e07a7e723b5e7af52c1ea3cd73a564d3336c274050f68409ff09a94"
+    },
+    {
+      "path": "incoming/stocks/stocks_2023-09.jsonl",
+      "rows": 19200,
+      "bytes": 2442437,
+      "sha256": "1d2e1910c05aa0461bbe7f10e11b7120ad9bf641ccae89e8bf0227343b6b9b91"
+    },
+    {
+      "path": "incoming/stocks/stocks_2023-10.jsonl",
+      "rows": 19840,
+      "bytes": 2524619,
+      "sha256": "74bddeec446d8a9819e3b45e4a3135a98b0fa0e8aea20ed3042166a0d639d3d1"
+    },
+    {
+      "path": "incoming/stocks/stocks_2023-11.jsonl",
+      "rows": 19200,
+      "bytes": 2446043,
+      "sha256": "42a9796a1f9ec1e1177e9d1620c1cff8cf65c70dcc7b16d51e585d1f3d489b8c"
+    },
+    {
+      "path": "incoming/stocks/stocks_2023-12.jsonl",
+      "rows": 19840,
+      "bytes": 2531602,
+      "sha256": "857f30ab4d9b2080d3d97a4e2a672f7923aa56021f6819a71e76eff85832cab1"
+    },
+    {
+      "path": "incoming/stocks/stocks_2024-01.jsonl",
+      "rows": 19840,
+      "bytes": 2534380,
+      "sha256": "81a31c847921b81b11c0a448fec4fdd571ef29406c6242eacf48e138cceac8ab"
+    },
+    {
+      "path": "incoming/stocks/stocks_2024-02.jsonl",
+      "rows": 18560,
+      "bytes": 2372207,
+      "sha256": "dc601ee1c46d2a5a25373e34a2984f0c8b56129822fe7b6fcf8bbd6596c0c26e"
+    },
+    {
+      "path": "incoming/stocks/stocks_2024-03.jsonl",
+      "rows": 19840,
+      "bytes": 2536462,
+      "sha256": "75bc578ee79f6bf3c221cce866b220c24a1f94055e172b5ed5806fce3abad547"
+    },
+    {
+      "path": "incoming/stocks/stocks_2024-04.jsonl",
+      "rows": 19200,
+      "bytes": 2454621,
+      "sha256": "e690e620ecbe1c32483cb18a8763d63148c221aeca58bb8f34a1605e91a5e8f6"
+    },
+    {
+      "path": "incoming/stocks/stocks_2024-05.jsonl",
+      "rows": 19840,
+      "bytes": 2535704,
+      "sha256": "ce5be26d49e84884900c221bfe0fa82bb48b139f7b5a498f49b5ef851d2efc22"
+    },
+    {
+      "path": "incoming/stocks/stocks_2024-06.jsonl",
+      "rows": 19200,
+      "bytes": 2451426,
+      "sha256": "9915862950808a73f4006f959deb7c58b4c954b7b4fe4493fabeb2c51ec7e952"
+    },
+    {
+      "path": "incoming/stocks/stocks_2024-07.jsonl",
+      "rows": 19840,
+      "bytes": 2529936,
+      "sha256": "702d08fe46cd28b12cc5346904ff6c55603366a8c0a451ef89b37944a19ddebd"
+    },
+    {
+      "path": "incoming/stocks/stocks_2024-08.jsonl",
+      "rows": 19840,
+      "bytes": 2526539,
+      "sha256": "1be3e86d10eb2f61f183131593cc0e8723ad4943005b7b74cbdf967dd782c119"
+    },
+    {
+      "path": "incoming/stocks/stocks_2024-09.jsonl",
+      "rows": 19200,
+      "bytes": 2442244,
+      "sha256": "e0fdbaa6cec61dd8bd73de0ff3db30418b1a6d3e5464669579c2330f4cb016b6"
+    },
+    {
+      "path": "incoming/stocks/stocks_2024-10.jsonl",
+      "rows": 19840,
+      "bytes": 2524361,
+      "sha256": "fc311a4400ee39feae400233dc131920919d4b8776e710f204b53a238154cdd2"
+    },
+    {
+      "path": "incoming/stocks/stocks_2024-11.jsonl",
+      "rows": 19200,
+      "bytes": 2446071,
+      "sha256": "21be1428f05645be1a64468279e93a7016627b077d113ab47ab211477885f893"
+    },
+    {
+      "path": "incoming/stocks/stocks_2024-12.jsonl",
+      "rows": 19840,
+      "bytes": 2531848,
+      "sha256": "08aa2c03b39575cb66b4390b4fa3a964d48faab63fdaf0304465991ad2664514"
+    },
+    {
+      "path": "incoming/stocks/stocks_2025-01.jsonl",
+      "rows": 19840,
+      "bytes": 2534437,
+      "sha256": "c720e0b0dedc8cd2e50014b81ac788dea590a3da34c216dc0936c3274ad1998c"
+    },
+    {
+      "path": "incoming/stocks/stocks_2025-02.jsonl",
+      "rows": 17920,
+      "bytes": 2290440,
+      "sha256": "8ef6687b1d8261531d2998b46e2e854e678f354307ae42603362fc732dfd1bbb"
+    },
+    {
+      "path": "incoming/stocks/stocks_2025-03.jsonl",
+      "rows": 19840,
+      "bytes": 2536511,
+      "sha256": "70d753166858508e070879ba98f3f016c4239fbe7adb86a80ec4c2658cc49dac"
+    },
+    {
+      "path": "incoming/stocks/stocks_2025-04.jsonl",
+      "rows": 19200,
+      "bytes": 2454594,
+      "sha256": "e925592b746ef90a6716ec889af11a38ff845056816d5c5cd523014c0d2e5d83"
+    },
+    {
+      "path": "incoming/stocks/stocks_2025-05.jsonl",
+      "rows": 19840,
+      "bytes": 2535838,
+      "sha256": "9c8fc2949f14dd6205743bc175e295237b3516b85119aa5c1192ccc9ea0edc3c"
+    },
+    {
+      "path": "incoming/stocks/stocks_2025-06.jsonl",
+      "rows": 19200,
+      "bytes": 2452491,
+      "sha256": "bebd61095a151bbf9af14a326202b4b92a1c8a47eb6b04fc71df38396e81deae"
+    },
+    {
+      "path": "incoming/stocks/stocks_2025-07.jsonl",
+      "rows": 19840,
+      "bytes": 2530647,
+      "sha256": "fdc842485128419b9af6c6d0c815183171db2bca4d507c04dea9afa9cbb472c5"
+    },
+    {
+      "path": "incoming/stocks/stocks_2025-08.jsonl",
+      "rows": 19840,
+      "bytes": 2526309,
+      "sha256": "6873cde770a0d79de0636f496024c4595c04b9e22ad3727a9d007244114144ce"
+    },
+    {
+      "path": "incoming/stocks/stocks_2025-09.jsonl",
+      "rows": 19200,
+      "bytes": 2442340,
+      "sha256": "13cc3a4ca8817111d8110651c3cef7f9e663e2bd289497a0a5d95d43e6d83a37"
+    },
+    {
+      "path": "incoming/stocks/stocks_2025-10.jsonl",
+      "rows": 19840,
+      "bytes": 2524874,
+      "sha256": "2dfb362cfbf6321809831a18873ce9a40e894a93b725399de797be83399265ca"
+    },
+    {
+      "path": "incoming/stocks/stocks_2025-11.jsonl",
+      "rows": 19200,
+      "bytes": 2446019,
+      "sha256": "875c445e2a27825b0a6bb2c62c9214364620687fd473c85d9a1aab9e13fcfac7"
+    },
+    {
+      "path": "incoming/stocks/stocks_2025-12.jsonl",
+      "rows": 19840,
+      "bytes": 2531649,
+      "sha256": "6cadf762fb51e4c7b9416f3055ad9b17e89d6d5c437c672881974c1fa1c95b4b"
+    }
+  ],
+  "reference_hashes": {
+    "districts.csv": "c7b513abf8a1d5b234328d58eddcdf533d207040c04d52d41309b032b5bf0974",
+    "population.csv": "322416cd4b83ef6edb0df5024ae2d2fa8a2aa7b8ee3d0d2549cd9dd27ea1164b",
+    "weather.parquet": "20b8a076b462602a8c7f825ad64c3d765aea5581683df4194c06e190e2a2aa7d",
+    "districts.geojson": "ba6fcf8df630074103126f9b654d9bee27311dcb840361c74b7be8780d4d2d92"
+  },
+  "mechanisms": {
+    "noise": "Negative binomial: variance mu+mu^2/15",
+    "weather_lag_dengue_days": [
+      35,
+      62
+    ],
+    "weather_lag_diarrhoea_days": [
+      7,
+      13
+    ],
+    "duplicates": "~2% exact encounter resubmissions",
+    "orphan_keys": "~0.5%",
+    "demographic_invalid": "~1% either age 212 or sex UNKNOWN",
+    "additional_defects": "~0.1% missing onset; ~0.1% report before onset; ~0.1% invalid ICD",
+    "reporting": "Right-skewed 0\u201321d delay, Friday/Saturday and selected fixed-holiday reporting dips; five Dhaka facilities silent three weeks then backfill",
+    "severity": "Disease-specific admissions/lab probabilities; admissions rise during injected outbreaks; deaths nested within admission",
+    "limitations": "Constructed mechanisms for testing analytics, not a fitted epidemiological model or clinically validated disease burden. Fixed national holidays are illustrative and exclude lunar holiday dates. Synthetic 90+ ages are uniform 90..100. Stock quantities and treatment conversion are teaching assumptions, not procurement advice."
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "schema_version": "1.0",
+  "status": "implementation_validated",
+  "verified_at": "2026-10-22T06:08:29.416314+00:00",
+  "primary_scaling": {
+    "run_id": "39705416049",
+    "source_revision": "b25ea19783c9ad49a7d55fb206a7311abe079c66",
+    "scales": [
+      0.25,
+      0.5,
+      1.0
+    ],
+    "sf1_unique_encounters": 25204173,
+    "sf1_submitted_encounters": 25708357,
+    "sf1_complete_command_seconds": 674.9150706390001,
+    "sf1_under_45_minutes": true
+  },
+  "python_tests": {
+    "passed": 41,
+    "seconds": 36.36,
+    "run_id": "39706621713",
+    "source_revision": "bb16e184758956f8fbb1c6c497420f82ff7648d9",
+    "log": "docs/evidence/python-tests.txt"
+  },
+  "browser": {
+    "scripts": 3,
+    "checks": 38,
+    "seconds": 61.53,
+    "release_sha256": "981094cba6b256b1dc3d429eb2130c46dc5b5251985627bbc8588322a89b3416",
+    "release_bytes": 2568942,
+    "frontend_files": {
+      "app.js": {
+        "sha256": "11527a2b86fe38a0c2ccda0cf9b7b88b5ff7ce7af2a3c8dec5852373c33ec0a1",
+        "bytes": 43815
+      },
+      "index.html": {
+        "sha256": "fd3c7af51cdef691952c7a0db89f4a536a0a1991c372bff46adb8dce2b30b133",
+        "bytes": 12689
+      },
+      "style.css": {
+        "sha256": "3bd6543e6ecd44f1d2f8870916c30e7be9b186e34fb23f49c543c7d88772c043",
+        "bytes": 15270
+      }
+    },
+    "evidence": "docs/evidence/dashboard-browser-qa.json"
+  },
+  "optimisation_study": {
+    "scope": "Independent SF1 query/UI study on identical recorded generated inputs; primary three-scale timers and dashboard release remain unchanged",
+    "primary_scaling_run_id": "39705416049",
+    "primary_source_revision": "b25ea19783c9ad49a7d55fb206a7311abe079c66",
+    "source_revision": "2e35c285f9b1d2e5486d868039e9d7130187e7c9",
+    "github_run_id": "39707413847",
+    "hardware": {
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+      "python": "3.12.3",
+      "logical_cpus": 4,
+      "cpu_model": "AMD EPYC 7763 64-Core Processor",
+      "physical_cores": 2,
+      "memory_bytes": 16766414848,
+      "available_memory_bytes": 10253529088,
+      "spark_master": "local[4]",
+      "driver_memory": "4g"
+    },
+    "preceding_full_command_seconds": 765.4668860310001,
+    "performance_source_sha256": "72878a418e0c24f4705ed367b3a1a413a2553f6ce8e29607c75a2a39710d9664",
+    "generation_semantics_and_recorded_file_metadata_equal": true,
+    "application_id": "local-1792634314841",
+    "capture_status": "complete"
+  },
+  "incremental_acceptance": {
+    "status": "passed",
+    "scale": 0.01,
+    "evidence": "results/incremental_acceptance.json"
+  },
+  "persistent_evidence": {
+    "archive": "resources/validation-evidence.zip",
+    "sha256": "7f9124a9fd4c7a40a30d9d2a70e9d5b277c7df7e3a74d1e6fdbeac792f9c5741",
+    "bytes": 4350584
+  },
+  "local_backend": "Preserved SF=0.01 incremental study; shipped protected dashboard is SF=1. Native WSL needs recovery; full backend validation used Linux CI.",
+  "deferred": [
+    "technical report",
+    "policy brief",
+    "presentation/video",
+    "signed contributions",
+    "individual reflections",
+    "final submission tag"
+  ],
+  "unverified_optional": [
+    "Docker execution",
+    "independent non-CS usability sessions",
+    "HDFS/MinIO",
+    "streaming",
+    "ACID time travel",
+    "SEIR",
+    "cross-facility episode deduplication"
+  ],
+  "public_file_audit": {
+    "status": "passed",
+    "record": "docs/evidence/public-release-audit.json",
+    "scope": "Publication paths, file sizes, known patient salt and common credential markers, including ZIP members"
+  },
+  "evidence_archive_roundtrip": "Extracted archive independently passed the same three-profile and complete independent-study validator."
+}

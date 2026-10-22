@@ -1,0 +1,412 @@
+{
+  "status": "complete",
+  "captured_at": "2026-10-22T02:00:11.287Z",
+  "evidence_type": "Live controlled Spark query comparisons; aggregate queries over deidentified silver",
+  "expected_labels": [
+    "join_before_sort_merge",
+    "join_after_broadcast",
+    "pruning_before_opaque_predicate",
+    "pruning_after_native_predicate"
+  ],
+  "screenshots": [
+    "spark-optimisation-jobs-2026-10-22T02-00-11-287Z.png",
+    "spark-optimisation-sql-summary-2026-10-22T02-00-11-287Z.png",
+    "spark-optimisation-join_before_sort_merge-2026-10-22T02-00-11-287Z.png",
+    "spark-optimisation-join_after_broadcast-2026-10-22T02-00-11-287Z.png",
+    "spark-optimisation-pruning_before_opaque_predicate-2026-10-22T02-00-11-287Z.png",
+    "spark-optimisation-pruning_after_native_predicate-2026-10-22T02-00-11-287Z.png"
+  ],
+  "queries": [
+    {
+      "query_id": 41,
+      "description": "join_before_sort_merge: sample 3/3",
+      "url": "http://127.0.0.1:4040/SQL/execution/?id=41",
+      "job_ids": [
+        42
+      ],
+      "sql_labels": [
+        "join_before_sort_merge"
+      ],
+      "job_labels": [
+        "join_before_sort_merge"
+      ],
+      "label": "join_before_sort_merge",
+      "physical_evidence": {
+        "operators": [
+          "SortMergeJoin",
+          "FileScan",
+          "Scan parquet"
+        ],
+        "sort_merge": true,
+        "broadcast_hash": false,
+        "opaque_python": false,
+        "native_year_partition_filter": false,
+        "empty_partition_filters": true
+      },
+      "ui_title": "EpiScope controlled optimisation evidence - Details for Query 41",
+      "screenshot": "spark-optimisation-join_before_sort_merge-2026-10-22T02-00-11-287Z.png",
+      "plan_dom_sha256": "ad14a2d393b1ad592942f99685c7a40177eb003ded5832837615d594620c6f49"
+    },
+    {
+      "query_id": 44,
+      "description": "join_after_broadcast: sample 3/3",
+      "url": "http://127.0.0.1:4040/SQL/execution/?id=44",
+      "job_ids": [
+        47,
+        48
+      ],
+      "sql_labels": [
+        "join_after_broadcast"
+      ],
+      "job_labels": [
+        "join_after_broadcast"
+      ],
+      "label": "join_after_broadcast",
+      "physical_evidence": {
+        "operators": [
+          "BroadcastHashJoin",
+          "FileScan",
+          "Scan parquet"
+        ],
+        "sort_merge": false,
+        "broadcast_hash": true,
+        "opaque_python": false,
+        "native_year_partition_filter": false,
+        "empty_partition_filters": true
+      },
+      "ui_title": "EpiScope controlled optimisation evidence - Details for Query 44",
+      "screenshot": "spark-optimisation-join_after_broadcast-2026-10-22T02-00-11-287Z.png",
+      "plan_dom_sha256": "58920cf8efc5d22c2a876c84d720dfc3f5d90b99018b2095df88e4035a0d9b45"
+    },
+    {
+      "query_id": 48,
+      "description": "pruning_before_opaque_predicate: sample 3/3",
+      "url": "http://127.0.0.1:4040/SQL/execution/?id=48",
+      "job_ids": [
+        52
+      ],
+      "sql_labels": [
+        "pruning_before_opaque_predicate"
+      ],
+      "job_labels": [
+        "pruning_before_opaque_predicate"
+      ],
+      "label": "pruning_before_opaque_predicate",
+      "physical_evidence": {
+        "operators": [
+          "BatchEvalPython",
+          "FileScan",
+          "Scan parquet"
+        ],
+        "sort_merge": false,
+        "broadcast_hash": false,
+        "opaque_python": true,
+        "native_year_partition_filter": false,
+        "empty_partition_filters": true
+      },
+      "ui_title": "EpiScope controlled optimisation evidence - Details for Query 48",
+      "screenshot": "spark-optimisation-pruning_before_opaque_predicate-2026-10-22T02-00-11-287Z.png",
+      "plan_dom_sha256": "f69b75cd2f484d721a7b3b3034dc87a626162d4efa997437b8a83c2ca9b3d7fe"
+    },
+    {
+      "query_id": 51,
+      "description": "pruning_after_native_predicate: sample 3/3",
+      "url": "http://127.0.0.1:4040/SQL/execution/?id=51",
+      "job_ids": [
+        55
+      ],
+      "sql_labels": [
+        "pruning_after_native_predicate"
+      ],
+      "job_labels": [
+        "pruning_after_native_predicate"
+      ],
+      "label": "pruning_after_native_predicate",
+      "physical_evidence": {
+        "operators": [
+          "FileScan",
+          "Scan parquet"
+        ],
+        "sort_merge": false,
+        "broadcast_hash": false,
+        "opaque_python": false,
+        "native_year_partition_filter": true,
+        "empty_partition_filters": false
+      },
+      "ui_title": "EpiScope controlled optimisation evidence - Details for Query 51",
+      "screenshot": "spark-optimisation-pruning_after_native_predicate-2026-10-22T02-00-11-287Z.png",
+      "plan_dom_sha256": "a6fad1bba1efdcb7eb77bc5dac81aaa06658a5be832ba6e5906f6df2a016d23c"
+    }
+  ],
+  "inspected_queries": [
+    {
+      "query_id": 41,
+      "job_ids": [
+        42
+      ],
+      "sql_labels": [
+        "join_before_sort_merge"
+      ],
+      "job_labels": [
+        "join_before_sort_merge"
+      ],
+      "physical_evidence": {
+        "operators": [
+          "SortMergeJoin",
+          "FileScan",
+          "Scan parquet"
+        ],
+        "sort_merge": true,
+        "broadcast_hash": false,
+        "opaque_python": false,
+        "native_year_partition_filter": false,
+        "empty_partition_filters": true
+      },
+      "classified_label": "join_before_sort_merge"
+    },
+    {
+      "query_id": 44,
+      "job_ids": [
+        47,
+        48
+      ],
+      "sql_labels": [
+        "join_after_broadcast"
+      ],
+      "job_labels": [
+        "join_after_broadcast"
+      ],
+      "physical_evidence": {
+        "operators": [
+          "BroadcastHashJoin",
+          "FileScan",
+          "Scan parquet"
+        ],
+        "sort_merge": false,
+        "broadcast_hash": true,
+        "opaque_python": false,
+        "native_year_partition_filter": false,
+        "empty_partition_filters": true
+      },
+      "classified_label": "join_after_broadcast"
+    },
+    {
+      "query_id": 48,
+      "job_ids": [
+        52
+      ],
+      "sql_labels": [
+        "pruning_before_opaque_predicate"
+      ],
+      "job_labels": [
+        "pruning_before_opaque_predicate"
+      ],
+      "physical_evidence": {
+        "operators": [
+          "BatchEvalPython",
+          "FileScan",
+          "Scan parquet"
+        ],
+        "sort_merge": false,
+        "broadcast_hash": false,
+        "opaque_python": true,
+        "native_year_partition_filter": false,
+        "empty_partition_filters": true
+      },
+      "classified_label": "pruning_before_opaque_predicate"
+    },
+    {
+      "query_id": 51,
+      "job_ids": [
+        55
+      ],
+      "sql_labels": [
+        "pruning_after_native_predicate"
+      ],
+      "job_labels": [
+        "pruning_after_native_predicate"
+      ],
+      "physical_evidence": {
+        "operators": [
+          "FileScan",
+          "Scan parquet"
+        ],
+        "sort_merge": false,
+        "broadcast_hash": false,
+        "opaque_python": false,
+        "native_year_partition_filter": true,
+        "empty_partition_filters": false
+      },
+      "classified_label": "pruning_after_native_predicate"
+    }
+  ],
+  "missing_labels": [],
+  "errors": [],
+  "application_id_expected": "local-1792634314841",
+  "ui_reported": "http://localhost:4040",
+  "ui_used": "http://127.0.0.1:4040",
+  "source_revision": "2e35c285f9b1d2e5486d868039e9d7130187e7c9",
+  "performance_source_sha256": "72878a418e0c24f4705ed367b3a1a413a2553f6ce8e29607c75a2a39710d9664",
+  "measurement_completed_at": "2026-10-22T02:00:10.962441+00:00",
+  "browser_version": "155.0.8059.39",
+  "playwright_version": "1.64.1",
+  "application_id_actual": "local-1792634314841",
+  "application_name": "EpiScope controlled optimisation evidence",
+  "application_verification": "Live Spark applications API",
+  "jobs_title": "EpiScope controlled optimisation evidence - Spark Jobs",
+  "visible_controlled_jobs": [
+    {
+      "job_id": 55,
+      "labels": [
+        "pruning_after_native_predicate"
+      ],
+      "descriptions": [
+        "pruning_after_native_predicate: sample 3/3"
+      ]
+    },
+    {
+      "job_id": 54,
+      "labels": [
+        "pruning_after_native_predicate"
+      ],
+      "descriptions": [
+        "pruning_after_native_predicate: sample 2/3"
+      ]
+    },
+    {
+      "job_id": 53,
+      "labels": [
+        "pruning_after_native_predicate"
+      ],
+      "descriptions": [
+        "pruning_after_native_predicate: sample 1/3"
+      ]
+    },
+    {
+      "job_id": 52,
+      "labels": [
+        "pruning_before_opaque_predicate"
+      ],
+      "descriptions": [
+        "pruning_before_opaque_predicate: sample 3/3"
+      ]
+    },
+    {
+      "job_id": 51,
+      "labels": [
+        "pruning_before_opaque_predicate"
+      ],
+      "descriptions": [
+        "pruning_before_opaque_predicate: sample 2/3"
+      ]
+    },
+    {
+      "job_id": 50,
+      "labels": [
+        "pruning_before_opaque_predicate"
+      ],
+      "descriptions": [
+        "pruning_before_opaque_predicate: sample 1/3"
+      ]
+    },
+    {
+      "job_id": 48,
+      "labels": [
+        "join_after_broadcast"
+      ],
+      "descriptions": [
+        "join_after_broadcast: sample 3/3"
+      ]
+    },
+    {
+      "job_id": 47,
+      "labels": [
+        "join_after_broadcast"
+      ],
+      "descriptions": [
+        "join_after_broadcast: sample 3/3"
+      ]
+    },
+    {
+      "job_id": 46,
+      "labels": [
+        "join_after_broadcast"
+      ],
+      "descriptions": [
+        "join_after_broadcast: sample 2/3"
+      ]
+    },
+    {
+      "job_id": 45,
+      "labels": [
+        "join_after_broadcast"
+      ],
+      "descriptions": [
+        "join_after_broadcast: sample 2/3"
+      ]
+    },
+    {
+      "job_id": 44,
+      "labels": [
+        "join_after_broadcast"
+      ],
+      "descriptions": [
+        "join_after_broadcast: sample 1/3"
+      ]
+    },
+    {
+      "job_id": 43,
+      "labels": [
+        "join_after_broadcast"
+      ],
+      "descriptions": [
+        "join_after_broadcast: sample 1/3"
+      ]
+    },
+    {
+      "job_id": 42,
+      "labels": [
+        "join_before_sort_merge"
+      ],
+      "descriptions": [
+        "join_before_sort_merge: sample 3/3"
+      ]
+    },
+    {
+      "job_id": 41,
+      "labels": [
+        "join_before_sort_merge"
+      ],
+      "descriptions": [
+        "join_before_sort_merge: sample 2/3"
+      ]
+    },
+    {
+      "job_id": 40,
+      "labels": [
+        "join_before_sort_merge"
+      ],
+      "descriptions": [
+        "join_before_sort_merge: sample 1/3"
+      ]
+    }
+  ],
+  "sql_title": "EpiScope controlled optimisation evidence - SQL / DataFrame",
+  "controlled_sql_queries_found": 12,
+  "candidate_query_ids": [
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51
+  ],
+  "browser_closed": true,
+  "elapsed_seconds": 5.908
+}

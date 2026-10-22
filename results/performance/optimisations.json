@@ -1,0 +1,180 @@
+{
+  "experiments": [
+    {
+      "label": "join_before_sort_merge",
+      "seconds": [
+        9.382967313999984,
+        6.640692704000003,
+        6.576419054999974
+      ],
+      "median_seconds": 6.640692704000003,
+      "result": [
+        {
+          "bed_weighted_encounters": 3505643859
+        }
+      ],
+      "sample_results_identical": true,
+      "samples": [
+        {
+          "sample": 1,
+          "query_execution_id": 104,
+          "physical_plan_id": 202,
+          "plan_file": "join_before_sort_merge_sample-1_plan.txt",
+          "plan_sha256": "20737c2f83ff54235f2c80fa604b40f6816619a006b55c5cd0798852f386b38f"
+        },
+        {
+          "sample": 2,
+          "query_execution_id": 109,
+          "physical_plan_id": 324,
+          "plan_file": "join_before_sort_merge_sample-2_plan.txt",
+          "plan_sha256": "988255762278a75e3e46fd6ed593bfa6c65264d2501291eb3c2973e1565df2ae"
+        },
+        {
+          "sample": 3,
+          "query_execution_id": 114,
+          "physical_plan_id": 446,
+          "plan_file": "join_before_sort_merge_sample-3_plan.txt",
+          "plan_sha256": "255044e156b803141515abd020caf849c79823032e23343f3946c32235b13015"
+        }
+      ]
+    },
+    {
+      "label": "join_after_broadcast",
+      "seconds": [
+        2.0490605480000568,
+        1.4476311249999299,
+        1.4374991189999946
+      ],
+      "median_seconds": 1.4476311249999299,
+      "result": [
+        {
+          "bed_weighted_encounters": 3505643859
+        }
+      ],
+      "sample_results_identical": true,
+      "samples": [
+        {
+          "sample": 1,
+          "query_execution_id": 118,
+          "physical_plan_id": 552,
+          "plan_file": "join_after_broadcast_sample-1_plan.txt",
+          "plan_sha256": "c6c16d50582f1c7d76e44b5a60a47109bc131e4db482da4a2d613296cedac7dd"
+        },
+        {
+          "sample": 2,
+          "query_execution_id": 122,
+          "physical_plan_id": 645,
+          "plan_file": "join_after_broadcast_sample-2_plan.txt",
+          "plan_sha256": "b9a6abef734399301ad1cf0cce12ce69905f0c9bab296a73137db282ab31937d"
+        },
+        {
+          "sample": 3,
+          "query_execution_id": 126,
+          "physical_plan_id": 738,
+          "plan_file": "join_after_broadcast_sample-3_plan.txt",
+          "plan_sha256": "6677600c136c4f065c0bc29c1792714f66dad6f622380b12f263c5773b81fa7c"
+        }
+      ]
+    },
+    {
+      "label": "pruning_before_opaque_predicate",
+      "seconds": [
+        21.209123566000017,
+        19.713934649000066,
+        19.74941795299992
+      ],
+      "median_seconds": 19.74941795299992,
+      "result": [
+        {
+          "encounters": 21904
+        }
+      ],
+      "sample_results_identical": true,
+      "samples": [
+        {
+          "sample": 1,
+          "query_execution_id": 130,
+          "physical_plan_id": 836,
+          "plan_file": "pruning_before_opaque_predicate_sample-1_plan.txt",
+          "plan_sha256": "f7c698f94a940021a6c58d21efdea19c88ec17d6bec679b76e888cc902401766"
+        },
+        {
+          "sample": 2,
+          "query_execution_id": 132,
+          "physical_plan_id": 894,
+          "plan_file": "pruning_before_opaque_predicate_sample-2_plan.txt",
+          "plan_sha256": "00dfa5df1250a9bcccce192dad7d9555c7a1b16d80dba47f1194965585a7dad3"
+        },
+        {
+          "sample": 3,
+          "query_execution_id": 134,
+          "physical_plan_id": 952,
+          "plan_file": "pruning_before_opaque_predicate_sample-3_plan.txt",
+          "plan_sha256": "e4a46090693a4b596d023d87c752c0fd0c62a37b1841040b90d81864d5a55640"
+        }
+      ]
+    },
+    {
+      "label": "pruning_after_native_predicate",
+      "seconds": [
+        0.1002064159999918,
+        0.06237359299984746,
+        0.05496011400009593
+      ],
+      "median_seconds": 0.06237359299984746,
+      "result": [
+        {
+          "encounters": 21904
+        }
+      ],
+      "sample_results_identical": true,
+      "samples": [
+        {
+          "sample": 1,
+          "query_execution_id": 136,
+          "physical_plan_id": 994,
+          "plan_file": "pruning_after_native_predicate_sample-1_plan.txt",
+          "plan_sha256": "1b2428bc5893e37479ca8d9aea294f6e9349422746f6cfe70d5e84e9f1576d0f"
+        },
+        {
+          "sample": 2,
+          "query_execution_id": 138,
+          "physical_plan_id": 1030,
+          "plan_file": "pruning_after_native_predicate_sample-2_plan.txt",
+          "plan_sha256": "ddfa6fa8dee0f05e24a2ce70e99fac64ae497428f7bdf4358a41f8272bb11e97"
+        },
+        {
+          "sample": 3,
+          "query_execution_id": 140,
+          "physical_plan_id": 1066,
+          "plan_file": "pruning_after_native_predicate_sample-3_plan.txt",
+          "plan_sha256": "61d46f10003006bfd82389bca9f399ba049c6c0d48bf1f09adb42faa4c9627f3"
+        }
+      ]
+    }
+  ],
+  "comparisons": [
+    {
+      "before": "join_before_sort_merge",
+      "after": "join_after_broadcast",
+      "identical_result": true,
+      "speedup": 4.587282346530318
+    },
+    {
+      "before": "pruning_before_opaque_predicate",
+      "after": "pruning_after_native_predicate",
+      "identical_result": true,
+      "speedup": 316.63107740239076
+    }
+  ],
+  "spark_ui": "http://localhost:4040",
+  "sampling": {
+    "fresh_query_execution_per_sample": true,
+    "timing_scope": "Each sample builds a new DataFrame/QueryExecution before timing. The timer covers collect(), including lazy optimisation/physical planning, Spark work and aggregate result conversion. Factory construction, plan inspection/export and UI capture are excluded. No DataFrame is persisted; operating-system and JVM caches remain warm."
+  },
+  "note": "Three fresh query executions per case, medians shown. These are controlled query comparisons, not whole-pipeline speedups. Case order is fixed; filesystem/JVM cache and host contention remain confounders.",
+  "application_id": "local-1792634314841",
+  "source_revision": "2e35c285f9b1d2e5486d868039e9d7130187e7c9",
+  "performance_source_sha256": "72878a418e0c24f4705ed367b3a1a413a2553f6ce8e29607c75a2a39710d9664",
+  "measurement_completed_at": "2026-10-22T02:00:10.962441+00:00"
+}

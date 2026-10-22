@@ -1,0 +1,13 @@
+*(3) HashAggregate(keys=[], functions=[sum(beds#532)], output=[bed_weighted_encounters#705L])
++- Exchange SinglePartition, ENSURE_REQUIREMENTS, [plan_id=549]
+   +- *(2) HashAggregate(keys=[], functions=[partial_sum(beds#532)], output=[sum#728L])
+      +- *(2) Project [beds#532]
+         +- *(2) BroadcastHashJoin [facility_id#488], [facility_id#526], Inner, BuildRight, false
+            :- *(2) Project [facility_id#488]
+            :  +- *(2) Filter isnotnull(facility_id#488)
+            :     +- *(2) ColumnarToRow
+            :        +- FileScan parquet [facility_id#488,epi_year#506] Batched: true, DataFilters: [isnotnull(facility_id#488)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/home/runner/work/episcope-bda/episcope-bda/data/lake/silver/enco..., PartitionFilters: [], PushedFilters: [IsNotNull(facility_id)], ReadSchema: struct<facility_id:string>
+            +- BroadcastExchange HashedRelationBroadcastMode(List(input[0, string, false]),false), [plan_id=543]
+               +- *(1) Filter isnotnull(facility_id#526)
+                  +- *(1) ColumnarToRow
+                     +- FileScan parquet [facility_id#526,beds#532] Batched: true, DataFilters: [isnotnull(facility_id#526)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/home/runner/work/episcope-bda/episcope-bda/data/lake/silver/faci..., PartitionFilters: [], PushedFilters: [IsNotNull(facility_id)], ReadSchema: struct<facility_id:string,beds:int>

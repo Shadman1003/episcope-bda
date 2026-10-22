@@ -1,0 +1,6 @@
+*(2) HashAggregate(keys=[], functions=[count(1)], output=[encounters#974L])
++- Exchange SinglePartition, ENSURE_REQUIREMENTS, [plan_id=1063]
+   +- *(1) HashAggregate(keys=[], functions=[partial_count(1)], output=[count#996L])
+      +- *(1) Project
+         +- *(1) ColumnarToRow
+            +- FileScan parquet [epi_year#506] Batched: true, DataFilters: [], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/home/runner/work/episcope-bda/episcope-bda/data/lake/silver/enco..., PartitionFilters: [isnotnull(epi_year#506), (epi_year#506 = 2026)], PushedFilters: [], ReadSchema: struct<>

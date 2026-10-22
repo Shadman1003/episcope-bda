@@ -1,9 +1,10 @@
 {
   "ok": true,
   "evidence_type": "Actual exported gold release; encounter-derived clinical observations are synthetic",
-  "release_sha256": "a362ba70111874d39fd58c602874c1cc446557178164df2c915a0cce02aaf825",
-  "release_bytes": 2373464,
-  "generated_at": "2026-10-21T15:40:43+00:00",
+  "validation_label": "Final SF1 cloud run39705416049; backendb25ea19",
+  "release_sha256": "981094cba6b256b1dc3d429eb2130c46dc5b5251985627bbc8588322a89b3416",
+  "release_bytes": 2568942,
+  "generated_at": "2026-10-22T01:35:55+00:00",
   "as_of": "2025-12-29",
   "districts": 64,
   "diseases": 4,
@@ -14,7 +15,9 @@
     "signals": 256,
     "allocations": 9216,
     "calendar": 1696,
-    "quality": 320
+    "quality": 465,
+    "tradeoff": 14,
+    "scenarios": 24
   },
   "checks": [
     "five_views_render_with_actual_release",
@@ -30,6 +33,7 @@
     "server_district_all_tables_geometry_calendar_scoped",
     "server_query_cannot_escape_scope_security_headers",
     "server_national_token_preserves_national_scope",
+    "district_policy_payload_hidden_and_dom_cleared",
     "district_browser_scope_and_no_browser_exceptions"
   ]
 }

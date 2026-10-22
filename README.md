@@ -6,39 +6,43 @@
 
 All patient encounters, facilities, stocks and outbreak events are synthetic. District boundaries, age/sex population estimates and daily weather are attributable public inputs. This is a teaching prototype; its constructed disease burden and generic planning costs are not validated operational estimates.
 
-## Run from Ubuntu WSL
+## Open the dashboard
 
-Prerequisites: Ubuntu with Python 3.12, OpenJDK 11 or 17, curl, internet access for the first reference/dependency download, and sufficient disk space for generated data. Runtime is pinned in `requirements.txt`; all heavy transformations use PySpark 3.5.3. The first setup can take several minutes because Spark is a large download.
+The repository includes a protected aggregate release for immediate preview. From the repository root, use Python 3.12 or newer:
 
-From a clean clone, one command builds public references, the full SF=1 synthetic feed, bronze/silver/gold tables, analytics and the privacy-protected dashboard release:
+```bash
+python -m serving.server --port 8765
+```
+
+Open <http://127.0.0.1:8765>. Preview uses the Python standard library and the vendored D3 v7.9.0 bundle; Spark, Java, dependency installation and a CDN are unnecessary. The included JSON contains suppressed and binned aggregate products, without patient-level records. Use the supplied server because it enforces API access and district-scope rules.
+
+## Rebuild from Ubuntu WSL or Linux
+
+Prerequisites: Python 3.12, OpenJDK 11 or 17, curl, internet access for the first reference/dependency download, and disk space for generated feeds and lake files. The numerical and Spark environment is pinned in `requirements.txt`; heavy transformations use PySpark 3.5.3. Initial setup includes downloading Spark.
+
+From a clean clone, one command acquires public references, generates the full SF=1 synthetic feed, builds bronze/silver/gold tables, runs analytics and exports the protected dashboard:
 
 ```bash
 bash run_wsl.sh all --scale 1
 ```
 
-For an initial smaller run:
+For a smaller initial build, use `bash run_wsl.sh all --scale 0.01`. Keep different scales and seeds in separate roots; immutable bronze history is retained. On the existing D: working copy, the local `data/` backend remains the SF=0.01 incremental acceptance study. It is separate from the shipped SF=1 dashboard and downloaded full-scale aggregate evidence in `results/cloud/`. Do not label the preserved local backend as SF=1 or overwrite it to preview the dashboard. A fresh full-scale backend can be built in a separate profile:
 
 ```bash
-bash run_wsl.sh all --scale 0.01
+mkdir -p runs/full-rebuild/dashboard
+cp -a dashboard/. runs/full-rebuild/dashboard/
+bash run_wsl.sh all --scale 1 --root "$PWD/runs/full-rebuild/data"
 ```
 
-Use a separate `--root` for a different scale or seed; the immutable bronze history is retained. Do not reuse a demo root and silently label it as full scale. On this machine the working copy is at `/mnt/d/Study/8th Semester/BDA/Assignment/episcope`.
+A separate-root build writes its results and dashboard data beside that data root. The copy supplies the frontend assets; the build replaces its aggregate JSON with the newly generated release. Preview it with `python -m serving.server --root runs/full-rebuild/dashboard --port 8765`.
 
-Start the dashboard:
-
-```bash
-bash run_wsl.sh serve --port 8765
-```
-
-Open <http://127.0.0.1:8765>. Use this server because it enforces the release and role access rules. It serves local vendored D3 v7 without a CDN. A plain static server bypasses the intended API access controls.
-
-Run the production checks:
+Run the complete Python checks with:
 
 ```bash
 bash run_wsl.sh test
 ```
 
-An optional [Docker environment](docs/docker.md) is included for Linux hosts. It has not been executed on this machine; the validation evidence applies to Ubuntu WSL.
+The existing Windows WSL1 instance became unresponsive after a successful local test run. Full-scale validation therefore uses actual Ubuntu GitHub Actions runners, as recorded below. Recovering that local subsystem is an environment task; the standard-library dashboard preview does not depend on WSL. An optional [Docker environment](docs/docker.md) is supplied, with its untested status documented.
 
 ## Hidden 14-day incremental drop (ING-4)
 
@@ -81,14 +85,54 @@ public geography / WorldPop / ERA5 + seeded encounters / facilities / stocks
 
 See `generator/README.md` for data provenance, `docs/architecture.md` for design decisions, `analytics/METHODS.md` for methods and limitations, and `docs/dashboard.md` for disclosure control, interaction and role behavior. Original public downloads and generated feeds remain under `data/` and are excluded from Git. Downloaded source checksums and the synthetic generation manifest are kept locally for audit.
 
-## Evaluation and scalability
+## Measured results
+
+The primary fresh profiles ran in [GitHub Actions run 39705416049](https://github.com/Shadman1003/episcope-bda/actions/runs/39705416049) at source `b25ea19783c9ad49a7d55fb206a7311abe079c66`, with seed 4345. Every profile generated a fresh encounter feed and lake while reusing checksummed public references.
+
+| SF | Unique generated encounters | Submitted encounter rows | Complete command, seconds | Lake output, bytes |
+|---|---:|---:|---:|---:|
+| 0.25 | 6,286,618 | 6,412,101 | 319.112 | 959,030,026 |
+| 0.5 | 12,606,672 | 12,858,721 | 470.751 | 1,889,522,728 |
+| 1 | 25,204,173 | 25,708,357 | 674.915 | 3,729,563,409 |
+
+SF=1 completed in **11.25 minutes**, meeting the 45-minute target on the recorded runner. These are complete child-command times, including Python/JVM startup and shutdown; dependency installation and reference-cache extraction are excluded. Python 3.12.3, Java 11, Spark 3.5.3, `local[4]`, a 4 GiB driver heap and 16 shuffle partitions were used. Runners exposed four logical CPUs and about 16.76 GB RAM; SF 0.25/0.5 used AMD EPYC 7763, while SF=1 used Intel Xeon Platinum 8573C. Host differences and caches affect comparisons; these measurements do not establish an isolated whole-pipeline code speedup. Full stages, input/output sizes and hardware are in [`results/scalability.json`](results/scalability.json).
+
+The complete suite passed **41 tests in 36.36 seconds** in [test run 39706621713](https://github.com/Shadman1003/episcope-bda/actions/runs/39706621713), at source `bb16e184758956f8fbb1c6c497420f82ff7648d9`. A workflow-only follow-up corrected Spark worker Python selection; the measured backend implementation is unchanged. Final browser/API checks passed on the actual 2,568,942-byte SF=1 release, including five coordinated views, 390/768/1440-pixel layouts, keyboard controls, 14 detector settings, 24 allocation scenarios, six budget curves and district access boundaries. See [`docs/validation.md`](docs/validation.md) for release/source hashes and executed evidence.
+
+The full-scale forecast backtest covers 52 mature target weeks, four diseases and horizons 1â€“4, with 53,248 scored district-week prediction records per model:
+
+| Model | MAE | 80% interval coverage | WIS |
+|---|---:|---:|---:|
+| Lagged-weather ridge | 56.730 | 0.7782 | 47.154 |
+| Seasonal naive | 97.564 | 0.7710 | 81.991 |
+
+The ridge model reduces pooled MAE by 41.85% and WIS by 42.49% relative to seasonal naive; coverage remains below the nominal 0.80. These are pooled district-level prediction errors, not errors of summed national forecasts. Calibration selected CUSUM threshold 10: it detected 26/26 calibration events and 10/10 holdout events, with a seven-day median issue-date delay and 4.562 false-alert episodes per district-year on holdout. The holdout contains only ten constructed events. Display defaults remain EARS C2 at 3 and CUSUM at 5; evaluation does not silently replace them.
+
+At budget 74,979.584 teaching units and a 20% population equity floor, the LP's weighted unmet demand is 20,559.521 versus 38,843.235 for the population baseline, a 47.07% reduction. These are synthetic planning results with generic costs and continuous capacity, requiring local validation before operational use. National metrics, calibration/holdout rows and the complete 24-scenario grid are in [`results/evaluation_summary.json`](results/evaluation_summary.json).
+
+The independent full-scale query/UI study retained twelve fresh samples, matching outputs, sixteen physical plans and all four corresponding Spark UI captures. Its measured medians are:
+
+| Controlled comparison | Before median (s) | After median (s) | Ratio |
+|---|---:|---:|---:|
+| Registry join: merge to broadcast | 6.640693 | 1.447631 | 4.59x |
+| Year predicate: Python UDF to native pruning | 19.749418 | 0.062374 | 316.63x |
+
+The partition query selects a small 21,904-record ISO-year edge partition. These query-specific ratios are not whole-pipeline speedups. The [validation record](docs/validation.md) identifies the separate study source, hardware, sample timings and initial failures/corrections.
+
+## Reproduce and inspect the evidence
+
+[`resources/validation-evidence.zip`](resources/validation-evidence.zip) retains the bounded aggregate profiles, corrected query evidence and successful test log after the temporary CI artifacts expire. Its companion manifest records archive/member checksums. It contains public provenance and protected aggregates; raw clinical feeds, lake records, salts and credentials are excluded. Readable provenance and measurement copies are under [`docs/evidence/cloud/`](docs/evidence/cloud/).
+
+After extracting the archive into a new folder, verify all three profiles without changing the working release:
 
 ```bash
-bash run_wsl.sh benchmark
-bash run_wsl.sh optimisations --root runs/EXPERIMENT_ID/sf1_0/data
+python -m zipfile -e resources/validation-evidence.zip work/validation-evidence
+python scripts/import_validation_artifacts.py --directory work/validation-evidence/scaling --optimisations-directory work/validation-evidence/optimisations --validate-only
 ```
 
-The scaling runner executes SF in `{0.25,0.5,1}`, records actual stage runtime, output bytes and hardware, and records whether each run took at most 45 minutes. It does not replace execution with an extrapolated number. Generated profiles are kept separately in `runs/`. The controlled optimisation study compares a merge join with a broadcast join, and an opaque date predicate with native partition pruning; plans, three-query timings and matching results are retained. Query speedup is not a claim of equal whole-pipeline speedup.
+The importer checks file inventories, SHA256/size, exact scale/source/count consistency, evaluation regeneration and release privacy. `--stage` prepares a separate review copy. `--promote` backs up overwritten release files under ignored `work/` before importing, while preserving the local demo backend and incremental evidence.
+
+Fresh local experiments can be run with `bash run_wsl.sh benchmark`. The controlled query study uses `bash run_wsl.sh optimisations --root runs/EXPERIMENT_ID/sf1_0/data`. It compares sort-merge/broadcast joins and opaque/native partition predicates with three fresh executions per case. Timings, per-sample execution IDs and plans belong in [`results/performance/`](results/performance/); query speedups have a narrower scope than the end-to-end run.
 
 ## Team and contribution records
 
@@ -119,12 +163,12 @@ The assignment originally requested a private repository and three members. The 
 | PRV-3 | `serving/server.py`, server-side district scope and denied static data | Access control |
 | AN-1, AN-3 | `analytics/detection.py`, causal matured cohorts and backfill guard | Detection |
 | AN-2 | `analytics/evaluate.py`, isolated ground truth and threshold curves | Detection evaluation |
-| AN-4, AN-5 | `analytics/forecast.py`, 52 mature target weeks, horizons 1–4, baseline/MAE/coverage/WIS | Forecast evaluation |
+| AN-4, AN-5 | `analytics/forecast.py`, 52 mature target weeks, horizons 1â€“4, baseline/MAE/coverage/WIS | Forecast evaluation |
 | AN-6 | `analytics/optimise.py`, explicit teaching resource conversions and upper intervals | Demand |
 | AN-7, AN-8 | HiGHS LP, population baseline and multi-budget equity grid | Allocation evaluation |
 | AN-9 | `analytics/seasonal.py`, annual decomposition and calendar | Preparedness |
-| VIS-1–VIS-4 | `dashboard/`, `serving/export.py`, five linked views and <=10MB guard | Dashboard |
-| VIS-5–VIS-7 | scenario controls, accessible/mobile layout, uncertainty and freshness | Visualisation |
+| VIS-1â€“VIS-4 | `dashboard/`, `serving/export.py`, five linked views and <=10MB guard | Dashboard |
+| VIS-5â€“VIS-7 | scenario controls, accessible/mobile layout, uncertainty and freshness | Visualisation |
 | ENG-1 | `run_wsl.sh`, pinned runtime, explicit DAG | Reproducibility |
 | ENG-2 | `orchestration/performance.py`, measured `results/scalability.json` after execution | Performance |
 | ENG-3 | controlled query plans/timing and captured Spark UI evidence after execution | Optimisation |

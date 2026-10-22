@@ -1,0 +1,1577 @@
+{
+  "schema_version": "1.0",
+  "created_utc": "2026-10-22T01:36:00.334116+00:00",
+  "scope": {
+    "study": "Synthetic encounter/stock teaching study with public reference inputs",
+    "generation_manifest_confirms_synthetic": true,
+    "clinical_or_real_world_validation": false,
+    "aggregation": "National summaries of aggregate district/disease evaluation products; no encounter or district-record tables included"
+  },
+  "generation": {
+    "schema_version": "1.0",
+    "synthetic": true,
+    "scale": 1.0,
+    "seed": 4345,
+    "period": [
+      "2021-01-01",
+      "2025-12-31"
+    ],
+    "minimum_required_rows": 25000000,
+    "unique_encounters": 25204173,
+    "duplicate_resubmissions": 504184,
+    "encounter_rows": 25708357,
+    "facilities": 640,
+    "unique_outbreak_events": 36,
+    "district_event_rows": 99,
+    "background_topup_rows": 0,
+    "generated_utc": "2026-10-22T01:26:46.554421+00:00",
+    "elapsed_seconds": 118.783,
+    "reference_hashes": {
+      "districts.csv": "c7b513abf8a1d5b234328d58eddcdf533d207040c04d52d41309b032b5bf0974",
+      "population.csv": "322416cd4b83ef6edb0df5024ae2d2fa8a2aa7b8ee3d0d2549cd9dd27ea1164b",
+      "weather.parquet": "20b8a076b462602a8c7f825ad64c3d765aea5581683df4194c06e190e2a2aa7d",
+      "districts.geojson": "ba6fcf8df630074103126f9b654d9bee27311dcb840361c74b7be8780d4d2d92"
+    },
+    "generator_limitations": "Constructed mechanisms for testing analytics, not a fitted epidemiological model or clinically validated disease burden. Fixed national holidays are illustrative and exclude lunar holiday dates. Synthetic 90+ ages are uniform 90..100. Stock quantities and treatment conversion are teaching assumptions, not procurement advice."
+  },
+  "run": {
+    "as_of": "2025-12-31",
+    "analytics_source_sha256": "99b3e6add9f5a23d6199fdca25d1c1fd2636a62a7bac660197d7117f1bcb79a3",
+    "input_manifest_sha256": "50c3be1a36f41dea4819f4993a7e815929230f071d7fc73f2f464056e1d49c7d",
+    "input_manifest_definition": "sorted silver parquet relative names, byte sizes and nanosecond mtimes; use bronze checksums for content audit",
+    "rows": {
+      "alerts": 931328,
+      "detection_tradeoff": 42,
+      "forecasts": 1024,
+      "forecast_backtest": 106496,
+      "forecast_metrics": 2048,
+      "allocations": 384,
+      "allocation_grid": 9216,
+      "allocation_scenarios": 24,
+      "calendar": 1696
+    },
+    "timings": {
+      "detection_seconds": 13.72182857200005,
+      "detection_evaluation_seconds": 12.782301852000046,
+      "forecast_seconds": 41.875665863999984,
+      "optimisation_seconds": 3.9204197110000223,
+      "calendar_seconds": 0.7732915640000328
+    },
+    "total_seconds": 73.203687478
+  },
+  "detection": {
+    "calibration_recommendation_recorded": {
+      "method": "CUSUM",
+      "threshold_multiplier": 10.0,
+      "sensitivity": 1.0,
+      "false_alerts_per_district_year": 4.925306424208534,
+      "median_days_to_detection": 7.0,
+      "events": 26,
+      "detected_events": 26,
+      "false_alert_episodes": 1254,
+      "evaluation_period": "calibration",
+      "district_event_sensitivity": 1.0
+    },
+    "recommended_operating_point_evaluation": {
+      "calibration": {
+        "detected_events": 26,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "calibration",
+        "events": 26,
+        "false_alert_episodes": 1254,
+        "false_alerts_per_district_year": 4.925306424208534,
+        "median_days_to_detection": 7.0,
+        "method": "CUSUM",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 10.0
+      },
+      "holdout": {
+        "detected_events": 10,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "holdout",
+        "events": 10,
+        "false_alert_episodes": 291,
+        "false_alerts_per_district_year": 4.562395582932693,
+        "median_days_to_detection": 7.0,
+        "method": "CUSUM",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 10.0
+      },
+      "all": {
+        "detected_events": 36,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "all",
+        "events": 36,
+        "false_alert_episodes": 1545,
+        "false_alerts_per_district_year": 4.849935218131188,
+        "median_days_to_detection": 7.0,
+        "method": "CUSUM",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 10.0
+      }
+    },
+    "operational_defaults": [
+      {
+        "method": "CUSUM",
+        "threshold_multiplier": 5.0,
+        "evaluation": {
+          "calibration": {
+            "detected_events": 26,
+            "district_event_sensitivity": 1.0,
+            "evaluation_period": "calibration",
+            "events": 26,
+            "false_alert_episodes": 4171,
+            "false_alerts_per_district_year": 16.38233899152615,
+            "median_days_to_detection": 7.0,
+            "method": "CUSUM",
+            "sensitivity": 1.0,
+            "threshold_multiplier": 5.0
+          },
+          "holdout": {
+            "detected_events": 10,
+            "district_event_sensitivity": 1.0,
+            "evaluation_period": "holdout",
+            "events": 10,
+            "false_alert_episodes": 936,
+            "false_alerts_per_district_year": 14.674921875,
+            "median_days_to_detection": 7.0,
+            "method": "CUSUM",
+            "sensitivity": 1.0,
+            "threshold_multiplier": 5.0
+          },
+          "all": {
+            "detected_events": 36,
+            "district_event_sensitivity": 1.0,
+            "evaluation_period": "all",
+            "events": 36,
+            "false_alert_episodes": 5107,
+            "false_alerts_per_district_year": 16.03146871132426,
+            "median_days_to_detection": 7.0,
+            "method": "CUSUM",
+            "sensitivity": 1.0,
+            "threshold_multiplier": 5.0
+          }
+        }
+      },
+      {
+        "method": "EARS_C2",
+        "threshold_multiplier": 3.0,
+        "evaluation": {
+          "calibration": {
+            "detected_events": 26,
+            "district_event_sensitivity": 1.0,
+            "evaluation_period": "calibration",
+            "events": 26,
+            "false_alert_episodes": 7039,
+            "false_alerts_per_district_year": 27.646915406701652,
+            "median_days_to_detection": 7.0,
+            "method": "EARS_C2",
+            "sensitivity": 1.0,
+            "threshold_multiplier": 3.0
+          },
+          "holdout": {
+            "detected_events": 10,
+            "district_event_sensitivity": 1.0,
+            "evaluation_period": "holdout",
+            "events": 10,
+            "false_alert_episodes": 1548,
+            "false_alerts_per_district_year": 24.27006310096154,
+            "median_days_to_detection": 7.0,
+            "method": "EARS_C2",
+            "sensitivity": 1.0,
+            "threshold_multiplier": 3.0
+          },
+          "all": {
+            "detected_events": 36,
+            "district_event_sensitivity": 1.0,
+            "evaluation_period": "all",
+            "events": 36,
+            "false_alert_episodes": 8587,
+            "false_alerts_per_district_year": 26.95559463954208,
+            "median_days_to_detection": 7.0,
+            "method": "EARS_C2",
+            "sensitivity": 1.0,
+            "threshold_multiplier": 3.0
+          }
+        }
+      }
+    ],
+    "event_denominators_by_period": {
+      "all": 36,
+      "calibration": 26,
+      "holdout": 10
+    },
+    "period_split": "2025-01-01",
+    "timeliness_definition": "7-day mature onset cohorts; detection delay measured on actual issue date",
+    "false_alert_definition": "new alert episode after 7 quiet days; pooled across diseases per district-year",
+    "threshold_tradeoff": [
+      {
+        "detected_events": 36,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "all",
+        "events": 36,
+        "false_alert_episodes": 11661,
+        "false_alerts_per_district_year": 36.605239209467825,
+        "median_days_to_detection": 7.0,
+        "method": "CUSUM",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 2.0
+      },
+      {
+        "detected_events": 36,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "all",
+        "events": 36,
+        "false_alert_episodes": 8898,
+        "false_alerts_per_district_year": 27.931859916460397,
+        "median_days_to_detection": 7.0,
+        "method": "CUSUM",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 3.0
+      },
+      {
+        "detected_events": 36,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "all",
+        "events": 36,
+        "false_alert_episodes": 6691,
+        "false_alerts_per_district_year": 21.003829478650992,
+        "median_days_to_detection": 7.0,
+        "method": "CUSUM",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 4.0
+      },
+      {
+        "detected_events": 36,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "all",
+        "events": 36,
+        "false_alert_episodes": 5107,
+        "false_alerts_per_district_year": 16.03146871132426,
+        "median_days_to_detection": 7.0,
+        "method": "CUSUM",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 5.0
+      },
+      {
+        "detected_events": 36,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "all",
+        "events": 36,
+        "false_alert_episodes": 3044,
+        "false_alerts_per_district_year": 9.555471070544554,
+        "median_days_to_detection": 7.0,
+        "method": "CUSUM",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 7.0
+      },
+      {
+        "detected_events": 36,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "all",
+        "events": 36,
+        "false_alert_episodes": 1545,
+        "false_alerts_per_district_year": 4.849935218131188,
+        "median_days_to_detection": 7.0,
+        "method": "CUSUM",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 10.0
+      },
+      {
+        "detected_events": 36,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "all",
+        "events": 36,
+        "false_alert_episodes": 16006,
+        "false_alerts_per_district_year": 50.2447010365099,
+        "median_days_to_detection": 7.0,
+        "method": "EARS_C2",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 0.5
+      },
+      {
+        "detected_events": 36,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "all",
+        "events": 36,
+        "false_alert_episodes": 20319,
+        "false_alerts_per_district_year": 63.783711130878714,
+        "median_days_to_detection": 7.0,
+        "method": "EARS_C2",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 1.0
+      },
+      {
+        "detected_events": 36,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "all",
+        "events": 36,
+        "false_alert_episodes": 21321,
+        "false_alerts_per_district_year": 66.9291060102104,
+        "median_days_to_detection": 7.0,
+        "method": "EARS_C2",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 1.5
+      },
+      {
+        "detected_events": 36,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "all",
+        "events": 36,
+        "false_alert_episodes": 16947,
+        "false_alerts_per_district_year": 53.19860980043317,
+        "median_days_to_detection": 7.0,
+        "method": "EARS_C2",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 2.0
+      },
+      {
+        "detected_events": 36,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "all",
+        "events": 36,
+        "false_alert_episodes": 12598,
+        "false_alerts_per_district_year": 39.546591506806934,
+        "median_days_to_detection": 7.0,
+        "method": "EARS_C2",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 2.5
+      },
+      {
+        "detected_events": 36,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "all",
+        "events": 36,
+        "false_alert_episodes": 8587,
+        "false_alerts_per_district_year": 26.95559463954208,
+        "median_days_to_detection": 7.0,
+        "method": "EARS_C2",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 3.0
+      },
+      {
+        "detected_events": 36,
+        "district_event_sensitivity": 0.9797979797979798,
+        "evaluation_period": "all",
+        "events": 36,
+        "false_alert_episodes": 3907,
+        "false_alerts_per_district_year": 12.264528736076732,
+        "median_days_to_detection": 7.0,
+        "method": "EARS_C2",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 4.0
+      },
+      {
+        "detected_events": 36,
+        "district_event_sensitivity": 0.8686868686868687,
+        "evaluation_period": "all",
+        "events": 36,
+        "false_alert_episodes": 1821,
+        "false_alerts_per_district_year": 5.716331412438119,
+        "median_days_to_detection": 7.0,
+        "method": "EARS_C2",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 5.0
+      },
+      {
+        "detected_events": 26,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "calibration",
+        "events": 26,
+        "false_alert_episodes": 9428,
+        "false_alerts_per_district_year": 37.03013474277357,
+        "median_days_to_detection": 7.0,
+        "method": "CUSUM",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 2.0
+      },
+      {
+        "detected_events": 26,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "calibration",
+        "events": 26,
+        "false_alert_episodes": 7219,
+        "false_alerts_per_district_year": 28.353897190080865,
+        "median_days_to_detection": 7.0,
+        "method": "CUSUM",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 3.0
+      },
+      {
+        "detected_events": 26,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "calibration",
+        "events": 26,
+        "false_alert_episodes": 5459,
+        "false_alerts_per_district_year": 21.44118641926187,
+        "median_days_to_detection": 7.0,
+        "method": "CUSUM",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 4.0
+      },
+      {
+        "detected_events": 26,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "calibration",
+        "events": 26,
+        "false_alert_episodes": 4171,
+        "false_alerts_per_district_year": 16.38233899152615,
+        "median_days_to_detection": 7.0,
+        "method": "CUSUM",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 5.0
+      },
+      {
+        "detected_events": 26,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "calibration",
+        "events": 26,
+        "false_alert_episodes": 2492,
+        "false_alerts_per_district_year": 9.787770023227804,
+        "median_days_to_detection": 7.0,
+        "method": "CUSUM",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 7.0
+      },
+      {
+        "detected_events": 26,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "calibration",
+        "events": 26,
+        "false_alert_episodes": 1254,
+        "false_alerts_per_district_year": 4.925306424208534,
+        "median_days_to_detection": 7.0,
+        "method": "CUSUM",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 10.0
+      },
+      {
+        "detected_events": 26,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "calibration",
+        "events": 26,
+        "false_alert_episodes": 12808,
+        "false_alerts_per_district_year": 50.3056815640055,
+        "median_days_to_detection": 7.0,
+        "method": "EARS_C2",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 0.5
+      },
+      {
+        "detected_events": 26,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "calibration",
+        "events": 26,
+        "false_alert_episodes": 16366,
+        "false_alerts_per_district_year": 64.280354815468,
+        "median_days_to_detection": 7.0,
+        "method": "EARS_C2",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 1.0
+      },
+      {
+        "detected_events": 26,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "calibration",
+        "events": 26,
+        "false_alert_episodes": 17211,
+        "false_alerts_per_district_year": 67.59924152077598,
+        "median_days_to_detection": 7.0,
+        "method": "EARS_C2",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 1.5
+      },
+      {
+        "detected_events": 26,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "calibration",
+        "events": 26,
+        "false_alert_episodes": 13757,
+        "false_alerts_per_district_year": 54.0330466330437,
+        "median_days_to_detection": 7.0,
+        "method": "EARS_C2",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 2.0
+      },
+      {
+        "detected_events": 26,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "calibration",
+        "events": 26,
+        "false_alert_episodes": 10234,
+        "false_alerts_per_district_year": 40.195842061682725,
+        "median_days_to_detection": 7.0,
+        "method": "EARS_C2",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 2.5
+      },
+      {
+        "detected_events": 26,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "calibration",
+        "events": 26,
+        "false_alert_episodes": 7039,
+        "false_alerts_per_district_year": 27.646915406701652,
+        "median_days_to_detection": 7.0,
+        "method": "EARS_C2",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 3.0
+      },
+      {
+        "detected_events": 26,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "calibration",
+        "events": 26,
+        "false_alert_episodes": 3195,
+        "false_alerts_per_district_year": 12.548926654981074,
+        "median_days_to_detection": 7.0,
+        "method": "EARS_C2",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 4.0
+      },
+      {
+        "detected_events": 26,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "calibration",
+        "events": 26,
+        "false_alert_episodes": 1470,
+        "false_alerts_per_district_year": 5.7736845642635926,
+        "median_days_to_detection": 7.0,
+        "method": "EARS_C2",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 5.0
+      },
+      {
+        "detected_events": 10,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "holdout",
+        "events": 10,
+        "false_alert_episodes": 2233,
+        "false_alerts_per_district_year": 35.00972280649039,
+        "median_days_to_detection": 7.0,
+        "method": "CUSUM",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 2.0
+      },
+      {
+        "detected_events": 10,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "holdout",
+        "events": 10,
+        "false_alert_episodes": 1679,
+        "false_alerts_per_district_year": 26.323925030048077,
+        "median_days_to_detection": 7.0,
+        "method": "CUSUM",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 3.0
+      },
+      {
+        "detected_events": 10,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "holdout",
+        "events": 10,
+        "false_alert_episodes": 1232,
+        "false_alerts_per_district_year": 19.315709134615386,
+        "median_days_to_detection": 7.0,
+        "method": "CUSUM",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 4.0
+      },
+      {
+        "detected_events": 10,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "holdout",
+        "events": 10,
+        "false_alert_episodes": 936,
+        "false_alerts_per_district_year": 14.674921875,
+        "median_days_to_detection": 7.0,
+        "method": "CUSUM",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 5.0
+      },
+      {
+        "detected_events": 10,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "holdout",
+        "events": 10,
+        "false_alert_episodes": 552,
+        "false_alerts_per_district_year": 8.654441105769232,
+        "median_days_to_detection": 7.0,
+        "method": "CUSUM",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 7.0
+      },
+      {
+        "detected_events": 10,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "holdout",
+        "events": 10,
+        "false_alert_episodes": 291,
+        "false_alerts_per_district_year": 4.562395582932693,
+        "median_days_to_detection": 7.0,
+        "method": "CUSUM",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 10.0
+      },
+      {
+        "detected_events": 10,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "holdout",
+        "events": 10,
+        "false_alert_episodes": 3198,
+        "false_alerts_per_district_year": 50.13931640625,
+        "median_days_to_detection": 7.0,
+        "method": "EARS_C2",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 0.5
+      },
+      {
+        "detected_events": 10,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "holdout",
+        "events": 10,
+        "false_alert_episodes": 3953,
+        "false_alerts_per_district_year": 61.97645958533654,
+        "median_days_to_detection": 7.0,
+        "method": "EARS_C2",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 1.0
+      },
+      {
+        "detected_events": 10,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "holdout",
+        "events": 10,
+        "false_alert_episodes": 4110,
+        "false_alerts_per_district_year": 64.43795823317308,
+        "median_days_to_detection": 7.0,
+        "method": "EARS_C2",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 1.5
+      },
+      {
+        "detected_events": 10,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "holdout",
+        "events": 10,
+        "false_alert_episodes": 3190,
+        "false_alerts_per_district_year": 50.013889723557696,
+        "median_days_to_detection": 7.0,
+        "method": "EARS_C2",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 2.0
+      },
+      {
+        "detected_events": 10,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "holdout",
+        "events": 10,
+        "false_alert_episodes": 2364,
+        "false_alerts_per_district_year": 37.063584735576924,
+        "median_days_to_detection": 7.0,
+        "method": "EARS_C2",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 2.5
+      },
+      {
+        "detected_events": 10,
+        "district_event_sensitivity": 1.0,
+        "evaluation_period": "holdout",
+        "events": 10,
+        "false_alert_episodes": 1548,
+        "false_alerts_per_district_year": 24.27006310096154,
+        "median_days_to_detection": 7.0,
+        "method": "EARS_C2",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 3.0
+      },
+      {
+        "detected_events": 10,
+        "district_event_sensitivity": 0.9726027397260274,
+        "evaluation_period": "holdout",
+        "events": 10,
+        "false_alert_episodes": 712,
+        "false_alerts_per_district_year": 11.162974759615386,
+        "median_days_to_detection": 7.0,
+        "method": "EARS_C2",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 4.0
+      },
+      {
+        "detected_events": 10,
+        "district_event_sensitivity": 0.821917808219178,
+        "evaluation_period": "holdout",
+        "events": 10,
+        "false_alert_episodes": 351,
+        "false_alerts_per_district_year": 5.503095703125,
+        "median_days_to_detection": 7.0,
+        "method": "EARS_C2",
+        "sensitivity": 1.0,
+        "threshold_multiplier": 5.0
+      }
+    ],
+    "interpretation": "Threshold selection uses the recorded calibration recommendation. Holdout rows are reported without reselecting on holdout outcomes. Event sensitivity counts a national event once; district-event sensitivity measures affected-district coverage."
+  },
+  "reporting_artefact": {
+    "status": "measured",
+    "artefact_district_comparator_rows": 1,
+    "naive_report_date_c2_alert_rows": 4,
+    "mature_onset_alert_rows_by_method": {
+      "EARS_C2": 0,
+      "CUSUM": 0
+    },
+    "eligible_onset_cases_by_method": {
+      "EARS_C2": 29118,
+      "CUSUM": 29118
+    },
+    "naive_minus_mature_onset_c2_alert_rows": 4,
+    "backfill_day_report_cases": 31171,
+    "source_interpretation": "Backfilled reports older than seven onset days cannot enter any as-of signal. Alerts from genuine concurrent onset variation may remain; zero is not assumed.",
+    "comparison_unit": "Sums of district-disease-day alert flags in the evaluated backfill window; these are not false-alert episode counts. Concurrent real variation can contribute to these alerts."
+  },
+  "forecasting": {
+    "backtest_design_recorded": {
+      "target_weeks": 52,
+      "label_maturity_weeks": 3,
+      "interval": "80% expanding prequential absolute-error intervals; no future residuals",
+      "note": "The last 52 fully mature target weeks, excluding the latest three weeks, are scored."
+    },
+    "diseases": [
+      "dengue",
+      "diarrhoea",
+      "influenza",
+      "malaria"
+    ],
+    "horizons_weeks": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "models": [
+      "lagged_weather_ridge",
+      "seasonal_naive"
+    ],
+    "comparisons": [
+      {
+        "model": "lagged_weather_ridge",
+        "disease": "dengue",
+        "horizon": 1,
+        "candidate": {
+          "n": 3328,
+          "mae": 69.11749201355873,
+          "coverage80": 0.8019831730769231,
+          "wis": 57.619293627924876
+        },
+        "seasonal_naive": {
+          "n": 3328,
+          "mae": 208.9900841346154,
+          "coverage80": 0.7388822115384616,
+          "wis": 178.5490384615385
+        },
+        "mae_comparison": {
+          "direction": "lower",
+          "baseline_minus_candidate": 139.87259212105664,
+          "relative_reduction_pct": 66.92786057302195
+        },
+        "wis_comparison": {
+          "direction": "lower",
+          "baseline_minus_candidate": 120.92974483361361,
+          "relative_reduction_pct": 67.72914930015894
+        },
+        "coverage80_minus_nominal": 0.0019831730769230838
+      },
+      {
+        "model": "lagged_weather_ridge",
+        "disease": "dengue",
+        "horizon": 2,
+        "candidate": {
+          "n": 3328,
+          "mae": 74.46462302280598,
+          "coverage80": 0.8073918269230769,
+          "wis": 61.523576733546065
+        },
+        "seasonal_naive": {
+          "n": 3328,
+          "mae": 208.9900841346154,
+          "coverage80": 0.7355769230769231,
+          "wis": 179.43876201923072
+        },
+        "mae_comparison": {
+          "direction": "lower",
+          "baseline_minus_candidate": 134.52546111180942,
+          "relative_reduction_pct": 64.36930329438904
+        },
+        "wis_comparison": {
+          "direction": "lower",
+          "baseline_minus_candidate": 117.91518528568466,
+          "relative_reduction_pct": 65.71332969464396
+        },
+        "coverage80_minus_nominal": 0.007391826923076827
+      },
+      {
+        "model": "lagged_weather_ridge",
+        "disease": "dengue",
+        "horizon": 3,
+        "candidate": {
+          "n": 3328,
+          "mae": 77.74187766218603,
+          "coverage80": 0.8100961538461539,
+          "wis": 66.03112784977671
+        },
+        "seasonal_naive": {
+          "n": 3328,
+          "mae": 208.9900841346154,
+          "coverage80": 0.7316706730769231,
+          "wis": 180.26446314102557
+        },
+        "mae_comparison": {
+          "direction": "lower",
+          "baseline_minus_candidate": 131.24820647242936,
+          "relative_reduction_pct": 62.80116447433426
+        },
+        "wis_comparison": {
+          "direction": "lower",
+          "baseline_minus_candidate": 114.23333529124886,
+          "relative_reduction_pct": 63.369858540494
+        },
+        "coverage80_minus_nominal": 0.01009615384615381
+      },
+      {
+        "model": "lagged_weather_ridge",
+        "disease": "dengue",
+        "horizon": 4,
+        "candidate": {
+          "n": 3328,
+          "mae": 78.56546630678986,
+          "coverage80": 0.8094951923076923,
+          "wis": 69.60612424379941
+        },
+        "seasonal_naive": {
+          "n": 3328,
+          "mae": 208.9900841346154,
+          "coverage80": 0.7310697115384616,
+          "wis": 180.9254407051282
+        },
+        "mae_comparison": {
+          "direction": "lower",
+          "baseline_minus_candidate": 130.42461782782553,
+          "relative_reduction_pct": 62.40708422501806
+        },
+        "wis_comparison": {
+          "direction": "lower",
+          "baseline_minus_candidate": 111.3193164613288,
+          "relative_reduction_pct": 61.52772989109736
+        },
+        "coverage80_minus_nominal": 0.009495192307692246
+      },
+      {
+        "model": "lagged_weather_ridge",
+        "disease": "diarrhoea",
+        "horizon": 1,
+        "candidate": {
+          "n": 3328,
+          "mae": 38.276884217414356,
+          "coverage80": 0.8233173076923077,
+          "wis": 26.31574952777993
+        },
+        "seasonal_naive": {
+          "n": 3328,
+          "mae": 58.75691105769231,
+          "coverage80": 0.7860576923076923,
+          "wis": 42.20867387820514
+        },
+        "mae_comparison": {
+          "direction": "lower",
+          "baseline_minus_candidate": 20.48002684027795,
+          "relative_reduction_pct": 34.855519923722674
+        },
+        "wis_comparison": {
+          "direction": "lower",
+          "baseline_minus_candidate": 15.892924350425211,
+          "relative_reduction_pct": 37.65321885327385
+        },
+        "coverage80_minus_nominal": 0.023317307692307665
+      },
+      {
+        "model": "lagged_weather_ridge",
+        "disease": "diarrhoea",
+        "horizon": 2,
+        "candidate": {
+          "n": 3328,
+          "mae": 38.38098267410413,
+          "coverage80": 0.8272235576923077,
+          "wis": 26.31051051684085
+        },
+        "seasonal_naive": {
+          "n": 3328,
+          "mae": 58.75691105769231,
+          "coverage80": 0.7860576923076923,
+          "wis": 42.243529647435906
+        },
+        "mae_comparison": {
+          "direction": "lower",
+          "baseline_minus_candidate": 20.375928383588175,
+          "relative_reduction_pct": 34.678351902436525
+        },
+        "wis_comparison": {
+          "direction": "lower",
+          "baseline_minus_candidate": 15.933019130595056,
+          "relative_reduction_pct": 37.717064041693206
+        },
+        "coverage80_minus_nominal": 0.027223557692307665
+      },
+      {
+        "model": "lagged_weather_ridge",
+        "disease": "diarrhoea",
+        "horizon": 3,
+        "candidate": {
+          "n": 3328,
+          "mae": 38.50322407342697,
+          "coverage80": 0.8248197115384616,
+          "wis": 26.522049072261773
+        },
+        "seasonal_naive": {
+          "n": 3328,
+          "mae": 58.75691105769231,
+          "coverage80": 0.7866586538461539,
+          "wis": 42.25386618589743
+        },
+        "mae_comparison": {
+          "direction": "lower",
+          "baseline_minus_candidate": 20.253686984265336,
+          "relative_reduction_pct": 34.47030590899958
+        },
+        "wis_comparison": {
+          "direction": "lower",
+          "baseline_minus_candidate": 15.731817113635657,
+          "relative_reduction_pct": 37.231663120299935
+        },
+        "coverage80_minus_nominal": 0.02481971153846152
+      },
+      {
+        "model": "lagged_weather_ridge",
+        "disease": "diarrhoea",
+        "horizon": 4,
+        "candidate": {
+          "n": 3328,
+          "mae": 38.54300221865695,
+          "coverage80": 0.8239182692307693,
+          "wis": 26.676732186323836
+        },
+        "seasonal_naive": {
+          "n": 3328,
+          "mae": 58.75691105769231,
+          "coverage80": 0.78515625,
+          "wis": 42.28155048076921
+        },
+        "mae_comparison": {
+          "direction": "lower",
+          "baseline_minus_candidate": 20.213908839035355,
+          "relative_reduction_pct": 34.40260639159145
+        },
+        "wis_comparison": {
+          "direction": "lower",
+          "baseline_minus_candidate": 15.604818294445376,
+          "relative_reduction_pct": 36.906920671092394
+        },
+        "coverage80_minus_nominal": 0.02391826923076923
+      },
+      {
+        "model": "lagged_weather_ridge",
+        "disease": "influenza",
+        "horizon": 1,
+        "candidate": {
+          "n": 3328,
+          "mae": 94.02310976716959,
+          "coverage80": 0.7085336538461539,
+          "wis": 80.24047497719448
+        },
+        "seasonal_naive": {
+          "n": 3328,
+          "mae": 113.17608173076923,
+          "coverage80": 0.73046875,
+          "wis": 97.9287059294872
+        },
+        "mae_comparison": {
+          "direction": "lower",
+          "baseline_minus_candidate": 19.15297196359964,
+          "relative_reduction_pct": 16.923162271302164
+        },
+        "wis_comparison": {
+          "direction": "lower",
+          "baseline_minus_candidate": 17.688230952292713,
+          "relative_reduction_pct": 18.06235544971766
+        },
+        "coverage80_minus_nominal": -0.09146634615384619
+      },
+      {
+        "model": "lagged_weather_ridge",
+        "disease": "influenza",
+        "horizon": 2,
+        "candidate": {
+          "n": 3328,
+          "mae": 106.08980480131481,
+          "coverage80": 0.7007211538461539,
+          "wis": 92.20267601375475
+        },
+        "seasonal_naive": {
+          "n": 3328,
+          "mae": 113.17608173076923,
+          "coverage80": 0.7280649038461539,
+          "wis": 97.9813701923077
+        },
+        "mae_comparison": {
+          "direction": "lower",
+          "baseline_minus_candidate": 7.086276929454414,
+          "relative_reduction_pct": 6.261284912046805
+        },
+        "wis_comparison": {
+          "direction": "lower",
+          "baseline_minus_candidate": 5.778694178552939,
+          "relative_reduction_pct": 5.897747875143118
+        },
+        "coverage80_minus_nominal": -0.09927884615384619
+      },
+      {
+        "model": "lagged_weather_ridge",
+        "disease": "influenza",
+        "horizon": 3,
+        "candidate": {
+          "n": 3328,
+          "mae": 109.10357388179142,
+          "coverage80": 0.6908052884615384,
+          "wis": 95.14853786332567
+        },
+        "seasonal_naive": {
+          "n": 3328,
+          "mae": 113.17608173076923,
+          "coverage80": 0.7256610576923077,
+          "wis": 98.02003205128206
+        },
+        "mae_comparison": {
+          "direction": "lower",
+          "baseline_minus_candidate": 4.072507848977807,
+          "relative_reduction_pct": 3.598382084534221
+        },
+        "wis_comparison": {
+          "direction": "lower",
+          "baseline_minus_candidate": 2.8714941879563867,
+          "relative_reduction_pct": 2.929497295465156
+        },
+        "coverage80_minus_nominal": -0.10919471153846161
+      },
+      {
+        "model": "lagged_weather_ridge",
+        "disease": "influenza",
+        "horizon": 4,
+        "candidate": {
+          "n": 3328,
+          "mae": 112.38151917290214,
+          "coverage80": 0.6817908653846154,
+          "wis": 98.25203906500441
+        },
+        "seasonal_naive": {
+          "n": 3328,
+          "mae": 113.17608173076923,
+          "coverage80": 0.7229567307692307,
+          "wis": 97.98573717948716
+        },
+        "mae_comparison": {
+          "direction": "lower",
+          "baseline_minus_candidate": 0.7945625578670814,
+          "relative_reduction_pct": 0.7020587262927511
+        },
+        "wis_comparison": {
+          "direction": "higher",
+          "baseline_minus_candidate": -0.266301885517251,
+          "relative_reduction_pct": -0.27177617190290426
+        },
+        "coverage80_minus_nominal": -0.11820913461538463
+      },
+      {
+        "model": "lagged_weather_ridge",
+        "disease": "malaria",
+        "horizon": 1,
+        "candidate": {
+          "n": 3328,
+          "mae": 7.023662268606751,
+          "coverage80": 0.7887620192307693,
+          "wis": 5.960054124590619
+        },
+        "seasonal_naive": {
+          "n": 3328,
+          "mae": 9.334735576923077,
+          "coverage80": 0.8353365384615384,
+          "wis": 7.929106570512823
+        },
+        "mae_comparison": {
+          "direction": "lower",
+          "baseline_minus_candidate": 2.3110733083163257,
+          "relative_reduction_pct": 24.757780113554148
+        },
+        "wis_comparison": {
+          "direction": "lower",
+          "baseline_minus_candidate": 1.9690524459222036,
+          "relative_reduction_pct": 24.833219586741578
+        },
+        "coverage80_minus_nominal": -0.011237980769230771
+      },
+      {
+        "model": "lagged_weather_ridge",
+        "disease": "malaria",
+        "horizon": 2,
+        "candidate": {
+          "n": 3328,
+          "mae": 7.949691300906363,
+          "coverage80": 0.7881610576923077,
+          "wis": 6.862389270456442
+        },
+        "seasonal_naive": {
+          "n": 3328,
+          "mae": 9.334735576923077,
+          "coverage80": 0.8371394230769231,
+          "wis": 7.935556891025642
+        },
+        "mae_comparison": {
+          "direction": "lower",
+          "baseline_minus_candidate": 1.385044276016714,
+          "relative_reduction_pct": 14.837530903829347
+        },
+        "wis_comparison": {
+          "direction": "lower",
+          "baseline_minus_candidate": 1.0731676205691993,
+          "relative_reduction_pct": 13.523532567485587
+        },
+        "coverage80_minus_nominal": -0.011838942307692335
+      },
+      {
+        "model": "lagged_weather_ridge",
+        "disease": "malaria",
+        "horizon": 3,
+        "candidate": {
+          "n": 3328,
+          "mae": 8.472839939128711,
+          "coverage80": 0.7830528846153846,
+          "wis": 7.359480179150541
+        },
+        "seasonal_naive": {
+          "n": 3328,
+          "mae": 9.334735576923077,
+          "coverage80": 0.8386418269230769,
+          "wis": 7.948297275641026
+        },
+        "mae_comparison": {
+          "direction": "lower",
+          "baseline_minus_candidate": 0.8618956377943654,
+          "relative_reduction_pct": 9.233208918366214
+        },
+        "wis_comparison": {
+          "direction": "lower",
+          "baseline_minus_candidate": 0.5888170964904846,
+          "relative_reduction_pct": 7.408091017116579
+        },
+        "coverage80_minus_nominal": -0.016947115384615463
+      },
+      {
+        "model": "lagged_weather_ridge",
+        "disease": "malaria",
+        "horizon": 4,
+        "candidate": {
+          "n": 3328,
+          "mae": 9.045626183564533,
+          "coverage80": 0.7809495192307693,
+          "wis": 7.832866095304189
+        },
+        "seasonal_naive": {
+          "n": 3328,
+          "mae": 9.334735576923077,
+          "coverage80": 0.8368389423076923,
+          "wis": 7.9547475961538465
+        },
+        "mae_comparison": {
+          "direction": "lower",
+          "baseline_minus_candidate": 0.2891093933585438,
+          "relative_reduction_pct": 3.0971353283243217
+        },
+        "wis_comparison": {
+          "direction": "lower",
+          "baseline_minus_candidate": 0.12188150084965788,
+          "relative_reduction_pct": 1.532185646073649
+        },
+        "coverage80_minus_nominal": -0.01905048076923077
+      }
+    ],
+    "pooled_prediction_record_metrics": [
+      {
+        "model": "lagged_weather_ridge",
+        "prediction_records": 53248,
+        "metric_observations": {
+          "mae": 53248,
+          "coverage80": 53248,
+          "wis": 53248
+        },
+        "mae": 56.73021121902046,
+        "coverage80": 0.7781888521634616,
+        "wis": 47.15398008418966
+      },
+      {
+        "model": "seasonal_naive",
+        "prediction_records": 53248,
+        "metric_observations": {
+          "mae": 53248,
+          "coverage80": 53248,
+          "wis": 53248
+        },
+        "mae": 97.564453125,
+        "coverage80": 0.7710148737980769,
+        "wis": 81.99055488782051
+      }
+    ],
+    "interpretation": "National coverage of district-level forecasts: errors are pooled over scored district-week prediction records, not errors of summed national case forecasts. Different horizons can score the same target week; prediction records are not independent case observations. Lower MAE/WIS is preferable; coverage80 is assessed against nominal 0.8."
+  },
+  "allocation": {
+    "recommended_budget": 74979.58355506802,
+    "recommended_equity_floor": 0.2,
+    "recommendation_explanation": "Reserve at least 20% of each resource's allocation in proportion to population; prioritize remaining capacity by weighted unmet forecast demand.",
+    "source_warning": "Generic budget units and teaching demand conversions require local validation. Continuous bed/team capacity is not a dispatch manifest.",
+    "chosen_scenario_recorded": {
+      "budget": 74979.58355506802,
+      "equity_floor": 0.2,
+      "weighted_unmet": 20559.52142064346,
+      "baseline_weighted_unmet": 38843.23502931534,
+      "unmet": 16944.162515738368,
+      "total_cost": 74979.58355506805,
+      "min_population_ratio": 0.1999999999999998,
+      "benefit_vs_baseline_pct": 47.07052230555204,
+      "transport_utilisation": 1.0000000000000002
+    },
+    "chosen_scenario_csv": {
+      "baseline_weighted_unmet": 38843.23502931534,
+      "benefit_vs_baseline_pct": 47.07052230555204,
+      "budget": 74979.58355506802,
+      "equity_floor": 0.2,
+      "min_population_ratio": 0.1999999999999998,
+      "total_cost": 74979.58355506805,
+      "transport_utilisation": 1.0000000000000002,
+      "unmet": 16944.162515738368,
+      "weighted_unmet": 20559.52142064346
+    },
+    "weighted_unmet_comparison": {
+      "direction": "lower",
+      "baseline_minus_candidate": 18283.713608671882,
+      "relative_reduction_pct": 47.07052230555204
+    },
+    "observed_budget_levels": [
+      14995.916711013604,
+      37489.79177753401,
+      74979.58355506802,
+      112469.37533260204,
+      149959.16711013604,
+      187448.95888767004
+    ],
+    "observed_equity_floors": [
+      0.0,
+      0.2,
+      0.5,
+      0.8
+    ],
+    "scenario_count": 24,
+    "national_scenario_summaries": [
+      {
+        "baseline_weighted_unmet": 39998.30782958652,
+        "benefit_vs_baseline_pct": 13.61630444712667,
+        "budget": 14995.916711013604,
+        "equity_floor": 0.0,
+        "min_population_ratio": 0.0,
+        "total_cost": 14995.916711013606,
+        "transport_utilisation": 0.26748907934649235,
+        "unmet": 25877.64683744912,
+        "weighted_unmet": 34552.016461811116
+      },
+      {
+        "baseline_weighted_unmet": 39998.30782958652,
+        "benefit_vs_baseline_pct": 12.997654765801254,
+        "budget": 14995.916711013604,
+        "equity_floor": 0.2,
+        "min_population_ratio": 0.19999999999999984,
+        "total_cost": 14995.9167110136,
+        "transport_utilisation": 0.7819786818390737,
+        "unmet": 25885.895150913228,
+        "weighted_unmet": 34799.46586573441
+      },
+      {
+        "baseline_weighted_unmet": 39998.30782958652,
+        "benefit_vs_baseline_pct": 10.48111149371504,
+        "budget": 14995.916711013604,
+        "equity_floor": 0.5,
+        "min_population_ratio": 0.49999999999999883,
+        "total_cost": 14995.916711013604,
+        "transport_utilisation": 1.0,
+        "unmet": 26257.025510404572,
+        "weighted_unmet": 35806.040590368204
+      },
+      {
+        "baseline_weighted_unmet": 39998.30782958652,
+        "benefit_vs_baseline_pct": 7.139523739851518,
+        "budget": 14995.916711013604,
+        "equity_floor": 0.8,
+        "min_population_ratio": 0.799999999999999,
+        "total_cost": 14995.9167110136,
+        "transport_utilisation": 0.5918900445728186,
+        "unmet": 27691.068716769354,
+        "weighted_unmet": 37142.6191465543
+      },
+      {
+        "baseline_weighted_unmet": 38843.23502931534,
+        "benefit_vs_baseline_pct": 28.42034418381691,
+        "budget": 37489.79177753401,
+        "equity_floor": 0.0,
+        "min_population_ratio": 0.0,
+        "total_cost": 37489.791777534025,
+        "transport_utilisation": 0.9090909090909091,
+        "unmet": 25652.708086783918,
+        "weighted_unmet": 27803.853941854988
+      },
+      {
+        "baseline_weighted_unmet": 38843.23502931534,
+        "benefit_vs_baseline_pct": 27.78329785197417,
+        "budget": 37489.79177753401,
+        "equity_floor": 0.2,
+        "min_population_ratio": 0.19999999999999982,
+        "total_cost": 37489.79177753401,
+        "transport_utilisation": 1.0000000000000002,
+        "unmet": 25660.95640024803,
+        "weighted_unmet": 28051.303345778295
+      },
+      {
+        "baseline_weighted_unmet": 38843.23502931534,
+        "benefit_vs_baseline_pct": 21.863155471406877,
+        "budget": 37489.79177753401,
+        "equity_floor": 0.5,
+        "min_population_ratio": 0.49999999999999956,
+        "total_cost": 37489.79177753402,
+        "transport_utilisation": 1.0000000000000002,
+        "unmet": 27224.240127247966,
+        "weighted_unmet": 30350.878164732152
+      },
+      {
+        "baseline_weighted_unmet": 38843.23502931534,
+        "benefit_vs_baseline_pct": 21.21524377034382,
+        "budget": 37489.79177753401,
+        "equity_floor": 0.8,
+        "min_population_ratio": 0.7999999999999821,
+        "total_cost": 37489.79177753402,
+        "transport_utilisation": 1.0000000000000002,
+        "unmet": 27372.151778037267,
+        "weighted_unmet": 30602.54802955851
+      },
+      {
+        "baseline_weighted_unmet": 38843.23502931534,
+        "benefit_vs_baseline_pct": 52.87763017163986,
+        "budget": 74979.58355506802,
+        "equity_floor": 0.0,
+        "min_population_ratio": 0.0,
+        "total_cost": 74979.58355506803,
+        "transport_utilisation": 0.9090909090909091,
+        "unmet": 16892.51518396064,
+        "weighted_unmet": 18303.85286381311
+      },
+      {
+        "baseline_weighted_unmet": 38843.23502931534,
+        "benefit_vs_baseline_pct": 47.07052230555204,
+        "budget": 74979.58355506802,
+        "equity_floor": 0.2,
+        "min_population_ratio": 0.1999999999999998,
+        "total_cost": 74979.58355506805,
+        "transport_utilisation": 1.0000000000000002,
+        "unmet": 16944.162515738368,
+        "weighted_unmet": 20559.52142064346
+      },
+      {
+        "baseline_weighted_unmet": 38843.23502931534,
+        "benefit_vs_baseline_pct": 28.593539125109274,
+        "budget": 74979.58355506802,
+        "equity_floor": 0.5,
+        "min_population_ratio": 0.4999999999999942,
+        "total_cost": 64222.954957053764,
+        "transport_utilisation": 1.0000000000000004,
+        "unmet": 22197.917107449357,
+        "weighted_unmet": 27736.57942374991
+      },
+      {
+        "baseline_weighted_unmet": 38843.23502931534,
+        "benefit_vs_baseline_pct": 21.681239094936846,
+        "budget": 74979.58355506802,
+        "equity_floor": 0.8,
+        "min_population_ratio": 0.7999999999999717,
+        "total_cost": 40139.34684815861,
+        "transport_utilisation": 1.0,
+        "unmet": 27137.779608485085,
+        "weighted_unmet": 30421.54037040122
+      },
+      {
+        "baseline_weighted_unmet": 38843.23502931534,
+        "benefit_vs_baseline_pct": 77.00653688425028,
+        "budget": 112469.37533260204,
+        "equity_floor": 0.0,
+        "min_population_ratio": 0.0,
+        "total_cost": 112469.37533260207,
+        "transport_utilisation": 0.9090909090909091,
+        "unmet": 7520.067239577129,
+        "weighted_unmet": 8931.404919429599
+      },
+      {
+        "baseline_weighted_unmet": 38843.23502931534,
+        "benefit_vs_baseline_pct": 66.30376205453749,
+        "budget": 112469.37533260204,
+        "equity_floor": 0.2,
+        "min_population_ratio": 0.1999999999999998,
+        "total_cost": 112469.37533260198,
+        "transport_utilisation": 1.0000000000000002,
+        "unmet": 8180.786114028284,
+        "weighted_unmet": 13088.70890119334
+      },
+      {
+        "baseline_weighted_unmet": 38843.23502931534,
+        "benefit_vs_baseline_pct": 28.59353912510926,
+        "budget": 112469.37533260204,
+        "equity_floor": 0.5,
+        "min_population_ratio": 0.49999999999999206,
+        "total_cost": 64222.954957053735,
+        "transport_utilisation": 1.0000000000000004,
+        "unmet": 22197.917107449357,
+        "weighted_unmet": 27736.579423749914
+      },
+      {
+        "baseline_weighted_unmet": 38843.23502931534,
+        "benefit_vs_baseline_pct": 21.681239094936846,
+        "budget": 112469.37533260204,
+        "equity_floor": 0.8,
+        "min_population_ratio": 0.7999999999999995,
+        "total_cost": 40139.3468481586,
+        "transport_utilisation": 1.0,
+        "unmet": 27137.779608485085,
+        "weighted_unmet": 30421.54037040122
+      },
+      {
+        "baseline_weighted_unmet": 38843.23502931534,
+        "benefit_vs_baseline_pct": 100.0,
+        "budget": 149959.16711013604,
+        "equity_floor": 0.0,
+        "min_population_ratio": 0.0,
+        "total_cost": 149959.16711013604,
+        "transport_utilisation": 0.9090909090909091,
+        "unmet": 0.0,
+        "weighted_unmet": 0.0
+      },
+      {
+        "baseline_weighted_unmet": 38843.23502931534,
+        "benefit_vs_baseline_pct": 79.40985154146684,
+        "budget": 149959.16711013604,
+        "equity_floor": 0.2,
+        "min_population_ratio": 0.1999999999999425,
+        "total_cost": 149959.167110136,
+        "transport_utilisation": 1.0000000000000002,
+        "unmet": 2262.6949680311754,
+        "weighted_unmet": 7997.879758632987
+      },
+      {
+        "baseline_weighted_unmet": 38843.23502931534,
+        "benefit_vs_baseline_pct": 28.59353912510926,
+        "budget": 149959.16711013604,
+        "equity_floor": 0.5,
+        "min_population_ratio": 0.49999999999999206,
+        "total_cost": 64222.954957053735,
+        "transport_utilisation": 1.0000000000000004,
+        "unmet": 22197.917107449357,
+        "weighted_unmet": 27736.579423749914
+      },
+      {
+        "baseline_weighted_unmet": 38843.23502931534,
+        "benefit_vs_baseline_pct": 21.681239094936846,
+        "budget": 149959.16711013604,
+        "equity_floor": 0.8,
+        "min_population_ratio": 0.7999999999999995,
+        "total_cost": 40139.3468481586,
+        "transport_utilisation": 1.0,
+        "unmet": 27137.779608485085,
+        "weighted_unmet": 30421.54037040122
+      },
+      {
+        "baseline_weighted_unmet": 38843.23502931534,
+        "benefit_vs_baseline_pct": 100.0,
+        "budget": 187448.95888767004,
+        "equity_floor": 0.0,
+        "min_population_ratio": 0.0,
+        "total_cost": 149959.16711013604,
+        "transport_utilisation": 0.9090909090909091,
+        "unmet": 0.0,
+        "weighted_unmet": 0.0
+      },
+      {
+        "baseline_weighted_unmet": 38843.23502931534,
+        "benefit_vs_baseline_pct": 79.67161232733622,
+        "budget": 187448.95888767004,
+        "equity_floor": 0.2,
+        "min_population_ratio": 0.19999999999999965,
+        "total_cost": 152570.2552219078,
+        "transport_utilisation": 1.0000000000000004,
+        "unmet": 2364.371325301006,
+        "weighted_unmet": 7896.203401363158
+      },
+      {
+        "baseline_weighted_unmet": 38843.23502931534,
+        "benefit_vs_baseline_pct": 28.59353912510926,
+        "budget": 187448.95888767004,
+        "equity_floor": 0.5,
+        "min_population_ratio": 0.49999999999999206,
+        "total_cost": 64222.954957053735,
+        "transport_utilisation": 1.0000000000000004,
+        "unmet": 22197.917107449357,
+        "weighted_unmet": 27736.579423749914
+      },
+      {
+        "baseline_weighted_unmet": 38843.23502931534,
+        "benefit_vs_baseline_pct": 21.681239094936846,
+        "budget": 187448.95888767004,
+        "equity_floor": 0.8,
+        "min_population_ratio": 0.7999999999999995,
+        "total_cost": 40139.3468481586,
+        "transport_utilisation": 1.0,
+        "unmet": 27137.779608485085,
+        "weighted_unmet": 30421.54037040122
+      }
+    ],
+    "interpretation": "The chosen budget/equity policy is copied from the completed run, not reselected to create an apparent gain. Weighted unmet demand uses teaching weights and generic budget units; tiny signed differences can be numerical equivalence. Continuous bed/team capacity is not an integer dispatch plan."
+  },
+  "input_files": [
+    {
+      "path": "results/analytics_latest.json",
+      "bytes": 3490,
+      "sha256": "58619a24ca92a507be3e6acb02968e0d92c07c43c0f2ac40091e0e84f2bb6027"
+    },
+    {
+      "path": "results/forecast_summary.csv",
+      "bytes": 2881,
+      "sha256": "8a0d6139af7c1dbd91df5993cdeca2f7bbba309d6630720aa250b9bcd01f5e71"
+    },
+    {
+      "path": "results/allocation_scenarios.csv",
+      "bytes": 3557,
+      "sha256": "c77051b64cce1d8e426b3c68b09126ab73a28e52ae8a5be840ca2baf3ebd7cf1"
+    },
+    {
+      "path": "results/detection_tradeoff.csv",
+      "bytes": 2778,
+      "sha256": "e9127bfc679eebf5499bf77b97d42a1452f64a12ce7b91e05ccc4a5c70299730"
+    },
+    {
+      "path": "generation_manifest.json",
+      "bytes": 97200,
+      "sha256": "196acf1cd5f0fb02c1fcc05fa49c49b9018fdae4234ba9905c3b27f1d9072f8b"
+    }
+  ],
+  "warnings": [],
+  "status": "summarised"
+}

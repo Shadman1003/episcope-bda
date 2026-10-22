@@ -1,0 +1,108 @@
+{
+  "status": "ok",
+  "hardware": {
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "python": "3.12.3",
+    "logical_cpus": 4,
+    "cpu_model": "AMD EPYC 7763 64-Core Processor",
+    "physical_cores": 2,
+    "memory_bytes": 16766414848,
+    "available_memory_bytes": 10253529088,
+    "spark_master": "local[4]",
+    "driver_memory": "4g"
+  },
+  "source_revision": "2e35c285f9b1d2e5486d868039e9d7130187e7c9",
+  "scale": 1.0,
+  "seed": 4345,
+  "generated_encounter_rows": 25708357,
+  "generated_unique_encounters": 25204173,
+  "facilities": 640,
+  "stock_rows": 1168640,
+  "output_bytes": 3729568859,
+  "started_at": "2026-10-22T01:45:32.304004+00:00",
+  "completed_at": "2026-10-22T01:58:17.770910+00:00",
+  "total_seconds": 765.4668860310001,
+  "orchestrator_seconds": 764.501378141,
+  "under_45_minutes": true,
+  "measurement": "fresh generated feed and lake; cached public references",
+  "timer_scope": "child command start through exit, including Python/JVM startup and shutdown; dependency install and reference-cache extraction excluded",
+  "input_bytes": 2413371796,
+  "profile": "github-actions/39707413847/sf1.0",
+  "github": {
+    "GITHUB_RUN_ID": "39707413847",
+    "GITHUB_JOB": "scaling",
+    "GITHUB_SHA": "2e35c285f9b1d2e5486d868039e9d7130187e7c9",
+    "RUNNER_OS": "Linux",
+    "RUNNER_ARCH": "X64"
+  },
+  "cache_archive_sha256": "198cf70977443d25fd6286feb21cf15e2e5a0b0f5013d245fbf801018e905ebb",
+  "source_files": [
+    {
+      "path": "results/run_all.json",
+      "bytes": 7356,
+      "sha256": "a13924979c881f1a6436c3f5c37ad24c7778b5b04b8b9dda5704a222ed8d7639"
+    },
+    {
+      "path": "results/analytics_latest.json",
+      "bytes": 3532,
+      "sha256": "be8102a24f35061b6adbac102d30568eeceba46cf4cb21a9e3adc283841d5a75"
+    },
+    {
+      "path": "results/quality_latest.json",
+      "bytes": 733,
+      "sha256": "c4b2a5fe711afc88e7c31ea428bc7871a9e1904c13b99f613445a8a13b2e87ec"
+    },
+    {
+      "path": "results/forecast_summary.csv",
+      "bytes": 2877,
+      "sha256": "8fce7bd488c963e6bc012475e88f64ee24d4afd2131725167135397f04a0f979"
+    },
+    {
+      "path": "results/detection_tradeoff.csv",
+      "bytes": 2778,
+      "sha256": "e9127bfc679eebf5499bf77b97d42a1452f64a12ce7b91e05ccc4a5c70299730"
+    },
+    {
+      "path": "results/allocation_scenarios.csv",
+      "bytes": 3557,
+      "sha256": "6737d07fe16ce860bb0fc33eaec82d8d1f2c0703dc0401d5d28a31f0695acbe5"
+    }
+  ],
+  "diagnostic_policy": "National aggregates only; district artefact comparators are summed in packaged analytics/run_all copies; source file checksums above identify originals",
+  "dashboard": {
+    "sha256": "3397f11674b87bd196e32e70c3d42be1b071a45bea0d88cb78243abeeb14e8ae",
+    "bytes": 2568942
+  },
+  "stages": [
+    {
+      "stage": "public_references",
+      "seconds": 1.596060644000005,
+      "attempt": 1,
+      "status": "ok"
+    },
+    {
+      "stage": "synthetic_generator",
+      "seconds": 131.355566758,
+      "attempt": 1,
+      "status": "ok"
+    },
+    {
+      "stage": "bronze_silver_gold",
+      "seconds": 529.8164260169999,
+      "attempt": 1,
+      "status": "ok"
+    },
+    {
+      "stage": "analytics",
+      "seconds": 90.193270762,
+      "attempt": 1,
+      "status": "ok"
+    },
+    {
+      "stage": "dashboard_export",
+      "seconds": 3.7026661139999533,
+      "attempt": 1,
+      "status": "ok"
+    }
+  ]
+}

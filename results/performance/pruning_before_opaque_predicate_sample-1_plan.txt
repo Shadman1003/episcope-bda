@@ -1,0 +1,8 @@
+*(3) HashAggregate(keys=[], functions=[count(1)], output=[encounters#849L])
++- Exchange SinglePartition, ENSURE_REQUIREMENTS, [plan_id=833]
+   +- *(2) HashAggregate(keys=[], functions=[partial_count(1)], output=[count#872L])
+      +- *(2) Project
+         +- *(2) Filter pythonUDF0#870: boolean
+            +- BatchEvalPython [<lambda>(epi_year#506)#847], [pythonUDF0#870]
+               +- *(1) ColumnarToRow
+                  +- FileScan parquet [epi_year#506] Batched: true, DataFilters: [], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/home/runner/work/episcope-bda/episcope-bda/data/lake/silver/enco..., PartitionFilters: [], PushedFilters: [], ReadSchema: struct<>

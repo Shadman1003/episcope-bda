@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "checked_utc": "2026-10-22T06:10:52.366617+00:00",
+  "scope": "Tracked and nonignored publication candidates; this audit record excludes itself.",
+  "checks": [
+    "ordinary contained files",
+    "no generated clinical/lake directories",
+    "50 MB file limit",
+    "known local patient salt absent",
+    "common GitHub/AWS/private-key credential markers absent"
+  ],
+  "limits": "Pattern checks are bounded checks, not a complete security certification. Inventory hashes identify Windows working-tree bytes; Git may normalize text line endings.",
+  "known_patient_salt_checked": true,
+  "files": 158,
+  "bytes": 47899910,
+  "largest_file": {
+    "path": "resources/public-reference-cache.zip",
+    "bytes": 33830870,
+    "sha256": "198cf70977443d25fd6286feb21cf15e2e5a0b0f5013d245fbf801018e905ebb"
+  },
+  "failures": [],
+  "inventory_sha256": "e3bc89dec5fc5c72ec12dc478becb63f1dc89d0d648a7ccac7954f94b8b7a5c5"
+}

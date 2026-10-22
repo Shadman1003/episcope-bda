@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "source_revision": "b25ea19783c9ad49a7d55fb206a7311abe079c66",
+  "scope": "Bounded national diagnostics, public reference provenance and protected dashboard release; no raw clinical or lake files",
+  "files": [
+    {
+      "path": "dashboard/data/dashboard.json",
+      "bytes": 2417944,
+      "sha256": "f991c4424b52f8c81267c21d89206710aed915beddc36905d033b85fc2a43325"
+    },
+    {
+      "path": "dashboard/data/manifest.json",
+      "bytes": 451,
+      "sha256": "cad3dc668d024d78e6918cd48167cb7956ae61b80d3f5c3bbaca701aa00a434d"
+    },
+    {
+      "path": "generation_manifest.json",
+      "bytes": 80668,
+      "sha256": "797195259e32f209adab7e014365159b4e97b31efe71a32283da418f7e446a1f"
+    },
+    {
+      "path": "measurement.json",
+      "bytes": 3372,
+      "sha256": "ac053543efcee79497f3fac86e6d519c05248087d587de3a2f619bd858e1ef9b"
+    },
+    {
+      "path": "reference_provenance.json",
+      "bytes": 29990,
+      "sha256": "74576b01e69dfe3bb26ebde5dabab36294af18e85fa87abe31ddc43e8c35d269"
+    },
+    {
+      "path": "results/allocation_scenarios.csv",
+      "bytes": 3593,
+      "sha256": "3ac14c341d359629cfa46d35bbd197e4f71d6329d44e929cdae9ac2d1fcc149e"
+    },
+    {
+      "path": "results/analytics_latest.json",
+      "bytes": 3522,
+      "sha256": "fdd362a0302b7141ce3b8e51194d8abfdb87e156c6ffde05542101279ce05ca6"
+    },
+    {
+      "path": "results/detection_tradeoff.csv",
+      "bytes": 3230,
+      "sha256": "6cd2bfe8d86cf65a2b491e061029f2df4e429b03205d9d76caa75c85bac98941"
+    },
+    {
+      "path": "results/evaluation_summary.json",
+      "bytes": 54235,
+      "sha256": "37bd9f73e04df88a63644f00aa6ee30c1d0c2d8d0bf85fc28673a4a1b422f2ce"
+    },
+    {
+      "path": "results/forecast_summary.csv",
+      "bytes": 2903,
+      "sha256": "37c30833e4f40aaf7ae2fa8077298ada83818e1caf9c9689ec67abc7edf6de5c"
+    },
+    {
+      "path": "results/quality_latest.json",
+      "bytes": 725,
+      "sha256": "2a4eb4c692758056ce08ed1afdcab88c9001330791035ff128a61239d9fe37ab"
+    },
+    {
+      "path": "results/run_all.json",
+      "bytes": 7339,
+      "sha256": "30e43b16b58358fcb5705a0a7e808c232e7d407ce38fd4caff305241791b397f"
+    }
+  ],
+  "payload_bytes": 2607972,
+  "evaluation_status": "summarised"
+}

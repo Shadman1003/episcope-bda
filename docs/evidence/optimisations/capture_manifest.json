@@ -1,0 +1,154 @@
+{
+  "status": "complete",
+  "started_at": "2026-10-22T01:58:31.599365+00:00",
+  "source_revision": "2e35c285f9b1d2e5486d868039e9d7130187e7c9",
+  "performance_source_sha256": "72878a418e0c24f4705ed367b3a1a413a2553f6ce8e29607c75a2a39710d9664",
+  "preceding_pipeline_record_sha256": "a13924979c881f1a6436c3f5c37ad24c7778b5b04b8b9dda5704a222ed8d7639",
+  "preceding_pipeline_scale": 1.0,
+  "preceding_pipeline_total_seconds": 764.501378141,
+  "timing_scope": "The all-pipeline process finished before this step. Node/Chrome starts only after all controlled-query samples complete. UI capture, artifact copy and Spark shutdown are outside measured query timings.",
+  "artifact_policy": "Aggregate query results, four representative and twelve per-sample deidentified plans and bounded live UI PNG/JSON only; no encounters, salts, credentials, event logs or lake files.",
+  "files": [
+    {
+      "file": "optimisations.json",
+      "bytes": 6143,
+      "sha256": "211d8fa454da92e878a7a5635c0e2e2bafb397157654bb6c3577655763bdaa9c"
+    },
+    {
+      "file": "join_before_sort_merge_plan.txt",
+      "bytes": 1694,
+      "sha256": "255044e156b803141515abd020caf849c79823032e23343f3946c32235b13015"
+    },
+    {
+      "file": "join_before_sort_merge_sample-1_plan.txt",
+      "bytes": 1694,
+      "sha256": "20737c2f83ff54235f2c80fa604b40f6816619a006b55c5cd0798852f386b38f"
+    },
+    {
+      "file": "join_before_sort_merge_sample-2_plan.txt",
+      "bytes": 1694,
+      "sha256": "988255762278a75e3e46fd6ed593bfa6c65264d2501291eb3c2973e1565df2ae"
+    },
+    {
+      "file": "join_before_sort_merge_sample-3_plan.txt",
+      "bytes": 1694,
+      "sha256": "255044e156b803141515abd020caf849c79823032e23343f3946c32235b13015"
+    },
+    {
+      "file": "join_after_broadcast_plan.txt",
+      "bytes": 1457,
+      "sha256": "6677600c136c4f065c0bc29c1792714f66dad6f622380b12f263c5773b81fa7c"
+    },
+    {
+      "file": "join_after_broadcast_sample-1_plan.txt",
+      "bytes": 1457,
+      "sha256": "c6c16d50582f1c7d76e44b5a60a47109bc131e4db482da4a2d613296cedac7dd"
+    },
+    {
+      "file": "join_after_broadcast_sample-2_plan.txt",
+      "bytes": 1457,
+      "sha256": "b9a6abef734399301ad1cf0cce12ce69905f0c9bab296a73137db282ab31937d"
+    },
+    {
+      "file": "join_after_broadcast_sample-3_plan.txt",
+      "bytes": 1457,
+      "sha256": "6677600c136c4f065c0bc29c1792714f66dad6f622380b12f263c5773b81fa7c"
+    },
+    {
+      "file": "pruning_before_opaque_predicate_plan.txt",
+      "bytes": 686,
+      "sha256": "e4a46090693a4b596d023d87c752c0fd0c62a37b1841040b90d81864d5a55640"
+    },
+    {
+      "file": "pruning_before_opaque_predicate_sample-1_plan.txt",
+      "bytes": 686,
+      "sha256": "f7c698f94a940021a6c58d21efdea19c88ec17d6bec679b76e888cc902401766"
+    },
+    {
+      "file": "pruning_before_opaque_predicate_sample-2_plan.txt",
+      "bytes": 686,
+      "sha256": "00dfa5df1250a9bcccce192dad7d9555c7a1b16d80dba47f1194965585a7dad3"
+    },
+    {
+      "file": "pruning_before_opaque_predicate_sample-3_plan.txt",
+      "bytes": 686,
+      "sha256": "e4a46090693a4b596d023d87c752c0fd0c62a37b1841040b90d81864d5a55640"
+    },
+    {
+      "file": "pruning_after_native_predicate_plan.txt",
+      "bytes": 595,
+      "sha256": "61d46f10003006bfd82389bca9f399ba049c6c0d48bf1f09adb42faa4c9627f3"
+    },
+    {
+      "file": "pruning_after_native_predicate_sample-1_plan.txt",
+      "bytes": 594,
+      "sha256": "1b2428bc5893e37479ca8d9aea294f6e9349422746f6cfe70d5e84e9f1576d0f"
+    },
+    {
+      "file": "pruning_after_native_predicate_sample-2_plan.txt",
+      "bytes": 595,
+      "sha256": "ddfa6fa8dee0f05e24a2ce70e99fac64ae497428f7bdf4358a41f8272bb11e97"
+    },
+    {
+      "file": "pruning_after_native_predicate_sample-3_plan.txt",
+      "bytes": 595,
+      "sha256": "61d46f10003006bfd82389bca9f399ba049c6c0d48bf1f09adb42faa4c9627f3"
+    },
+    {
+      "file": "spark-optimisation-2026-10-22T02-00-11-287Z.json",
+      "bytes": 10807,
+      "sha256": "fbd9156e834df3464ad8924175ef5898c0109af395578db7da596bac079d8ec7"
+    },
+    {
+      "file": "spark-optimisation-jobs-2026-10-22T02-00-11-287Z.png",
+      "bytes": 456877,
+      "sha256": "6e4e28fe6a56c11fe50864ff0cbb446726de67e70e637b5155fead092f52ef29"
+    },
+    {
+      "file": "spark-optimisation-join_after_broadcast-2026-10-22T02-00-11-287Z.png",
+      "bytes": 414088,
+      "sha256": "5ab38e42ddb19b7e4d9974b2612c2569a398d3d22e02384fc6bfc93b1645ab41"
+    },
+    {
+      "file": "spark-optimisation-join_before_sort_merge-2026-10-22T02-00-11-287Z.png",
+      "bytes": 616911,
+      "sha256": "0dc717c8f069cb7257f718d79a9972ed383bb4ff4de0c7eda0a5d606ec5b5856"
+    },
+    {
+      "file": "spark-optimisation-pruning_after_native_predicate-2026-10-22T02-00-11-287Z.png",
+      "bytes": 233273,
+      "sha256": "bafda2fc3394ad0a2307108aaa55f56a781e8496dffeebb9efc14f9a250d2068"
+    },
+    {
+      "file": "spark-optimisation-pruning_before_opaque_predicate-2026-10-22T02-00-11-287Z.png",
+      "bytes": 306662,
+      "sha256": "3c50f28e86368c9d3ed253fd5889e011da4c769c7bec3dfcdaf8a08f323979be"
+    },
+    {
+      "file": "spark-optimisation-sql-summary-2026-10-22T02-00-11-287Z.png",
+      "bytes": 504415,
+      "sha256": "148f80b472806829855c8b2bea07c39268fada518bb6e6a60bf8bb7f9d9eb554"
+    }
+  ],
+  "application_id": "local-1792634314841",
+  "spark_ui": "http://localhost:4040",
+  "spark_master": "local[4]",
+  "driver_memory": "4g",
+  "measurement_started_at": "2026-10-22T01:58:41.505786+00:00",
+  "measurement_wall_seconds": 89.4566293339999,
+  "measurement_completed_at": "2026-10-22T02:00:10.962441+00:00",
+  "capture_started_at": "2026-10-22T02:00:10.971091+00:00",
+  "capture_process_returncode": 0,
+  "capture_completed_at": "2026-10-22T02:00:17.211180+00:00",
+  "ui_capture_status": "complete",
+  "captured_labels": [
+    "join_before_sort_merge",
+    "join_after_broadcast",
+    "pruning_before_opaque_predicate",
+    "pruning_after_native_predicate"
+  ],
+  "missing_labels": [],
+  "spark_stopped_at": "2026-10-22T02:00:17.674904+00:00",
+  "completed_at": "2026-10-22T02:00:17.674937+00:00",
+  "artifact_bytes": 2566903
+}

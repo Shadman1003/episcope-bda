@@ -164,15 +164,77 @@ def validate_profile(folder):
     return {"folder": folder, "measurement": measurement, "generation": generation, "summary": recorded}
 
 
-def collect(directory):
+def validate_capture(path, core, *, independent=False):
+    manifest = load(path)
+    files, size = verify_inventory(path.parent, path.name, manifest["files"], optimisation=True)
+    measurement = core["measurement"]
+    if manifest.get("source_revision") != measurement["source_revision"] or manifest.get("preceding_pipeline_scale") != 1:
+        raise ValueError("Optimisation evidence belongs to another source or scale")
+    source_record = next(row["sha256"] for row in measurement["source_files"] if row["path"] == "results/run_all.json")
+    if manifest.get("preceding_pipeline_record_sha256") != source_record:
+        raise ValueError("Optimisation evidence does not identify its completed SF1 pipeline")
+    if manifest.get("artifact_bytes") != size:
+        raise ValueError("Optimisation manifest byte total is inconsistent")
+    measured = load(path.parent/"optimisations.json") if "optimisations.json" in files else None
+    if measured:
+        validate_query_result(measured)
+        if measured.get("application_id") != manifest.get("application_id") or measured.get("source_revision") != manifest.get("source_revision"):
+            raise ValueError("Query measurements and UI capture identify different applications or sources")
+        for row in measured["experiments"]:
+            for sample in row["samples"]:
+                if sample["plan_file"] not in files or sha256(path.parent/sample["plan_file"]) != sample["plan_sha256"]:
+                    raise ValueError("Per-sample physical plan differs from measured query provenance")
+    for name in files:
+        if name.endswith("_plan.txt") and DIRECT_IDENTIFIER.search((path.parent/name).read_text(encoding="utf-8")):
+            raise ValueError("Direct identifiers unexpectedly appear in a controlled query plan")
+    if independent:
+        performance_hash = sha256(REPOSITORY/"orchestration/performance.py")
+        if manifest.get("performance_source_sha256") != performance_hash or not measured or measured.get("performance_source_sha256") != performance_hash:
+            raise ValueError("Independent study does not use the current query timing implementation")
+        if (manifest.get("status") != "complete" or manifest.get("ui_capture_status") != "complete"
+                or set(manifest.get("captured_labels", [])) != set(LABELS)
+                or manifest.get("missing_labels") or manifest.get("capture_process_returncode") != 0):
+            raise ValueError("Independent optimisation study requires a complete live UI capture")
+        for label in LABELS:
+            if f"{label}_plan.txt" not in files or not any(name.startswith(f"spark-optimisation-{label}-") and name.endswith(".png") for name in files):
+                raise ValueError("Independent study lacks a representative plan or corresponding UI screenshot")
+        metadata_files = [name for name in files if name.startswith("spark-optimisation-") and name.endswith(".json")]
+        if len(metadata_files) != 1:
+            raise ValueError("Independent study requires one live UI metadata record")
+        ui = load(path.parent/metadata_files[0])
+        if (ui.get("status") != "complete" or ui.get("browser_closed") is not True
+                or ui.get("application_id_actual") != manifest.get("application_id")
+                or ui.get("application_id_expected") != manifest.get("application_id")
+                or ui.get("source_revision") != manifest["source_revision"]
+                or ui.get("performance_source_sha256") != performance_hash
+                or {row.get("label") for row in ui.get("queries", [])} != set(LABELS)):
+            raise ValueError("Live UI metadata does not match the completed independent query study")
+        operators = {LABELS[0]: "sort_merge", LABELS[1]: "broadcast_hash",
+                     LABELS[2]: "opaque_python", LABELS[3]: "native_year_partition_filter"}
+        for row in ui["queries"]:
+            if (row.get("screenshot") not in files or not row.get("physical_evidence", {}).get(operators[row["label"]])
+                    or not re.fullmatch(r"[0-9a-f]{64}", row.get("plan_dom_sha256", ""))):
+                raise ValueError("Live query screenshot lacks its corresponding physical-operator evidence")
+    return {"folder": path.parent, "manifest": manifest, "files": files}
+
+
+def checked_directory(directory):
     if directory.is_symlink():
         raise ValueError("Extraction root cannot be a symbolic link")
     directory = directory.resolve(strict=True)
     for path in directory.rglob("*"):
         if path.is_symlink():
             raise ValueError("Extracted evidence cannot contain symbolic links")
+    return directory
+
+
+def collect(directory, optimisations_directory=None):
+    directory = checked_directory(directory)
+    independent_root = checked_directory(optimisations_directory) if optimisations_directory is not None else None
     profiles = {}
     for path in directory.rglob("artifact_manifest.json"):
+        if independent_root and path.is_relative_to(independent_root):
+            continue
         profile = validate_profile(path.parent)
         scale = profile["measurement"]["scale"]
         if scale in profiles:
@@ -187,26 +249,44 @@ def collect(directory):
     run_ids = {row["github"]["GITHUB_RUN_ID"] for row in measurements}
     if len(run_ids) != 1:
         raise ValueError("The three scale runs must belong to one GitHub workflow run")
-    captures = list(directory.rglob("capture_manifest.json"))
+    # The explicit override deliberately ignores an older partial capture in the
+    # three-scale directory; it never changes those primary timing records.
+    captures = list((independent_root or directory).rglob("capture_manifest.json"))
     if len(captures) > 1:
         raise ValueError("More than one optimisation artifact was supplied")
     optimisation = None
     if captures:
-        path = captures[0]
-        manifest = load(path)
-        files, size = verify_inventory(path.parent, path.name, manifest["files"], optimisation=True)
-        if manifest.get("source_revision") != measurements[0]["source_revision"] or manifest.get("preceding_pipeline_scale") != 1:
-            raise ValueError("Optimisation evidence belongs to another source or scale")
-        if manifest.get("preceding_pipeline_record_sha256") != next(row["sha256"] for row in measurements[-1]["source_files"] if row["path"] == "results/run_all.json"):
-            raise ValueError("Optimisation evidence does not identify the completed SF1 pipeline")
-        if manifest.get("artifact_bytes") != size:
-            raise ValueError("Optimisation manifest byte total is inconsistent")
-        if "optimisations.json" in files:
-            validate_query_result(load(path.parent/"optimisations.json"))
-        for name in files:
-            if name.endswith("_plan.txt") and DIRECT_IDENTIFIER.search((path.parent/name).read_text(encoding="utf-8")):
-                raise ValueError("Direct identifiers unexpectedly appear in a controlled query plan")
-        optimisation = {"folder": path.parent, "manifest": manifest, "files": files}
+        core = profiles[1.]
+        if independent_root:
+            core_manifests = list(independent_root.rglob("artifact_manifest.json"))
+            if len(core_manifests) != 1:
+                raise ValueError("Independent optimisation directory requires exactly one SF1 core artifact")
+            core = validate_profile(core_manifests[0].parent)
+            if core["measurement"]["scale"] != 1:
+                raise ValueError("Independent optimisation study must use SF1")
+            semantic = lambda generation: {key: value for key, value in generation.items() if key not in {"generated_utc", "elapsed_seconds"}}
+            if semantic(core["generation"]) != semantic(profiles[1.]["generation"]):
+                raise ValueError("Independent study generation facts, reference hashes or recorded source files differ from primary SF1")
+            if core["measurement"].get("cache_archive_sha256") != profiles[1.]["measurement"].get("cache_archive_sha256"):
+                raise ValueError("Independent optimisation study used a different reference archive")
+        optimisation = validate_capture(captures[0], core, independent=independent_root is not None)
+        if independent_root:
+            optimisation["core"] = core
+            optimisation["study"] = {
+                "scope": "Independent SF1 query/UI study on identical recorded generated inputs; primary three-scale timers and dashboard release remain unchanged",
+                "primary_scaling_run_id": measurements[-1]["github"]["GITHUB_RUN_ID"],
+                "primary_source_revision": measurements[-1]["source_revision"],
+                "source_revision": core["measurement"]["source_revision"],
+                "github_run_id": core["measurement"]["github"]["GITHUB_RUN_ID"],
+                "hardware": core["measurement"]["hardware"],
+                "preceding_full_command_seconds": core["measurement"]["total_seconds"],
+                "performance_source_sha256": optimisation["manifest"]["performance_source_sha256"],
+                "generation_semantics_and_recorded_file_metadata_equal": True,
+                "application_id": optimisation["manifest"]["application_id"],
+                "capture_status": optimisation["manifest"]["status"],
+            }
+    elif independent_root:
+        raise ValueError("Independent optimisation directory does not contain a capture artifact")
     return profiles, optimisation
 
 
@@ -233,6 +313,11 @@ def promotion_files(profiles, optimisation):
     writer.writerows({key: row[key] for key in fields} for row in measurements)
     files[Path("results/cloud/scalability.csv")] = table.getvalue().encode("utf-8")
     if optimisation:
+        if "core" in optimisation:
+            metadata = ("artifact_manifest.json", "measurement.json", "generation_manifest.json", "reference_provenance.json", "results/run_all.json")
+            for name in metadata:
+                files[Path("results/cloud/optimisation_study/core_metadata")/name] = (optimisation["core"]["folder"]/name).read_bytes()
+            files[Path("results/cloud/optimisation_study/study.json")] = encoded(optimisation["study"])
         for name in optimisation["files"] | {"capture_manifest.json"}:
             source = optimisation["folder"]/name
             files[Path("results/cloud/optimisations")/name] = source.read_bytes()
@@ -246,13 +331,15 @@ def promotion_files(profiles, optimisation):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--directory", required=True, type=Path, help="Parent of separately extracted artifact folders")
+    parser.add_argument("--optimisations-directory", type=Path,
+                        help="Independent SF1 core plus complete query/UI capture; overrides embedded capture only")
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--validate-only", action="store_true", help="Verify and describe evidence without writing (default)")
     mode.add_argument("--stage", action="store_true", help="Write intended promotion files under ignored work/ for review")
     mode.add_argument("--promote", action="store_true", help="Back up overwritten files, then import final aggregate evidence")
     args = parser.parse_args(argv)
     try:
-        profiles, optimisation = collect(args.directory)
+        profiles, optimisation = collect(args.directory, args.optimisations_directory)
         files = promotion_files(profiles, optimisation)
         receipt = {"status": "validated", "mode": "promote" if args.promote else "stage" if args.stage else "validate-only",
                    "created_utc": datetime.now(timezone.utc).isoformat(),
@@ -260,6 +347,7 @@ def main(argv=None):
                    "github_run_id": profiles[1.]["measurement"]["github"]["GITHUB_RUN_ID"],
                    "scales": sorted(profiles), "sf1_under_45_minutes": profiles[1.]["measurement"]["under_45_minutes"],
                    "optimisation_status": optimisation["manifest"].get("status") if optimisation else "not_supplied",
+                   "optimisation_study": optimisation.get("study") if optimisation else None,
                    "warnings": {str(scale): profile["summary"]["warnings"] for scale, profile in profiles.items()},
                    "files": [{"path": path.as_posix(), "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()} for path, data in sorted(files.items())]}
         if args.promote or args.stage:

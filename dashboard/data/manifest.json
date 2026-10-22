@@ -1,0 +1,14 @@
+{
+  "generated_at": "2026-10-22T01:35:55+00:00",
+  "bytes": 2568942,
+  "sha256": "981094cba6b256b1dc3d429eb2130c46dc5b5251985627bbc8588322a89b3416",
+  "counts": {
+    "observed": 67072,
+    "forecasts": 1024,
+    "signals": 256,
+    "allocations": 9216,
+    "calendar": 1696
+  },
+  "privacy": "disjoint weekly cells, five-count bins, coupled balance suppression",
+  "path": "/home/runner/work/episcope-bda/episcope-bda/dashboard/data/dashboard.json"
+}
