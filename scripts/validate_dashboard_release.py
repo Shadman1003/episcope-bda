@@ -2,7 +2,7 @@
 
 Requires Node.js, Playwright and Chrome. No Spark or generated clinical files
 are needed. The default output is a new ignored work/ directory, preserving
-previous evidence. Use --output docs/evidence only for a final release.
+previous evidence. Review the output before copying final evidence into docs/.
 """
 from __future__ import annotations
 
@@ -48,10 +48,18 @@ def main():
     args = parser.parse_args()
     if not args.node or not args.node.is_file():
         parser.error("Node.js was not found; provide --node /absolute/path/to/node")
+    args.node = args.node.resolve()
     dashboard = args.dashboard_root.resolve()
     release = dashboard / "data/dashboard.json"
     if not release.is_file():
         parser.error("The actual dashboard export is missing; no fixture fallback is permitted")
+    frontend = {}
+    for name in ("app.js", "index.html", "style.css"):
+        source = dashboard / name
+        if not source.is_file():
+            parser.error(f"The tested dashboard source is missing: {source}")
+        frontend[name] = {"sha256": hashlib.sha256(source.read_bytes()).hexdigest(), "bytes": source.stat().st_size}
+    revision = subprocess.run(["git", "rev-parse", "--verify", "HEAD"], cwd=ROOT, capture_output=True, text=True, check=True, timeout=10).stdout.strip()
     evidence = (args.output or ROOT / "work" / ("browser-qa-" + datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ"))).resolve()
     evidence.mkdir(parents=True, exist_ok=True)
     if any(evidence.iterdir()):
@@ -82,7 +90,7 @@ def main():
     role_env["EPISCOPE_TOKENS"] = json.dumps({national_token: {"role": "national"}, district_token: {"role": "district", "district_id": "01"}})
     national_env = env.copy()
     national_env.pop("EPISCOPE_TOKENS", None)
-    context = {"started_at": datetime.now(timezone.utc).isoformat(), "label": args.label, "release_sha256": hashlib.sha256(release.read_bytes()).hexdigest(), "release_bytes": release.stat().st_size, "python": sys.version.split()[0], "node": str(args.node), "browser_channel": args.chrome_channel}
+    context = {"started_at": datetime.now(timezone.utc).isoformat(), "label": args.label, "git_revision": revision, "frontend_files": frontend, "release_sha256": hashlib.sha256(release.read_bytes()).hexdigest(), "release_bytes": release.stat().st_size, "python": sys.version.split()[0], "node": str(args.node), "browser_channel": args.chrome_channel}
     (evidence / "run-context.json").write_text(json.dumps(context, indent=2) + "\n", encoding="utf-8")
     servers, logs, runs = [], [], []
     try:

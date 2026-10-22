@@ -75,7 +75,13 @@ async function verifyNationalPolicyPlots(page,{screenshotDir}={}){
   const viewport=page.viewportSize();await page.setViewportSize({width:390,height:844});await page.waitForTimeout(200);
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>window.innerWidth),false,'Expanded policy charts overflow mobile width');
   assert.equal(await detection.count(),14);assert.equal(await scenarios.count(),24);
-  if(screenshotDir)await panel.screenshot({path:path.join(screenshotDir,'dashboard-policy-checks-mobile.png')});
+  if(screenshotDir){
+    // Fit the complete panel before an element capture. Chromium otherwise
+    // composites off-screen fixed skip links into clips taller than viewport.
+    const panelHeight=Math.ceil((await panel.boundingBox()).height);
+    await page.setViewportSize({width:390,height:Math.max(844,panelHeight+40)});await page.waitForTimeout(200);
+    await panel.screenshot({path:path.join(screenshotDir,'dashboard-policy-checks-mobile.png')});
+  }
   await page.setViewportSize(viewport);await page.waitForTimeout(200);
   if(!wasOpen)await page.locator('#policy-checks > summary').click();
   assert.deepEqual(await page.evaluate(()=>window.epiScopeState),original,'Policy QA did not restore shared state');
