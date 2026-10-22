@@ -141,6 +141,7 @@ def main(argv=None):
     capture_script = REPOSITORY / "tests" / "capture_optimisation_ui.cjs"
     manifest = {
         "status": "starting", "started_at": now(), "source_revision": revision,
+        "performance_source_sha256": sha256(REPOSITORY / "orchestration" / "performance.py"),
         "preceding_pipeline_record_sha256": sha256(source_record),
         "preceding_pipeline_scale": pipeline["scale"],
         "preceding_pipeline_total_seconds": pipeline.get("total_seconds"),
@@ -174,6 +175,7 @@ def main(argv=None):
         measured = {**measured, "spark_ui": spark.sparkContext.uiWebUrl,
                     "application_id": spark.sparkContext.applicationId,
                     "source_revision": revision,
+                    "performance_source_sha256": manifest["performance_source_sha256"],
                     "measurement_completed_at": manifest["measurement_completed_at"]}
         write_json(output / "optimisations.json", measured)
         manifest["files"].append({"file": "optimisations.json", "bytes": (output / "optimisations.json").stat().st_size, "sha256": sha256(output / "optimisations.json")})
@@ -199,15 +201,16 @@ def main(argv=None):
             write_json(ready, {"application_id": spark.sparkContext.applicationId,
                                "ui": spark.sparkContext.uiWebUrl,
                                "source_revision": revision,
+                               "performance_source_sha256": manifest["performance_source_sha256"],
                                "measurement_completed_at": manifest["measurement_completed_at"]})
             command = [node, str(capture_script), "--ready-file", str(ready),
                        "--done-file", str(done), "--evidence-dir", str(screenshots),
-                       "--chrome-channel", args.chrome_channel, "--budget-ms", "45000"]
+                       "--chrome-channel", args.chrome_channel, "--budget-ms", "120000"]
             if args.chrome_executable:
                 command += ["--chrome-executable", str(args.chrome_executable.resolve())]
             manifest["capture_started_at"] = now()
             try:
-                captured = subprocess.run(command, cwd=REPOSITORY, capture_output=True, text=True, timeout=55)
+                captured = subprocess.run(command, cwd=REPOSITORY, capture_output=True, text=True, timeout=135)
                 manifest["capture_process_returncode"] = captured.returncode
                 if captured.stdout:
                     print(captured.stdout, end="", flush=True)
@@ -215,7 +218,7 @@ def main(argv=None):
                     print(captured.stderr, end="", file=sys.stderr, flush=True)
             except subprocess.TimeoutExpired:
                 manifest["capture_process_returncode"] = None
-                manifest["capture_timeout_seconds"] = 55
+                manifest["capture_timeout_seconds"] = 135
             manifest["capture_completed_at"] = now()
             for source in sorted(screenshots.iterdir()):
                 if source.name.startswith("spark-optimisation-") and source.suffix in {".png", ".json"}:

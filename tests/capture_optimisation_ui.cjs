@@ -19,14 +19,14 @@ function optionsFromArgs(args){
   return options;
 }
 const options=optionsFromArgs(process.argv.slice(2));
-if(options.help){console.log('Usage: node tests/capture_optimisation_ui.cjs --ready-file FILE --done-file FILE --evidence-dir DIRECTORY [--chrome-channel chrome] [--chrome-executable FILE] [--budget-ms 45000]');process.exit(0);}
+if(options.help){console.log('Usage: node tests/capture_optimisation_ui.cjs --ready-file FILE --done-file FILE --evidence-dir DIRECTORY [--chrome-channel chrome] [--chrome-executable FILE] [--budget-ms 120000]');process.exit(0);}
 const {chromium}=require('playwright');
 const readyPath=path.resolve(options['ready-file']||process.env.EPISCOPE_UI_READY_FILE||path.join(root,'work','optimisation-ui-ready.json'));
 const donePath=path.resolve(options['done-file']||process.env.EPISCOPE_UI_DONE_FILE||path.join(root,'work','optimisation-ui-captured'));
 const chromeChannel=options['chrome-channel']||process.env.EPISCOPE_BROWSER_CHANNEL||'chrome';
 const chromeExecutable=options['chrome-executable']||process.env.EPISCOPE_CHROME_EXECUTABLE;
-const budgetMs=Number(options['budget-ms']||45000);
-if(!Number.isFinite(budgetMs)||budgetMs<15000||budgetMs>45000)throw new Error('Capture budget must be between 15000 and 45000 milliseconds.');
+const budgetMs=Number(options['budget-ms']||120000);
+if(!Number.isFinite(budgetMs)||budgetMs<15000||budgetMs>120000)throw new Error('Capture budget must be between 15000 and 120000 milliseconds.');
 const expected=['join_before_sort_merge','join_after_broadcast','pruning_before_opaque_predicate','pruning_after_native_predicate'];
 const operatorNames=['SortMergeJoin','BroadcastHashJoin','BatchEvalPython','FileScan','Scan parquet'];
 const stamp=new Date().toISOString().replace(/[:.]/g,'-');
@@ -68,11 +68,12 @@ function classify(checks){
   const reported=new URL(ready.ui),base=`http://127.0.0.1:${reported.port||4040}`;
   result.application_id_expected=String(ready.application_id);result.ui_reported=ready.ui;result.ui_used=base;
   if(ready.source_revision)result.source_revision=String(ready.source_revision);
+  if(ready.performance_source_sha256)result.performance_source_sha256=String(ready.performance_source_sha256);
   if(ready.measurement_completed_at)result.measurement_completed_at=String(ready.measurement_completed_at);
   fs.mkdirSync(evidence,{recursive:true});
   const watchdog=setTimeout(()=>{result.status='timed_out';result.errors.push('Capture limit reached; no completion marker written.');saveMetadata();console.error(JSON.stringify({status:result.status,metadata:path.basename(metadataPath),available_screenshots:result.screenshots.length}));process.exit(1);},budgetMs);
   try{
-    browser=await chromium.launch({headless:true,...(chromeExecutable?{executablePath:chromeExecutable}:{channel:chromeChannel}),timeout:remaining(12000)});
+    browser=await chromium.launch({headless:true,...(chromeExecutable?{executablePath:chromeExecutable}:{channel:chromeChannel}),timeout:remaining(60000)});
     result.browser_version=browser.version();result.playwright_version=require('playwright/package.json').version;
     const page=await browser.newPage({viewport:{width:1600,height:1000},deviceScaleFactor:1});
     page.setDefaultTimeout(remaining(4000));

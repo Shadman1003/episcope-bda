@@ -2,6 +2,15 @@ name: Validate scaling
 
 on:
   workflow_dispatch:
+    inputs:
+      scale:
+        description: Fresh profiles to validate
+        required: true
+        default: all
+        type: choice
+        options:
+          - all
+          - '1'
 
 permissions:
   contents: read
@@ -15,7 +24,7 @@ jobs:
       fail-fast: false
       max-parallel: 3
       matrix:
-        scale: ['0.25', '0.5', '1']
+        scale: ${{ fromJSON(inputs.scale == '1' && '["1"]' || '["0.25","0.5","1"]') }}
     env:
       EPISCOPE_SPARK_MASTER: local[4]
       EPISCOPE_DRIVER_MEMORY: 4g
@@ -151,6 +160,20 @@ jobs:
           node --version
           google-chrome --version
           npm install --no-save --package-lock=false playwright@1.64.1
+          # Complete browser startup/close before Spark or query timers start.
+          node - <<'JS'
+          const {chromium} = require('playwright');
+          (async () => {
+            const browser = await chromium.launch({headless:true, channel:'chrome', timeout:60000});
+            try {
+              const page = await browser.newPage();
+              await page.goto('about:blank');
+              console.log('Untimed Chrome preflight passed: '+browser.version());
+            } finally {
+              await browser.close();
+            }
+          })().catch(error => { console.error(error.message); process.exitCode=1; });
+          JS
 
       - name: Measure SF=1 query comparisons and capture their actual Spark UI
         id: optimisations
