@@ -47,6 +47,7 @@ jobs:
         run: |
           set -euo pipefail
           echo "EPISCOPE_VENV=$RUNNER_TEMP/episcope-venv" >> "$GITHUB_ENV"
+          echo "PYSPARK_PYTHON=$RUNNER_TEMP/episcope-venv/bin/python" >> "$GITHUB_ENV"
           python --version
           java -version
           nproc
@@ -125,7 +126,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir ci-tests
-          "$EPISCOPE_VENV/bin/python" -m pytest -q tests | tee ci-tests/python-tests.txt
+          bash run_wsl.sh test | tee ci-tests/python-tests.txt
           printf '%s\n' "$GITHUB_SHA" > ci-tests/source-revision.txt
 
       - name: Upload successful Python test evidence
