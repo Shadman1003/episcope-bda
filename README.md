@@ -8,7 +8,39 @@ All patient encounters, facilities, stocks and outbreak events are synthetic. Di
 
 ## Open the dashboard
 
-The repository includes a protected aggregate release for immediate preview. From the repository root, use Python 3.12 or newer:
+The instructor can view the completed dashboard without rebuilding the 25-million-row dataset. Only Python 3.12 or newer and a browser are needed; no account, API key, Java, Spark, Node.js or Python package installation is required for this preview.
+
+### First visit on Windows
+
+Install Python if needed using the [official Windows instructions](https://docs.python.org/3.12/using/windows.html). Obtain this repository using either Git or the green **Code > Download ZIP** button on GitHub. Extract the ZIP completely before running anything.
+
+With Git installed, open PowerShell and run:
+
+```powershell
+git clone https://github.com/Shadman1003/episcope-bda.git
+cd episcope-bda
+py -3 -m serving.server --port 8765
+```
+
+For Download ZIP, open PowerShell in the extracted `episcope-bda-main` folder containing `README.md` and run the last command only. If `py` is unavailable but `python --version` shows Python 3.12 or newer, use `python -m serving.server --port 8765` instead.
+
+### First visit on Linux or macOS
+
+```bash
+git clone https://github.com/Shadman1003/episcope-bda.git
+cd episcope-bda
+python3 -m serving.server --port 8765
+```
+
+If using Download ZIP, enter its extracted folder and run the final command. The preview server is portable Python; full backend rebuilds use Linux/WSL as documented below.
+
+### Confirm that it works
+
+Keep the terminal open and visit **http://127.0.0.1:8765** in a browser on the same PC. Expect the EpiScope national overview, 64 districts, disease selectors and linked charts. The health endpoint http://127.0.0.1:8765/api/health should report `ok: true` and `data_ready: true`. Stop the server with **Ctrl+C**. Your PC does not need Shadman's D: folder or his Python environment.
+
+If the port is busy, use `--port 8766` and open that port instead. If the module is missing, change into the folder containing `README.md`, `serving/` and `dashboard/`. If data is unavailable, confirm both `dashboard/data/dashboard.json` and `manifest.json` were included in the clone/extracted ZIP. A localhost link works while the server is running on that PC; GitHub itself is not hosting this dashboard.
+
+The repository includes a protected aggregate release. The generic preview command is:
 
 ```bash
 python -m serving.server --port 8765
@@ -19,6 +51,25 @@ Open <http://127.0.0.1:8765>. Preview uses the Python standard library and the v
 ## Rebuild from Ubuntu WSL or Linux
 
 Prerequisites: Python 3.12, OpenJDK 11 or 17, curl, internet access for the first reference/dependency download, and disk space for generated feeds and lake files. The numerical and Spark environment is pinned in `requirements.txt`; heavy transformations use PySpark 3.5.3. Initial setup includes downloading Spark.
+
+For a concrete matching environment, use **Ubuntu 24.04 with Python 3.12**. On Windows, install that distribution under WSL2 using [Microsoft's WSL instructions](https://learn.microsoft.com/en-us/windows/wsl/install); run the following commands in the Ubuntu terminal, not PowerShell:
+
+```bash
+sudo apt update
+sudo apt install -y python3 python3-venv openjdk-17-jre-headless curl git
+python3 --version
+java -version
+git clone https://github.com/Shadman1003/episcope-bda.git
+cd episcope-bda
+```
+
+Confirm Python reports 3.12 and Java reports 11 or 17. Use a fresh clone for a new scale. A 16 GB machine and at least 15 GB of free working space are practical starting points; peak usage and runtime depend on the host. The shipped licensed reference cache can avoid downloading the reference datasets again:
+
+```bash
+python3 -m zipfile -e resources/public-reference-cache.zip data
+```
+
+This optional step restores public reference files only. The build below still generates encounters and processes the lake. `run_wsl.sh` creates the pinned virtual environment automatically. The measured 11.25-minute result excludes first-time dependency installation/cache extraction and is not a promise for another PC.
 
 From a clean clone, one command acquires public references, generates the full SF=1 synthetic feed, builds bronze/silver/gold tables, runs analytics and exports the protected dashboard:
 
