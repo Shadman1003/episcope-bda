@@ -231,12 +231,18 @@ function evaluationFrame(selector,title,xDomain,yDomain,xLabel,yLabel,xFormat,yF
   return {svg,x,y};
 }
 
+let focusedEvaluationTip=null;
+function showFocusedEvaluationTip(){
+  if(!focusedEvaluationTip||focusedEvaluationTip.node!==document.activeElement||focusedEvaluationTip.dismissed)return false;
+  focusedEvaluationTip.show();return true;
+}
 function evaluationPointEvents(points,describe){
   points.attr("tabindex",0).attr("role","img").attr("aria-label",r=>{const text=describe(r);return text.title+". "+text.lines.join(". ");})
-    .on("pointermove",(event,r)=>{const text=describe(r);tooltip(event,text.title,text.lines);})
-    .on("pointerleave",hideTip).on("blur",hideTip)
-    .on("focus",function(event,r){const bounds=this.getBoundingClientRect(),text=describe(r);tooltip({clientX:bounds.left+bounds.width/2,clientY:bounds.top+bounds.height/2},text.title,text.lines);})
-    .on("keydown",event=>{if(event.key==="Escape")hideTip();});
+    .on("pointermove",function(event,r){if(focusedEvaluationTip?.node===this&&focusedEvaluationTip.dismissed)return;const text=describe(r);tooltip(event,text.title,text.lines);})
+    .on("pointerleave",()=>{if(!showFocusedEvaluationTip())hideTip();})
+    .on("blur",()=>{focusedEvaluationTip=null;hideTip();})
+    .on("focus",function(event,r){focusedEvaluationTip={node:this,dismissed:false,show:()=>{const bounds=this.getBoundingClientRect(),text=describe(r);tooltip({clientX:bounds.left+bounds.width/2,clientY:bounds.top+bounds.height/2},text.title,text.lines);}};showFocusedEvaluationTip();})
+    .on("keydown",event=>{if(event.key==="Escape"){if(focusedEvaluationTip)focusedEvaluationTip.dismissed=true;hideTip();}});
 }
 
 function renderDetectionPolicy(){
@@ -342,5 +348,7 @@ $("#access-button").onclick=()=>$("#token-dialog").showModal();
 $("#token-submit").onclick=()=>{const token=$("#token-input").value.trim();if(token)sessionStorage.setItem("episcope-token",token);else sessionStorage.removeItem("episcope-token");$("#token-input").value="";load();};
 $("#policy-checks").addEventListener("toggle",()=>{if(data)renderPolicyChecks();});
 window.addEventListener("resize",()=>{clearTimeout(renderTimer);renderTimer=setTimeout(render,150);});
-document.addEventListener("scroll",hideTip,{passive:true});
+// Keyboard focus can scroll a point into view after its focus event. Keep that
+// tooltip anchored to the point; pointer tooltips still disappear on scroll.
+document.addEventListener("scroll",()=>{if(!showFocusedEvaluationTip())hideTip();},{passive:true});
 load();

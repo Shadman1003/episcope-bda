@@ -49,12 +49,16 @@ async function verifyNationalPolicyPlots(page,{screenshotDir}={}){
   assert.equal(await selectedScenario.locator('.evaluation-selection-ring').count(),1);
   await detection.first().focus();await page.keyboard.press('Tab');
   assert.equal(await page.evaluate(()=>document.activeElement?.matches('#detection-policy .detection-point')),true,'Tab did not reach a detection point');
-  assert.equal(await page.locator('#tooltip').isVisible(),true);
+  await page.waitForTimeout(500); // Let keyboard-triggered smooth scrolling finish.
+  assert.equal(await page.locator('#tooltip').isVisible(),true,'Focused detection tooltip disappeared during scrolling');
   assert.match(await page.locator('#tooltip').innerText(),/Median issue delay \(detected events\)/);
   await page.keyboard.press('Escape');assert.equal(await page.locator('#tooltip').isVisible(),false);
+  await page.mouse.wheel(0,80);await page.waitForTimeout(250);
+  assert.equal(await page.locator('#tooltip').isVisible(),false,'Scrolling restored an Escape-dismissed tooltip');
   await scenarios.first().focus();await page.keyboard.press('Tab');
   assert.equal(await page.evaluate(()=>document.activeElement?.matches('#allocation-policy .allocation-policy-point')),true,'Tab did not reach an allocation point');
-  assert.equal(await page.locator('#tooltip').isVisible(),true);
+  await page.waitForTimeout(500);
+  assert.equal(await page.locator('#tooltip').isVisible(),true,'Focused allocation tooltip disappeared during scrolling');
   const allocationTip=await page.locator('#tooltip').innerText();assert.match(allocationTip,/Budget/);assert.match(allocationTip,/equity floor/);assert.match(allocationTip,/Weighted unmet need reduction/);
   await page.keyboard.press('Escape');
   for(const id of ['threshold','budget','equity']){await page.locator('#'+id).fill(controls[id]);await page.locator('#'+id).dispatchEvent('input');}
