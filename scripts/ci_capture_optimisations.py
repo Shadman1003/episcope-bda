@@ -211,8 +211,16 @@ def main(argv=None):
         print(f"Optimisation evidence failed during {stage}: {type(error).__name__}", file=sys.stderr, flush=True)
     finally:
         if spark is not None:
-            spark.stop()
-            manifest["spark_stopped_at"] = now()
+            # Keep measured evidence and its manifest if a JVM shutdown fails.
+            # A shutdown failure still fails this step and is stated explicitly.
+            try:
+                spark.stop()
+                manifest["spark_stopped_at"] = now()
+            except Exception as error:
+                manifest["spark_shutdown_failure_type"] = type(error).__name__
+                manifest["status"] = "failed"
+                manifest.setdefault("failure_stage", "spark_shutdown")
+                exit_code = 1
         manifest["completed_at"] = now()
         manifest["artifact_bytes"] = sum(path.stat().st_size for path in output.iterdir() if path.is_file())
         write_json(output / "capture_manifest.json", manifest)

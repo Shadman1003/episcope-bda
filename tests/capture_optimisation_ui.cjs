@@ -93,7 +93,7 @@ function classify(checks){
     }
     if(!verifiedApp)throw new Error('Live Spark application ID did not match the controlled benchmark ready marker.');
     if(!String(result.application_name).includes('EpiScope controlled optimisation evidence'))throw new Error('Live application name is not the controlled optimisation evidence run.');
-    await page.goto(base+'/jobs/',{waitUntil:'domcontentloaded',timeout:remaining()});
+    await page.goto(base+'/jobs/?completedJob.pageSize=200&completedJob.desc=true',{waitUntil:'domcontentloaded',timeout:remaining()});
     result.jobs_title=await page.title();
     const jobRows=await tableRows(page),jobLabels=new Map(),jobDescriptions=new Map();
     for(const row of jobRows){
@@ -104,14 +104,20 @@ function classify(checks){
     }
     result.visible_controlled_jobs=Array.from(jobLabels,([id,labels])=>({job_id:id,labels,descriptions:jobDescriptions.get(id)}));
     await screenshot(page,'jobs',{fullPage:true});
-    await page.goto(base+'/SQL/',{waitUntil:'domcontentloaded',timeout:remaining()});
+    await page.goto(base+'/SQL/?completed.pageSize=200&completed.desc=true',{waitUntil:'domcontentloaded',timeout:remaining()});
     result.sql_title=await page.title();
     const sqlRows=await tableRows(page),byQuery=new Map();
     for(const row of sqlRows){
       for(const link of row.links){
-        if(!/\/SQL\/execution\/\?id=\d+/.test(link.href)||!/collect/i.test(link.text)||!/performance\.py/i.test(link.text))continue;
+        if(!/\/SQL\/execution\/\?id=\d+/.test(link.href))continue;
+        // Spark 3.5.3 SQLExecution uses spark.job.description as the SQL
+        // description when set; collect-at-performance.py is only a fallback.
+        // Accept only these actual sample descriptions or that call site.
+        const sqlLabels=expected.filter(label=>new RegExp('^'+label+':\\s*sample\\s+[123]/3$').test(link.text));
+        const knownCallSite=/collect/i.test(link.text)&&/performance\.py/i.test(link.text);
+        if(!sqlLabels.length&&!knownCallSite)continue;
         const id=jobId(link.href),jobs=row.links.filter(item=>/\/jobs\/job\/\?id=\d+/.test(item.href)).map(item=>jobId(item.href));
-        byQuery.set(id,{query_id:id,description:link.text,url:link.href,job_ids:Array.from(new Set(jobs)),job_labels:Array.from(new Set(jobs.flatMap(job=>jobLabels.get(job)||[])))});
+        byQuery.set(id,{query_id:id,description:link.text,url:link.href,job_ids:Array.from(new Set(jobs)),sql_labels:sqlLabels,job_labels:Array.from(new Set(jobs.flatMap(job=>jobLabels.get(job)||[])))});
       }
     }
     const candidates=Array.from(byQuery.values()).sort((a,b)=>a.query_id-b.query_id);
@@ -122,13 +128,14 @@ function classify(checks){
     // chronological quarter of the 12 collect actions, then remaining queries.
     // Physical operators, not this ordering heuristic, determine each label.
     const preferred=[];
-    for(const label of expected){const match=candidates.filter(query=>query.job_labels.includes(label)).at(-1);if(match)preferred.push(match);}
+    for(const label of expected){const match=candidates.filter(query=>query.sql_labels.includes(label)||query.job_labels.includes(label)).at(-1);if(match)preferred.push(match);}
     if(candidates.length>=4)for(let i=1;i<=4;i++)preferred.push(candidates[Math.ceil(i*candidates.length/4)-1]);
     const queue=Array.from(new Map([...preferred,...candidates.slice().reverse()].map(query=>[query.query_id,query])).values());
     const captured=new Set();
     for(const query of queue){
       if(!withinCapture()||captured.size===expected.length)break;
-      if(query.job_labels.length===1&&captured.has(query.job_labels[0]))continue;
+      const declaredLabels=Array.from(new Set([...query.sql_labels,...query.job_labels]));
+      if(declaredLabels.length===1&&captured.has(declaredLabels[0]))continue;
       try{
         await page.goto(query.url,{waitUntil:'domcontentloaded',timeout:remaining(4500)});
         // Reveal the Spark-provided description before inspecting partition
@@ -138,11 +145,11 @@ function classify(checks){
         if(await details.count())try{await details.last().click({timeout:remaining(1200)});}catch(error){detailsNote=errorText(error);}
         const dom=await page.locator('html').textContent();
         const checks=operatorsFromDom(dom),label=classify(checks);
-        const inspected={query_id:query.query_id,job_ids:query.job_ids,job_labels:query.job_labels,physical_evidence:checks,classified_label:label};
+        const inspected={query_id:query.query_id,job_ids:query.job_ids,sql_labels:query.sql_labels,job_labels:query.job_labels,physical_evidence:checks,classified_label:label};
         if(detailsNote)inspected.details_note=detailsNote;
         result.inspected_queries.push(inspected);
         if(!label||captured.has(label))continue;
-        if(query.job_labels.length===1&&query.job_labels[0]!==label){inspected.note='Job label and observed physical operator disagreed; query not captured as that case.';continue;}
+        if(declaredLabels.length!==1||declaredLabels[0]!==label){inspected.note='Query/job labels and the observed physical operator did not uniquely agree; query not captured as that case.';continue;}
         if(/\bpatient_id\b|\bpatient_name\b|\bencounter_id\b|BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY/.test(dom)){inspected.note='Unexpected direct identifier or private-key marker in plan DOM; screenshot skipped.';continue;}
         // No labels or plans are injected into the application UI.
         const image=await screenshot(page,label,{fullPage:true});

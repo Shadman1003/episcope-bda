@@ -32,13 +32,17 @@ INTEGER_FIELDS = {"horizon", "n", "events", "detected_events", "false_alert_epis
 
 
 class EvaluationInputs:
-    def __init__(self):
+    def __init__(self, root=None):
+        self.root = Path(root).resolve() if root is not None else None
         self.sources = []
         self.warnings = []
 
     def read_bytes(self, path):
         content = path.read_bytes()
-        self.sources.append({"path": str(path.resolve()), "bytes": len(content),
+        # Portable evidence should not publish the current user's absolute path.
+        resolved = path.resolve()
+        relative = resolved.relative_to(self.root).as_posix() if self.root and resolved.is_relative_to(self.root) else path.name
+        self.sources.append({"path": relative, "bytes": len(content),
                              "sha256": hashlib.sha256(content).hexdigest()})
         return content
 
@@ -150,7 +154,7 @@ def summarise_artefact(analytics):
     naive_total = sum(row.get("naive_report_date_c2_alerts", 0) for row in naive) if naive else None
     ears_count = method_counts.get("EARS_C2")
     return {"status": source.get("status", "unavailable"),
-            "artefact_district_comparator_rows": len(naive),
+            "artefact_district_comparator_rows": source.get("nationalised_comparator_districts", len(naive)),
             "naive_report_date_c2_alert_rows": naive_total,
             "mature_onset_alert_rows_by_method": method_counts,
             "eligible_onset_cases_by_method": eligible,
@@ -237,14 +241,22 @@ def summarise_allocation(analytics, scenarios, inputs):
             "interpretation": "The chosen budget/equity policy is copied from the completed run, not reselected to create an apparent gain. Weighted unmet demand uses teaching weights and generic budget units; tiny signed differences can be numerical equivalence. Continuous bed/team capacity is not an integer dispatch plan."}
 
 
-def build_summary(results):
+def build_summary(results, generation_manifest=None):
     results = Path(results).resolve()
-    inputs = EvaluationInputs()
+    inputs = EvaluationInputs(results.parent)
     analytics = inputs.json(results/"analytics_latest.json")
     forecasts = inputs.table(results/"forecast_summary.csv", FORECAST_NUMBERS, FORECAST_NUMBERS | {"model", "disease"})
     allocations = inputs.table(results/"allocation_scenarios.csv", ALLOCATION_NUMBERS, ALLOCATION_NUMBERS)
     detection = inputs.table(results/"detection_tradeoff.csv", DETECTION_NUMBERS, DETECTION_NUMBERS | {"method", "evaluation_period"})
-    manifest_path = results.parent/"data"/"generation_manifest.json"
+    if generation_manifest is not None:
+        # An explicit manifest must exist: typos must not silently lose scale evidence.
+        manifest_path = Path(generation_manifest).resolve(strict=True)
+    else:
+        candidates = (results.parent/"generation_manifest.json", results.parent/"data"/"generation_manifest.json")
+        existing = [path for path in candidates if path.exists()]
+        if len(existing) > 1 and existing[0].read_bytes() != existing[1].read_bytes():
+            raise ValueError("Multiple different generation manifests found; select --generation-manifest explicitly")
+        manifest_path = existing[0] if existing else candidates[-1]
     generation = None
     if manifest_path.exists():
         manifest = inputs.json(manifest_path)
@@ -285,10 +297,12 @@ def build_summary(results):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--results", required=True, type=Path, help="Completed run's results directory")
+    parser.add_argument("--generation-manifest", type=Path,
+                        help="Exact completed run manifest; otherwise discover the cloud artifact or local data layout")
     parser.add_argument("--output", required=True, type=Path, help="Destination evaluation_summary.json")
     args = parser.parse_args(argv)
     try:
-        summary = build_summary(args.results)
+        summary = build_summary(args.results, args.generation_manifest)
         encoded = json.dumps(summary, indent=2, ensure_ascii=False, allow_nan=False)+"\n"
         args.output.parent.mkdir(parents=True, exist_ok=True)
         temporary = args.output.with_name(args.output.name+".tmp")

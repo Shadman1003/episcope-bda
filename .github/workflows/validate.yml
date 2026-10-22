@@ -17,7 +17,6 @@ jobs:
       matrix:
         scale: ['0.25', '0.5', '1']
     env:
-      EPISCOPE_VENV: ${{ runner.temp }}/episcope-venv
       EPISCOPE_SPARK_MASTER: local[4]
       EPISCOPE_DRIVER_MEMORY: 4g
       EPISCOPE_SHUFFLE_PARTITIONS: '16'
@@ -47,6 +46,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          echo "EPISCOPE_VENV=$RUNNER_TEMP/episcope-venv" >> "$GITHUB_ENV"
           python --version
           java -version
           nproc
@@ -101,17 +101,52 @@ jobs:
           PY
 
       - name: Execute fresh scale run and package safe aggregate evidence
+        id: profile
         shell: bash
         run: |
           set -euo pipefail
           "$EPISCOPE_VENV/bin/python" scripts/ci_validate.py --scale '${{ matrix.scale }}' --output ci-public
 
       - name: Upload aggregate evidence only
-        if: success()
+        if: ${{ steps.profile.outcome == 'success' }}
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: scale-${{ matrix.scale }}-aggregate-evidence
           path: ci-public/**
+          if-no-files-found: error
+          retention-days: 1
+          compression-level: 9
+
+      # Upload the completed profile first: a later browser or controlled-query
+      # failure must not discard an otherwise valid end-to-end measurement.
+      - name: Install pinned browser automation for SF=1 evidence
+        if: ${{ matrix.scale == '1' && steps.profile.outcome == 'success' }}
+        timeout-minutes: 5
+        shell: bash
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+        run: |
+          set -euo pipefail
+          node --version
+          google-chrome --version
+          npm install --no-save --package-lock=false playwright@1.64.1
+
+      - name: Measure SF=1 query comparisons and capture their actual Spark UI
+        id: optimisations
+        if: ${{ matrix.scale == '1' && steps.profile.outcome == 'success' }}
+        timeout-minutes: 20
+        shell: bash
+        run: |
+          set -euo pipefail
+          "$EPISCOPE_VENV/bin/python" scripts/ci_capture_optimisations.py \
+            --root data --output ci-optimisations --chrome-channel chrome
+
+      - name: Preserve bounded optimisation evidence including honest partial captures
+        if: ${{ always() && matrix.scale == '1' && hashFiles('ci-optimisations/**') != '' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: scale-1-optimisation-evidence
+          path: ci-optimisations/**
           if-no-files-found: error
           retention-days: 1
           compression-level: 9
