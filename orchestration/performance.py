@@ -1,17 +1,70 @@
 """Measured scaling and controlled Spark query comparisons (ENG-2/ENG-3)."""
 from pathlib import Path
 import json
+import hashlib
 import shutil
 import statistics
 import subprocess
 import sys
 import time
 from datetime import datetime, timezone
-from pyspark.sql import functions as F
 from pipeline.common import json_write
 
 
+QUERY_TIMING_SCOPE = (
+    'Each sample builds a new DataFrame/QueryExecution before timing. The timer covers '
+    'collect(), including lazy optimisation/physical planning, Spark work and aggregate '
+    'result conversion. Factory construction, plan inspection/export and UI capture '
+    'are excluded. No DataFrame is persisted; operating-system and JVM caches remain warm.'
+)
+
+
+def measure_query_samples(spark, label, query_factory, out):
+    """Measure fresh executions rather than reusing a materialised shuffle plan."""
+    out = Path(out)
+    spark.sparkContext.setJobGroup(label, label)
+    times, samples = [], []
+    execution_ids, plan_ids = set(), set()
+    reference = None
+    for sample in range(1, 4):
+        # A factory is essential: repeated collect() on one DataFrame can reuse
+        # its ShuffleExchangeExec shuffleDependency/cachedShuffleRDD.
+        query = query_factory()
+        execution = query._jdf.queryExecution()
+        execution_id = int(execution.id())
+        if execution_id in execution_ids:
+            raise ValueError('Each timing sample must have a fresh QueryExecution')
+        execution_ids.add(execution_id)
+        spark.sparkContext.setJobDescription(f'{label}: sample {sample}/3')
+        started = time.monotonic()
+        value = [row.asDict() for row in query.collect()]
+        times.append(time.monotonic() - started)
+        if sample == 1:
+            reference = value
+        elif value != reference:
+            raise ValueError('Controlled query samples produced different aggregate results')
+        # Inspect only after the timer so all three actions include lazy planning.
+        plan = execution.executedPlan()
+        plan_id = int(plan.id())
+        if plan_id in plan_ids:
+            raise ValueError('Each timing sample must have a fresh physical plan')
+        plan_ids.add(plan_id)
+        plan_text = plan.toString()
+        plan_file = f'{label}_sample-{sample}_plan.txt'
+        plan_path = out / plan_file
+        plan_path.write_text(plan_text, encoding='utf-8', newline='\n')
+        samples.append({'sample':sample, 'query_execution_id':execution_id,
+                        'physical_plan_id':plan_id, 'plan_file':plan_file,
+                        'plan_sha256':hashlib.sha256(plan_path.read_bytes()).hexdigest()})
+    # Preserve the conventional representative plan, now the final fresh sample.
+    (out / f'{label}_plan.txt').write_text(plan_text, encoding='utf-8', newline='\n')
+    query.explain(mode='formatted')
+    return {'label':label, 'seconds':times, 'median_seconds':statistics.median(times),
+            'result':reference, 'sample_results_identical':True, 'samples':samples}
+
+
 def benchmark_optimisations(spark, root):
+    from pyspark.sql import functions as F
     root = Path(root)
     out = root.parent / 'results/performance'
     out.mkdir(parents=True, exist_ok=True)
@@ -19,34 +72,26 @@ def benchmark_optimisations(spark, root):
     facilities = spark.read.parquet(str(root / 'lake/silver/facilities')).select('facility_id', 'beds')
     results = []
 
-    def measure(label, query):
-        spark.sparkContext.setJobGroup(label, label)
-        query.explain(mode='formatted')
-        (out / f'{label}_plan.txt').write_text(query._jdf.queryExecution().executedPlan().toString(), encoding='utf-8')
-        times = []
-        for sample in range(3):
-            spark.sparkContext.setJobDescription(f'{label}: sample {sample+1}/3')
-            start = time.monotonic()
-            value = [r.asDict() for r in query.collect()]
-            times.append(time.monotonic()-start)
-        return {'label':label,'seconds':times,'median_seconds':statistics.median(times),'result':value}
-
     old_aqe = spark.conf.get('spark.sql.adaptive.enabled')
     old_broadcast = spark.conf.get('spark.sql.autoBroadcastJoinThreshold')
     try:
         spark.conf.set('spark.sql.adaptive.enabled', 'false')
         spark.conf.set('spark.sql.autoBroadcastJoinThreshold', '-1')
-        before = encounters.hint('merge').join(facilities.hint('merge'), 'facility_id').agg(F.sum('beds').alias('bed_weighted_encounters'))
-        results.append(measure('join_before_sort_merge', before))
-        after = encounters.join(F.broadcast(facilities), 'facility_id').agg(F.sum('beds').alias('bed_weighted_encounters'))
-        results.append(measure('join_after_broadcast', after))
+        before = lambda: encounters.hint('merge').join(facilities.hint('merge'), 'facility_id').agg(F.sum('beds').alias('bed_weighted_encounters'))
+        results.append(measure_query_samples(spark, 'join_before_sort_merge', before, out))
+        after = lambda: encounters.join(F.broadcast(facilities), 'facility_id').agg(F.sum('beds').alias('bed_weighted_encounters'))
+        results.append(measure_query_samples(spark, 'join_after_broadcast', after, out))
         # Identical output: predicate expressed through an opaque Python UDF
         # prevents partition pruning in the reference query. The optimized
         # native predicate prunes all nonselected epi_year directories.
+        spark.sparkContext.setJobGroup('pruning_year_selection', 'Select the latest stored epi-year')
+        spark.sparkContext.setJobDescription('Select the latest stored epi-year outside query timings')
         year = encounters.agg(F.max('epi_year')).first()[0]
         opaque_year = F.udf(lambda value: value == year, 'boolean')
-        results.append(measure('pruning_before_opaque_predicate', encounters.filter(opaque_year('epi_year')).agg(F.count('*').alias('encounters'))))
-        results.append(measure('pruning_after_native_predicate', encounters.filter(F.col('epi_year') == year).agg(F.count('*').alias('encounters'))))
+        results.append(measure_query_samples(spark, 'pruning_before_opaque_predicate',
+                       lambda: encounters.filter(opaque_year('epi_year')).agg(F.count('*').alias('encounters')), out))
+        results.append(measure_query_samples(spark, 'pruning_after_native_predicate',
+                       lambda: encounters.filter(F.col('epi_year') == year).agg(F.count('*').alias('encounters')), out))
     finally:
         spark.sparkContext.setLocalProperty('spark.jobGroup.id', None)
         spark.sparkContext.setLocalProperty('spark.job.description', None)
@@ -57,8 +102,11 @@ def benchmark_optimisations(spark, root):
         a, b = results[i:i+2]
         comparisons.append({'before':a['label'],'after':b['label'],'identical_result':a['result']==b['result'],
                             'speedup':a['median_seconds']/b['median_seconds']})
+    if not all(row['identical_result'] for row in comparisons):
+        raise ValueError('Before/after queries did not produce identical aggregate results')
     result = {'experiments':results,'comparisons':comparisons,'spark_ui':'http://127.0.0.1:4040',
-              'note':'Three executions per query, medians shown. These are controlled query comparisons, not whole-pipeline speedups. Filesystem cache and laptop contention remain confounders.'}
+              'sampling':{'fresh_query_execution_per_sample':True, 'timing_scope':QUERY_TIMING_SCOPE},
+              'note':'Three fresh query executions per case, medians shown. These are controlled query comparisons, not whole-pipeline speedups. Case order is fixed; filesystem/JVM cache and host contention remain confounders.'}
     json_write(out / 'optimisations.json', result)
     return result
 

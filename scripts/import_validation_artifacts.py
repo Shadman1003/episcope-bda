@@ -71,6 +71,7 @@ def verify_inventory(folder, manifest_name, entries, *, optimisation=False):
             raise ValueError("Duplicate or self-referencing artifact manifest entry")
         if optimisation:
             allowed = name == "optimisations.json" or name in {f"{label}_plan.txt" for label in LABELS}
+            allowed |= name in {f"{label}_sample-{sample}_plan.txt" for label in LABELS for sample in (1, 2, 3)}
             allowed |= bool(re.fullmatch(r"spark-optimisation-[A-Za-z0-9_.-]+\.(?:png|json)", name))
         else:
             allowed = name in PROFILE_FILES

@@ -2,7 +2,8 @@
 
 Run after the SF=1 `all` process exits. The measured query function returns
 before Node/Chrome starts. The output directory contains only bounded aggregate
-JSON, four deidentified physical plans, screenshots and a provenance manifest.
+JSON, four representative and twelve per-sample deidentified physical plans,
+screenshots and a provenance manifest.
 
 Job-only browser dependency (verified npm latest on 2026-10-22):
 PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm install --no-save --package-lock=false playwright@1.64.1
@@ -56,6 +57,8 @@ def validate_measurement_record(record, expected_scale):
 
 
 def validate_query_result(result):
+    if result.get("sampling", {}).get("fresh_query_execution_per_sample") is not True:
+        raise ValueError("Query comparisons require fresh QueryExecutions for every sample")
     experiments = result.get("experiments", [])
     if sorted(row.get("label", "") for row in experiments) != sorted(LABELS):
         raise ValueError("Expected exactly the four controlled query experiments")
@@ -69,6 +72,21 @@ def validate_query_result(result):
             raise ValueError("Only the one-row aggregate query results may be published")
         if any(isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) for value in values[0].values()):
             raise ValueError("A published query result contains a non-finite or nonnumeric value")
+        records = row.get("samples", [])
+        if row.get("sample_results_identical") is not True or len(records) != 3:
+            raise ValueError("All three fresh samples must have matching aggregate results")
+        for index, record in enumerate(records, start=1):
+            if (record.get("sample") != index
+                    or record.get("plan_file") != f'{row["label"]}_sample-{index}_plan.txt'
+                    or not re.fullmatch(r"[0-9a-f]{64}", record.get("plan_sha256", ""))):
+                raise ValueError("A fresh sample has invalid plan provenance")
+            for key in ("query_execution_id", "physical_plan_id"):
+                if type(record.get(key)) is not int or record[key] < 0:
+                    raise ValueError("Fresh sample execution/plan IDs must be nonnegative integers")
+    for key in ("query_execution_id", "physical_plan_id"):
+        identifiers = [record[key] for row in experiments for record in row["samples"]]
+        if len(set(identifiers)) != 12:
+            raise ValueError("A timing sample reused a query execution or physical plan")
     comparisons = result.get("comparisons", [])
     if len(comparisons) != 2 or not all(row.get("identical_result") is True for row in comparisons):
         raise ValueError("Before/after queries did not produce matching aggregate results")
@@ -127,7 +145,7 @@ def main(argv=None):
         "preceding_pipeline_scale": pipeline["scale"],
         "preceding_pipeline_total_seconds": pipeline.get("total_seconds"),
         "timing_scope": "The all-pipeline process finished before this step. Node/Chrome starts only after all controlled-query samples complete. UI capture, artifact copy and Spark shutdown are outside measured query timings.",
-        "artifact_policy": "Aggregate query results, four deidentified plans and bounded live UI PNG/JSON only; no encounters, salts, credentials, event logs or lake files.",
+        "artifact_policy": "Aggregate query results, four representative and twelve per-sample deidentified plans and bounded live UI PNG/JSON only; no encounters, salts, credentials, event logs or lake files.",
         "files": [],
     }
     spark = None
@@ -161,11 +179,16 @@ def main(argv=None):
         manifest["files"].append({"file": "optimisations.json", "bytes": (output / "optimisations.json").stat().st_size, "sha256": sha256(output / "optimisations.json")})
         stage = "physical_plan_publication"
         performance = root.parent / "results" / "performance"
-        for label in LABELS:
-            plan = performance / f"{label}_plan.txt"
-            if DIRECT_IDENTIFIER.search(plan.read_text(encoding="utf-8")):
-                raise ValueError("An unexpected direct identifier marker appears in a query plan")
-            manifest["files"].append(copy_public_file(plan, output))
+        for row in measured["experiments"]:
+            plans = [(f'{row["label"]}_plan.txt', row["samples"][-1]["plan_sha256"])]
+            plans += [(record["plan_file"], record["plan_sha256"]) for record in row["samples"]]
+            for name, expected_hash in plans:
+                plan = performance / name
+                if sha256(plan) != expected_hash:
+                    raise ValueError("A sample/representative physical plan checksum is inconsistent")
+                if DIRECT_IDENTIFIER.search(plan.read_text(encoding="utf-8")):
+                    raise ValueError("An unexpected direct identifier marker appears in a query plan")
+                manifest["files"].append(copy_public_file(plan, output))
         stage = "live_ui_capture_after_measurement"
         with tempfile.TemporaryDirectory(prefix="episcope-ui-") as directory:
             temporary = Path(directory).resolve()

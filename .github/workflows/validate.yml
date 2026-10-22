@@ -117,6 +117,26 @@ jobs:
           retention-days: 1
           compression-level: 9
 
+      - name: Run complete Python regression suite after SF=0.25 measurement
+        id: python_tests
+        if: ${{ matrix.scale == '0.25' && steps.profile.outcome == 'success' }}
+        timeout-minutes: 10
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir ci-tests
+          "$EPISCOPE_VENV/bin/python" -m pytest -q tests | tee ci-tests/python-tests.txt
+          printf '%s\n' "$GITHUB_SHA" > ci-tests/source-revision.txt
+
+      - name: Upload successful Python test evidence
+        if: ${{ steps.python_tests.outcome == 'success' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: python-test-evidence
+          path: ci-tests/*
+          if-no-files-found: error
+          retention-days: 1
+
       # Upload the completed profile first: a later browser or controlled-query
       # failure must not discard an otherwise valid end-to-end measurement.
       - name: Install pinned browser automation for SF=1 evidence

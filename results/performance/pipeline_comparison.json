@@ -1,0 +1,816 @@
+{
+  "schema_version": "1.0",
+  "created_utc": "2026-10-22T01:18:42.309899+00:00",
+  "status": "consistent_aggregate_outputs_with_floating_point_roundoff",
+  "scope": {
+    "scale": 0.25,
+    "seed": 4345,
+    "purpose": "Regression consistency check after quality-expression and shared-ranking changes, using independently completed local and cloud runs.",
+    "clinical_or_real_world_validation": false,
+    "all_raw_or_silver_records_compared": false,
+    "all_historical_daily_alert_decisions_compared": false
+  },
+  "tolerance": {
+    "relative": 1e-09,
+    "absolute": 1e-09,
+    "rule": "abs(a-b) <= max(relative*max(abs(a),abs(b)), absolute); counts and detector decisions are additionally reported for exact equality"
+  },
+  "source_revisions": {
+    "baseline": null,
+    "baseline_note": "The baseline runner did not record its Git revision; it is not inferred from later commit dates.",
+    "cloud": "bd61dfcf978c9498743dbebb27495e8314a67b74",
+    "analytics_implementation_sha256_baseline": "99b3e6add9f5a23d6199fdca25d1c1fd2636a62a7bac660197d7117f1bcb79a3",
+    "analytics_implementation_sha256_cloud": "99b3e6add9f5a23d6199fdca25d1c1fd2636a62a7bac660197d7117f1bcb79a3",
+    "analytics_implementation_hashes_equal": true
+  },
+  "generated_feed": {
+    "facts": {
+      "synthetic": {
+        "baseline": true,
+        "cloud": true,
+        "equal": true
+      },
+      "scale": {
+        "baseline": 0.25,
+        "cloud": 0.25,
+        "equal": true
+      },
+      "seed": {
+        "baseline": 4345,
+        "cloud": 4345,
+        "equal": true
+      },
+      "period": {
+        "baseline": [
+          "2021-01-01",
+          "2025-12-31"
+        ],
+        "cloud": [
+          "2021-01-01",
+          "2025-12-31"
+        ],
+        "equal": true
+      },
+      "minimum_required_rows": {
+        "baseline": 6250000,
+        "cloud": 6250000,
+        "equal": true
+      },
+      "unique_encounters": {
+        "baseline": 6286618,
+        "cloud": 6286618,
+        "equal": true
+      },
+      "duplicate_resubmissions": {
+        "baseline": 125483,
+        "cloud": 125483,
+        "equal": true
+      },
+      "encounter_rows": {
+        "baseline": 6412101,
+        "cloud": 6412101,
+        "equal": true
+      },
+      "facilities": {
+        "baseline": 640,
+        "cloud": 640,
+        "equal": true
+      },
+      "unique_outbreak_events": {
+        "baseline": 36,
+        "cloud": 36,
+        "equal": true
+      },
+      "district_event_rows": {
+        "baseline": 99,
+        "cloud": 99,
+        "equal": true
+      },
+      "background_topup_rows": {
+        "baseline": 0,
+        "cloud": 0,
+        "equal": true
+      }
+    },
+    "reference_hashes_equal": true,
+    "reference_hashes": {
+      "districts.csv": "c7b513abf8a1d5b234328d58eddcdf533d207040c04d52d41309b032b5bf0974",
+      "population.csv": "322416cd4b83ef6edb0df5024ae2d2fa8a2aa7b8ee3d0d2549cd9dd27ea1164b",
+      "weather.parquet": "20b8a076b462602a8c7f825ad64c3d765aea5581683df4194c06e190e2a2aa7d",
+      "districts.geojson": "ba6fcf8df630074103126f9b654d9bee27311dcb840361c74b7be8780d4d2d92"
+    },
+    "recorded_input_file_metadata": {
+      "encounter_files": {
+        "file_records_baseline": 326,
+        "file_records_cloud": 326,
+        "relative_paths_equal": true,
+        "recorded_path_row_byte_sha256_fields_equal": true,
+        "different_recorded_file_entries": 0
+      },
+      "stock_files": {
+        "file_records_baseline": 60,
+        "file_records_cloud": 60,
+        "relative_paths_equal": true,
+        "recorded_path_row_byte_sha256_fields_equal": true,
+        "different_recorded_file_entries": 0
+      }
+    },
+    "interpretation": "All 386 recorded generated-file SHA256, byte and row metadata entries match. Cloud raw files were not downloaded or reread locally; no record-by-record raw/silver equality claim is made."
+  },
+  "quality": {
+    "all_non_timing_fields_exact": true,
+    "fields": {
+      "start_date": {
+        "baseline": "2021-01-01",
+        "cloud": "2021-01-01",
+        "equal": true
+      },
+      "end_date": {
+        "baseline": "2025-12-31",
+        "cloud": "2025-12-31",
+        "equal": true
+      },
+      "latest_report": {
+        "baseline": "2026-01-18",
+        "cloud": "2026-01-18",
+        "equal": true
+      },
+      "weekly_rows": {
+        "baseline": 67072,
+        "cloud": 67072,
+        "equal": true
+      },
+      "new_batches": {
+        "baseline": 392,
+        "cloud": 392,
+        "equal": true
+      },
+      "rows_in": {
+        "baseline": 7580741,
+        "cloud": 7580741,
+        "equal": true
+      },
+      "rows_out": {
+        "baseline": 7342828,
+        "cloud": 7342828,
+        "equal": true
+      },
+      "quarantined": {
+        "baseline": 237913,
+        "cloud": 237913,
+        "equal": true
+      },
+      "duplicates": {
+        "baseline": 123165,
+        "cloud": 123165,
+        "equal": true
+      },
+      "rule_counts": {
+        "baseline": {
+          "missing_encounter_id": 0,
+          "missing_patient_id": 0,
+          "missing_facility_id": 0,
+          "orphan_facility": 32108,
+          "invalid_geography": 32108,
+          "invalid_onset_date": 6367,
+          "invalid_report_date": 0,
+          "onset_after_report": 12787,
+          "delay_above_21": 6367,
+          "invalid_age": 38284,
+          "invalid_sex": 25788,
+          "invalid_icd10": 6376,
+          "invalid_lab_flag": 0,
+          "invalid_admission_flag": 0,
+          "invalid_outcome": 0
+        },
+        "cloud": {
+          "missing_encounter_id": 0,
+          "missing_patient_id": 0,
+          "missing_facility_id": 0,
+          "orphan_facility": 32108,
+          "invalid_geography": 32108,
+          "invalid_onset_date": 6367,
+          "invalid_report_date": 0,
+          "onset_after_report": 12787,
+          "delay_above_21": 6367,
+          "invalid_age": 38284,
+          "invalid_sex": 25788,
+          "invalid_icd10": 6376,
+          "invalid_lab_flag": 0,
+          "invalid_admission_flag": 0,
+          "invalid_outcome": 0
+        },
+        "equal": true
+      }
+    },
+    "interpretation": "rows_in/out/quarantined include encounters and stock snapshots; duplicates are a subset of quarantined, not an additional subtraction. Matching aggregates do not prove row-by-row equality."
+  },
+  "analytics_row_counts": {
+    "baseline": {
+      "alerts": 931328,
+      "detection_tradeoff": 42,
+      "forecasts": 1024,
+      "forecast_backtest": 106496,
+      "forecast_metrics": 2048,
+      "allocations": 384,
+      "allocation_grid": 9216,
+      "allocation_scenarios": 24,
+      "calendar": 1696
+    },
+    "cloud": {
+      "alerts": 931328,
+      "detection_tradeoff": 42,
+      "forecasts": 1024,
+      "forecast_backtest": 106496,
+      "forecast_metrics": 2048,
+      "allocations": 384,
+      "allocation_grid": 9216,
+      "allocation_scenarios": 24,
+      "calendar": 1696
+    },
+    "exact": true
+  },
+  "detection": {
+    "threshold_summary_comparison": {
+      "row_key": [
+        "method",
+        "threshold_multiplier",
+        "evaluation_period"
+      ],
+      "matched_rows": 42,
+      "key_sets_equal": true,
+      "all_numeric_values_exact": true,
+      "all_within_tolerance": true,
+      "fields": {
+        "detected_events": {
+          "compared_numeric_cells": 42,
+          "exact_numeric_matches": 42,
+          "max_absolute_difference": 0.0,
+          "outside_tolerance": 0,
+          "largest_difference": {
+            "key": {
+              "method": "CUSUM",
+              "threshold_multiplier": "10.0",
+              "evaluation_period": "all"
+            },
+            "baseline": 35.0,
+            "cloud": 35.0,
+            "absolute_difference": 0.0
+          }
+        },
+        "district_event_sensitivity": {
+          "compared_numeric_cells": 42,
+          "exact_numeric_matches": 42,
+          "max_absolute_difference": 0.0,
+          "outside_tolerance": 0,
+          "largest_difference": {
+            "key": {
+              "method": "CUSUM",
+              "threshold_multiplier": "10.0",
+              "evaluation_period": "all"
+            },
+            "baseline": 0.98989898989899,
+            "cloud": 0.98989898989899,
+            "absolute_difference": 0.0
+          }
+        },
+        "events": {
+          "compared_numeric_cells": 42,
+          "exact_numeric_matches": 42,
+          "max_absolute_difference": 0.0,
+          "outside_tolerance": 0,
+          "largest_difference": {
+            "key": {
+              "method": "CUSUM",
+              "threshold_multiplier": "10.0",
+              "evaluation_period": "all"
+            },
+            "baseline": 36.0,
+            "cloud": 36.0,
+            "absolute_difference": 0.0
+          }
+        },
+        "false_alert_episodes": {
+          "compared_numeric_cells": 42,
+          "exact_numeric_matches": 42,
+          "max_absolute_difference": 0.0,
+          "outside_tolerance": 0,
+          "largest_difference": {
+            "key": {
+              "method": "CUSUM",
+              "threshold_multiplier": "10.0",
+              "evaluation_period": "all"
+            },
+            "baseline": 1109.0,
+            "cloud": 1109.0,
+            "absolute_difference": 0.0
+          }
+        },
+        "false_alerts_per_district_year": {
+          "compared_numeric_cells": 42,
+          "exact_numeric_matches": 42,
+          "max_absolute_difference": 0.0,
+          "outside_tolerance": 0,
+          "largest_difference": {
+            "key": {
+              "method": "CUSUM",
+              "threshold_multiplier": "10.0",
+              "evaluation_period": "all"
+            },
+            "baseline": 3.4812803604579208,
+            "cloud": 3.4812803604579208,
+            "absolute_difference": 0.0
+          }
+        },
+        "median_days_to_detection": {
+          "compared_numeric_cells": 42,
+          "exact_numeric_matches": 42,
+          "max_absolute_difference": 0.0,
+          "outside_tolerance": 0,
+          "largest_difference": {
+            "key": {
+              "method": "CUSUM",
+              "threshold_multiplier": "10.0",
+              "evaluation_period": "all"
+            },
+            "baseline": 7.0,
+            "cloud": 7.0,
+            "absolute_difference": 0.0
+          }
+        },
+        "sensitivity": {
+          "compared_numeric_cells": 42,
+          "exact_numeric_matches": 42,
+          "max_absolute_difference": 0.0,
+          "outside_tolerance": 0,
+          "largest_difference": {
+            "key": {
+              "method": "CUSUM",
+              "threshold_multiplier": "10.0",
+              "evaluation_period": "all"
+            },
+            "baseline": 0.9722222222222222,
+            "cloud": 0.9722222222222222,
+            "absolute_difference": 0.0
+          }
+        }
+      },
+      "outside_tolerance": []
+    },
+    "calibration_recommendation_exact": true,
+    "recorded_recommendation": {
+      "method": "CUSUM",
+      "threshold_multiplier": 10.0,
+      "sensitivity": 0.9615384615384616,
+      "false_alerts_per_district_year": 3.4838491214298,
+      "median_days_to_detection": 7.0,
+      "events": 26,
+      "detected_events": 25,
+      "false_alert_episodes": 887,
+      "evaluation_period": "calibration",
+      "district_event_sensitivity": 0.9615384615384616
+    },
+    "operational_defaults_exact": true,
+    "national_artefact_summary_exact": true,
+    "interpretation": "All 42 national threshold/period summary rows match exactly after joining by method, threshold and evaluation period. This checks aggregate event hits, false-alert episodes and delay, not every historical district-day flag."
+  },
+  "forecasting": {
+    "row_key": [
+      "model",
+      "disease",
+      "horizon"
+    ],
+    "matched_rows": 32,
+    "key_sets_equal": true,
+    "all_numeric_values_exact": false,
+    "all_within_tolerance": true,
+    "fields": {
+      "coverage80": {
+        "compared_numeric_cells": 32,
+        "exact_numeric_matches": 32,
+        "max_absolute_difference": 0.0,
+        "outside_tolerance": 0,
+        "largest_difference": {
+          "key": {
+            "model": "lagged_weather_ridge",
+            "disease": "dengue",
+            "horizon": "1"
+          },
+          "baseline": 0.79296875,
+          "cloud": 0.79296875,
+          "absolute_difference": 0.0
+        }
+      },
+      "mae": {
+        "compared_numeric_cells": 32,
+        "exact_numeric_matches": 22,
+        "max_absolute_difference": 1.0658141036401503e-14,
+        "outside_tolerance": 0,
+        "largest_difference": {
+          "key": {
+            "model": "lagged_weather_ridge",
+            "disease": "influenza",
+            "horizon": "2"
+          },
+          "baseline": 28.029641667546567,
+          "cloud": 28.029641667546578,
+          "absolute_difference": 1.0658141036401503e-14
+        }
+      },
+      "n": {
+        "compared_numeric_cells": 32,
+        "exact_numeric_matches": 32,
+        "max_absolute_difference": 0.0,
+        "outside_tolerance": 0,
+        "largest_difference": {
+          "key": {
+            "model": "lagged_weather_ridge",
+            "disease": "dengue",
+            "horizon": "1"
+          },
+          "baseline": 3328.0,
+          "cloud": 3328.0,
+          "absolute_difference": 0.0
+        }
+      },
+      "wis": {
+        "compared_numeric_cells": 32,
+        "exact_numeric_matches": 4,
+        "max_absolute_difference": 3.552713678800501e-14,
+        "outside_tolerance": 0,
+        "largest_difference": {
+          "key": {
+            "model": "seasonal_naive",
+            "disease": "dengue",
+            "horizon": "3"
+          },
+          "baseline": 45.05250400641028,
+          "cloud": 45.052504006410246,
+          "absolute_difference": 3.552713678800501e-14
+        }
+      }
+    },
+    "outside_tolerance": []
+  },
+  "allocation": {
+    "row_key": [
+      "budget",
+      "equity_floor"
+    ],
+    "matched_rows": 24,
+    "key_sets_equal": true,
+    "all_numeric_values_exact": false,
+    "all_within_tolerance": true,
+    "fields": {
+      "baseline_weighted_unmet": {
+        "compared_numeric_cells": 24,
+        "exact_numeric_matches": 8,
+        "max_absolute_difference": 9.094947017729282e-13,
+        "outside_tolerance": 0,
+        "largest_difference": {
+          "key": {
+            "budget": "12569.15687852335",
+            "equity_floor": "0.0"
+          },
+          "baseline": 5658.435298500758,
+          "cloud": 5658.435298500757,
+          "absolute_difference": 9.094947017729282e-13
+        }
+      },
+      "benefit_vs_baseline_pct": {
+        "compared_numeric_cells": 24,
+        "exact_numeric_matches": 9,
+        "max_absolute_difference": 2.6645352591003757e-14,
+        "outside_tolerance": 0,
+        "largest_difference": {
+          "key": {
+            "budget": "2513.8313757046703",
+            "equity_floor": "0.2"
+          },
+          "baseline": 6.6428006104789254,
+          "cloud": 6.642800610478952,
+          "absolute_difference": 2.6645352591003757e-14
+        }
+      },
+      "min_population_ratio": {
+        "compared_numeric_cells": 24,
+        "exact_numeric_matches": 16,
+        "max_absolute_difference": 2.1538326677728037e-14,
+        "outside_tolerance": 0,
+        "largest_difference": {
+          "key": {
+            "budget": "12569.15687852335",
+            "equity_floor": "0.8"
+          },
+          "baseline": 0.7999999999999784,
+          "cloud": 0.7999999999999569,
+          "absolute_difference": 2.1538326677728037e-14
+        }
+      },
+      "total_cost": {
+        "compared_numeric_cells": 24,
+        "exact_numeric_matches": 12,
+        "max_absolute_difference": 3.637978807091713e-12,
+        "outside_tolerance": 0,
+        "largest_difference": {
+          "key": {
+            "budget": "12569.15687852335",
+            "equity_floor": "0.8"
+          },
+          "baseline": 10722.978922069735,
+          "cloud": 10722.978922069731,
+          "absolute_difference": 3.637978807091713e-12
+        }
+      },
+      "transport_utilisation": {
+        "compared_numeric_cells": 24,
+        "exact_numeric_matches": 16,
+        "max_absolute_difference": 6.661338147750939e-16,
+        "outside_tolerance": 0,
+        "largest_difference": {
+          "key": {
+            "budget": "2513.8313757046703",
+            "equity_floor": "0.2"
+          },
+          "baseline": 0.5675385513473442,
+          "cloud": 0.5675385513473449,
+          "absolute_difference": 6.661338147750939e-16
+        }
+      },
+      "unmet": {
+        "compared_numeric_cells": 24,
+        "exact_numeric_matches": 18,
+        "max_absolute_difference": 9.094947017729282e-13,
+        "outside_tolerance": 0,
+        "largest_difference": {
+          "key": {
+            "budget": "18853.735317785024",
+            "equity_floor": "0.0"
+          },
+          "baseline": 1571.1446098154183,
+          "cloud": 1571.1446098154192,
+          "absolute_difference": 9.094947017729282e-13
+        }
+      },
+      "weighted_unmet": {
+        "compared_numeric_cells": 24,
+        "exact_numeric_matches": 13,
+        "max_absolute_difference": 1.8189894035458565e-12,
+        "outside_tolerance": 0,
+        "largest_difference": {
+          "key": {
+            "budget": "2513.8313757046703",
+            "equity_floor": "0.2"
+          },
+          "baseline": 6016.832988343329,
+          "cloud": 6016.832988343327,
+          "absolute_difference": 1.8189894035458565e-12
+        }
+      }
+    },
+    "outside_tolerance": []
+  },
+  "protected_dashboard": {
+    "dimension_registries_equal": true,
+    "tables": {
+      "observed": {
+        "baseline_rows": 67072,
+        "cloud_rows": 67072,
+        "arrays_exactly_equal": true
+      },
+      "forecasts": {
+        "baseline_rows": 1024,
+        "cloud_rows": 1024,
+        "arrays_exactly_equal": true
+      },
+      "signals": {
+        "baseline_rows": 256,
+        "cloud_rows": 256,
+        "arrays_exactly_equal": true
+      },
+      "allocations": {
+        "baseline_rows": 9216,
+        "cloud_rows": 9216,
+        "arrays_exactly_equal": true
+      },
+      "calendar": {
+        "baseline_rows": 1696,
+        "cloud_rows": 1696,
+        "arrays_exactly_equal": true
+      }
+    },
+    "latest_signal_alert_flags_true_baseline": 1,
+    "latest_signal_alert_flags_true_cloud": 1,
+    "latest_signal_complete_baseline": 244,
+    "latest_signal_complete_cloud": 244,
+    "interpretation": "These are the compared protected release arrays, including 256 latest signal flags. Equal binned/suppressed displays do not establish equality of hidden unrounded measures."
+  },
+  "baseline_summary_recomputed_consistently": true,
+  "measurements": {
+    "baseline": {
+      "started_at": "2026-10-21T20:05:37.551371+00:00",
+      "completed_at": "2026-10-21T20:24:41.215225+00:00",
+      "total_seconds": 1143.6638930000001,
+      "hardware": {
+        "platform": "Linux-4.4.0-19041-Microsoft-x86_64-with-glibc2.39",
+        "python": "3.12.3",
+        "logical_cpus": 4,
+        "memory_bytes": 8464728064,
+        "available_memory_bytes": 729726976,
+        "spark_master": "local[2]",
+        "driver_memory": "1g"
+      },
+      "output_bytes": 958029666,
+      "stages": [
+        {
+          "stage": "public_references",
+          "seconds": 6.1799496000000005,
+          "attempt": 1,
+          "status": "ok"
+        },
+        {
+          "stage": "synthetic_generator",
+          "seconds": 93.4577098,
+          "attempt": 1,
+          "status": "ok"
+        },
+        {
+          "stage": "bronze_silver_gold",
+          "seconds": 664.7428828,
+          "attempt": 1,
+          "status": "ok"
+        },
+        {
+          "stage": "analytics",
+          "seconds": 345.5772895000001,
+          "attempt": 1,
+          "status": "ok"
+        },
+        {
+          "stage": "dashboard_export",
+          "seconds": 14.697423599999865,
+          "attempt": 1,
+          "status": "ok"
+        }
+      ],
+      "timer_scope": "Original in-process orchestrator timer: includes cached-reference checks, feed generation, Spark startup, pipeline, analytics and export; record written before Spark.stop, so JVM shutdown and initial parent Python startup are excluded."
+    },
+    "cloud": {
+      "started_at": "2026-10-22T01:08:16.066255+00:00",
+      "completed_at": "2026-10-22T01:13:30.375194+00:00",
+      "total_seconds": 314.30891721599994,
+      "orchestrator_seconds": 312.367330132,
+      "timer_scope": "child command start through exit, including Python/JVM startup and shutdown; dependency install and reference-cache extraction excluded",
+      "hardware": {
+        "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+        "python": "3.12.3",
+        "logical_cpus": 4,
+        "cpu_model": "AMD EPYC 7763 64-Core Processor",
+        "physical_cores": 2,
+        "memory_bytes": 16766414848,
+        "available_memory_bytes": 10570502144,
+        "spark_master": "local[4]",
+        "driver_memory": "4g"
+      },
+      "input_bytes": 713880263,
+      "output_bytes": 959164313,
+      "stages": [
+        {
+          "stage": "public_references",
+          "seconds": 1.7850574280000018,
+          "attempt": 1,
+          "status": "ok"
+        },
+        {
+          "stage": "synthetic_generator",
+          "seconds": 37.91593975000001,
+          "attempt": 1,
+          "status": "ok"
+        },
+        {
+          "stage": "bronze_silver_gold",
+          "seconds": 177.210072032,
+          "attempt": 1,
+          "status": "ok"
+        },
+        {
+          "stage": "analytics",
+          "seconds": 82.20106457700001,
+          "attempt": 1,
+          "status": "ok"
+        },
+        {
+          "stage": "dashboard_export",
+          "seconds": 4.149172764000014,
+          "attempt": 1,
+          "status": "ok"
+        }
+      ],
+      "github_run_id": "39703788793"
+    },
+    "isolated_whole_pipeline_code_speedup_established": false,
+    "interpretation": "Times are observed measurements on different hardware and execution configurations: local WSL1, 8 GB RAM, local[2]/1g versus Linux Azure, 16 GB RAM, local[4]/4g. Python/JVM lifetime and timer scope also changed. No end-to-end code speedup ratio is inferred. Controlled same-session query comparisons are separate evidence."
+  },
+  "non_equality_expected": {
+    "lake_output_byte_sizes_equal": false,
+    "input_manifest_fingerprints_equal": false,
+    "explanation": "Parquet layout, partitioning, file metadata and independent pseudonym salts can differ across runs. The analytics input fingerprint includes relative names, byte sizes and nanosecond mtimes, and is not a content-equivalence hash."
+  },
+  "input_files": [
+    {
+      "path": "runs/20261021T200536722646Z/sf0_25/data/generation_manifest.json",
+      "bytes": 80668,
+      "sha256": "f1738436f4ba24d1cbfd296cb43354e8aaeb4d18fb8ab72112c0f9cfe596d070"
+    },
+    {
+      "path": "work/cloud_artifacts/run39703788793/scale-0.25-aggregate-evidence/generation_manifest.json",
+      "bytes": 80668,
+      "sha256": "876b1fb20855067e6ee7e5c4157b1b36b7b65000aa692ddd9dd463794496f1f5"
+    },
+    {
+      "path": "runs/20261021T200536722646Z/sf0_25/results/run_all.json",
+      "bytes": 7392,
+      "sha256": "5151bf44be9803450533108a8c6a401d6275ffc05933b3e32ed4790289c2b14d"
+    },
+    {
+      "path": "work/cloud_artifacts/run39703788793/scale-0.25-aggregate-evidence/measurement.json",
+      "bytes": 3375,
+      "sha256": "397582269145222b9c2af538057a98f0f409b99aade4c0a6d076fe6b6d782500"
+    },
+    {
+      "path": "runs/20261021T200536722646Z/sf0_25/results/analytics_latest.json",
+      "bytes": 3555,
+      "sha256": "02e42a6e291c32d5c2904f7473aef8a40634210d38bf9262cbe79d1c00f8a4c1"
+    },
+    {
+      "path": "work/cloud_artifacts/run39703788793/scale-0.25-aggregate-evidence/results/analytics_latest.json",
+      "bytes": 3516,
+      "sha256": "07675575ec6e397957fff3254da637f648706c51fc2985c589a840bfd9d3fe35"
+    },
+    {
+      "path": "runs/20261021T200536722646Z/sf0_25/results/quality_latest.json",
+      "bytes": 722,
+      "sha256": "14c457a678dc58ac2899ba54db1460b13877ba4e12ee4a2e5f3f8cb44ab2f8d5"
+    },
+    {
+      "path": "work/cloud_artifacts/run39703788793/scale-0.25-aggregate-evidence/results/quality_latest.json",
+      "bytes": 725,
+      "sha256": "d388fb8ba7ef32fc9a4822918c73a3a401ce32262d72ed4d3bedc719179bf027"
+    },
+    {
+      "path": "work/evaluation_summary_sf025.json",
+      "bytes": 56201,
+      "sha256": "7e92abbc8996c20e2631fb1a04a4b045f238a34dd8dc58ed27a565e8548c2075"
+    },
+    {
+      "path": "work/cloud_artifacts/run39703788793/scale-0.25-aggregate-evidence/results/evaluation_summary.json",
+      "bytes": 54229,
+      "sha256": "4918b2b1f463da42727b3a9d03be144ff6b523f9bb300590769110b1863ade5b"
+    },
+    {
+      "path": "work/cloud_artifacts/run39703788793/scale-0.25-aggregate-evidence/artifact_manifest.json",
+      "bytes": 2255,
+      "sha256": "d430ddc393e4c25c4f18bcc61924a22fb9eb206804d903edbf1eead256a9b362"
+    },
+    {
+      "path": "runs/20261021T200536722646Z/sf0_25/results/forecast_summary.csv",
+      "bytes": 2903,
+      "sha256": "46c3c3974f6780ed1931a13d0ababe2f7840d939c51b2e6d5c6b0aebed5175fd"
+    },
+    {
+      "path": "work/cloud_artifacts/run39703788793/scale-0.25-aggregate-evidence/results/forecast_summary.csv",
+      "bytes": 2903,
+      "sha256": "37c30833e4f40aaf7ae2fa8077298ada83818e1caf9c9689ec67abc7edf6de5c"
+    },
+    {
+      "path": "runs/20261021T200536722646Z/sf0_25/results/detection_tradeoff.csv",
+      "bytes": 3230,
+      "sha256": "749fbbc55fab1fc56a42e684cba528341b041706e0c63c5d66314ef38ac05ec4"
+    },
+    {
+      "path": "work/cloud_artifacts/run39703788793/scale-0.25-aggregate-evidence/results/detection_tradeoff.csv",
+      "bytes": 3230,
+      "sha256": "6cd2bfe8d86cf65a2b491e061029f2df4e429b03205d9d76caa75c85bac98941"
+    },
+    {
+      "path": "runs/20261021T200536722646Z/sf0_25/results/allocation_scenarios.csv",
+      "bytes": 3523,
+      "sha256": "6f3bb21ad4d8368ede4f711cc9ffbb4137a7037dc5d87545d01f7b8c9f08684b"
+    },
+    {
+      "path": "work/cloud_artifacts/run39703788793/scale-0.25-aggregate-evidence/results/allocation_scenarios.csv",
+      "bytes": 3593,
+      "sha256": "3ac14c341d359629cfa46d35bbd197e4f71d6329d44e929cdae9ac2d1fcc149e"
+    },
+    {
+      "path": "runs/20261021T200536722646Z/sf0_25/dashboard/data/dashboard.json",
+      "bytes": 2417944,
+      "sha256": "6914259d44c1038c39fc2f64301f891f7aabbbea4263a3f7094e3b4ae9086f15"
+    },
+    {
+      "path": "work/cloud_artifacts/run39703788793/scale-0.25-aggregate-evidence/dashboard/data/dashboard.json",
+      "bytes": 2417944,
+      "sha256": "b5ce906e3d03751727db54e9fd5a874ae2e547d72342141adbef0585c415fc3a"
+    }
+  ]
+}
